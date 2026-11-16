@@ -105,6 +105,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 6. **`icu::TimeZone::adoptDefault()` không đủ** — Phải dùng `TimeZoneController::SetTimeZoneOverride()` để notify V8 trong Workers
 7. **`document.fonts.check()` không detect system fonts** — Phải block tại `FontCache::GetFontPlatformData()` level
 8. **TLS/H2 parity = verification, not implementation** — Nếu 0 file `net/`/`boringssl` bị sửa → TLS fingerprint tự động khớp stock. Chrome 110+ shuffle extension order mỗi session → JA3 hash thay đổi, nhưng ciphers/curves/H2 SETTINGS cố định
+9. **Storage quota: noise, không replace** — Spoof giá trị cố định (2GB thay 10GB) → bị detect ngay. Fix: dùng deterministic noise ±5% quanh quota thật via `FingerprintProfile::NoisedQuota()`. Luôn bật khi profile active, không cần toggle hay JSON field
 
 ## hCaptcha Reverse Engineering
 - Full analysis: `C:\src\kernel-r\reverse\HCAPTCHA_SIGNALS.md`

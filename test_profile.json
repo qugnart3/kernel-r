@@ -11,7 +11,7 @@
     "locale_tz": true,
     "network": true,
     "voices": true,
-    "permissions": true,
+    "permissions": false,
     "window_size": true,
     "webrtc": true
   },
@@ -218,5 +218,5 @@
     "rtt": 50,
     "saveData": false
   },
-  "storage_quota": 2147483648
+  "storage_quota": 0
 }

@@ -1404,7 +1404,7 @@ index 65c71ea9de..09ce0dad36 100644
    MaybeDispatchEvent(RTCPeerConnectionIceEvent::Create(ice_candidate));
  }
 diff --git a/third_party/blink/renderer/modules/quota/storage_manager.cc b/third_party/blink/renderer/modules/quota/storage_manager.cc
-index ef1c723ac2..43fcdad7d2 100644
+index ef1c723ac2..8efc28c30b 100644
 --- a/third_party/blink/renderer/modules/quota/storage_manager.cc
 +++ b/third_party/blink/renderer/modules/quota/storage_manager.cc
 @@ -26,6 +26,7 @@
@@ -1420,8 +1420,8 @@ index ef1c723ac2..43fcdad7d2 100644
    }
  
 +  const auto& fp = kr::FingerprintProfile::Get();
-+  if (fp.IsActive() && fp.data().storage_quota > 0)
-+    quota_in_bytes = fp.data().storage_quota;
++  if (fp.IsActive())
++    quota_in_bytes = fp.NoisedQuota(quota_in_bytes);
 +
    StorageEstimate* estimate = StorageEstimate::Create();
    estimate->setUsage(usage_in_bytes);
@@ -1840,15 +1840,16 @@ index 0000000000..443dc2edc5
 +#endif  // THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_CANVAS_NOISE_H_
 diff --git a/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc
 new file mode 100644
-index 0000000000..2ce949f47c
+index 0000000000..864fccdb81
 --- /dev/null
 +++ b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc
-@@ -0,0 +1,54 @@
+@@ -0,0 +1,63 @@
 +#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
 +
 +#include "base/check.h"
 +#include "base/logging.h"
 +#include "base/no_destructor.h"
++#include "components/kr_fingerprint/deterministic_noise.h"
 +
 +namespace blink {
 +namespace kr {
@@ -1896,14 +1897,22 @@ index 0000000000..2ce949f47c
 +  return false;
 +}
 +
++int64_t FingerprintProfile::NoisedQuota(int64_t real_quota) const {
++  if (!active_ || real_quota <= 0)
++    return real_quota;
++  ::kr::DeterministicNoise noise(data_.seed, "storage_quota");
++  double factor = noise.UniformRange(0.95, 1.05);
++  return static_cast<int64_t>(real_quota * factor);
++}
++
 +}  // namespace kr
 +}  // namespace blink
 diff --git a/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h
 new file mode 100644
-index 0000000000..3457b53941
+index 0000000000..e4e4b74fee
 --- /dev/null
 +++ b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h
-@@ -0,0 +1,48 @@
+@@ -0,0 +1,49 @@
 +#ifndef THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_FINGERPRINT_PROFILE_H_
 +#define THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_FINGERPRINT_PROFILE_H_
 +
@@ -1935,6 +1944,7 @@ index 0000000000..3457b53941
 +  const std::string& seed() const { return data_.seed; }
 +
 +  bool IsToggleEnabled(std::string_view group) const;
++  int64_t NoisedQuota(int64_t real_quota) const;
 +
 +  FingerprintProfile(const FingerprintProfile&) = delete;
 +  FingerprintProfile& operator=(const FingerprintProfile&) = delete;

@@ -1,17 +1,18 @@
 # CHANGELOG — Kernel-R
 
-## 2026-11-16 — H6-H7: Voices filter + Storage quota override
+## 2026-11-16 — H6-H7: Voices filter + Storage quota noise
 
 ### Sửa
 - **speech_synthesis.cc**: Filter voices trong `OnSetVoiceList()` — nếu profile có explicit voice list, chỉ giữ voices matching tên. Nếu không, filter theo locale language prefix (e.g., "en" từ "en-US"). Giữ original list nếu filter xoá hết
-- **storage_manager.cc**: Override `quota_in_bytes` trong `QueryStorageUsageAndQuotaCallback` khi profile có `storage_quota > 0`
-- **profile_loader.cc**: Thêm parse `storage_quota` từ JSON (dùng GetDouble → cast int64_t)
-- **test_profile.json**: Thêm `storage_quota: 2147483648` (2 GiB)
-- **test_toggles.html**: Thêm 4 test cards mới: H3 Connection, H4 maxTouchPoints, H6 Voices, H7 Storage Quota
+- **storage_manager.cc**: Apply deterministic noise ±5% lên real quota (thay vì fixed value override)
+- **fingerprint_profile.h/.cc**: Thêm `NoisedQuota(int64_t real_quota)` — dùng DeterministicNoise(seed, "storage_quota") để tạo noise factor 0.95-1.05
+- **profile_loader.cc**: Thêm parse `storage_quota` từ JSON (giữ lại cho backward compat, nhưng không dùng nữa)
+- **test_toggles.html**: Thêm 4 test cards mới: H3 Connection, H4 maxTouchPoints, H6 Voices, H7 Storage Quota Noise
 
 ### Thiết kế
-- Voices: Filter tại `OnSetVoiceList` (Mojo callback) — chỉ filter 1 lần khi OS voices arrive, không filter mỗi `getVoices()` call. Profile voices empty → filter by locale prefix → ngăn leak system locale voices (e.g., vi-VN voices khi profile says en-US)
-- Storage quota: Override chỉ khi `storage_quota > 0` — 0 = pass-through real quota. Không cần toggle riêng
+- Voices: Filter tại `OnSetVoiceList` (Mojo callback) — chỉ filter 1 lần khi OS voices arrive. Profile voices empty → filter by locale prefix
+- Storage quota v1 (REVERTED): Fixed value override — bị hCaptcha detect vì giá trị không khớp disk thật
+- Storage quota v2 (CURRENT): Deterministic noise ±5% quanh quota thật. Luôn bật khi profile active. Mỗi profile seed → factor khác nhau → mỗi instance quota khác nhau nhưng realistic
 
 ## 2026-11-16 — H3-H4: hCaptcha signal gaps (connection + maxTouchPoints)
 

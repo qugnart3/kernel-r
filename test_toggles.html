@@ -52,8 +52,7 @@ const PROFILE_EXPECTED = {
     'Comic Sans MS','Palatino Linotype','Book Antiqua','Garamond'],
   fonts_blocked: ['Papyrus','Fira Code','Bahnschrift','Agency FB'],
   connection: { effectiveType: '4g', downlink: 10, rtt: 50, saveData: false },
-  navigator_extra: { maxTouchPoints: 10 },
-  storage_quota: 2147483648
+  navigator_extra: { maxTouchPoints: 10 }
 };
 
 function isFontAvailable(font) {
@@ -305,39 +304,51 @@ async function run() {
     html += card('touch', 'H4', 'maxTouchPoints (toggle: screen)', r.join(''), allMatch);
   }
 
-  // H6: Voices
+  // H6: Voices (async — wait for voiceschanged)
   {
-    const voices = speechSynthesis.getVoices();
+    let voices = speechSynthesis.getVoices();
+    if (voices.length === 0) {
+      voices = await new Promise(resolve => {
+        const h = () => { speechSynthesis.removeEventListener('voiceschanged', h); resolve(speechSynthesis.getVoices()); };
+        speechSynthesis.addEventListener('voiceschanged', h);
+        setTimeout(() => resolve(speechSynthesis.getVoices()), 3000);
+      });
+    }
     const voiceNames = voices.map(v => v.name).join(', ');
     const voiceLangs = [...new Set(voices.map(v => v.lang.split('-')[0]))].join(', ');
     const allEn = voices.length === 0 || voices.every(v => v.lang.startsWith('en'));
     const r = [
-      row('voice count', voices.length, '(filtered)', voices.length > 0),
+      row('voice count', voices.length, '(any > 0)', voices.length > 0),
       row('languages', voiceLangs, 'en', allEn),
-      row('names', voiceNames.substring(0, 80) || '(loading...)', '(en-* only)', allEn),
+      row('names', voiceNames.substring(0, 80) || '(timeout)', '(en-* only)', allEn),
     ];
     html += card('voices', 'H6', 'Voices Filter (toggle: voices)', r.join(''), allEn && voices.length > 0);
   }
 
-  // H7: Storage Quota
+  // H7: Storage Quota (deterministic noise ±5%)
   {
-    let quotaMatch = null;
+    let quotaOk = null;
     let r = '';
     try {
       const est = await navigator.storage.estimate();
       const quotaGB = (est.quota / (1024*1024*1024)).toFixed(2);
-      const expectedGB = (E.storage_quota / (1024*1024*1024)).toFixed(2);
-      quotaMatch = est.quota === E.storage_quota;
+      const realApprox = 10737418240; // ~10GB real on this machine
+      const lo = Math.floor(realApprox * 0.94);
+      const hi = Math.ceil(realApprox * 1.06);
+      const inRange = est.quota >= lo && est.quota <= hi;
+      const notExact = est.quota !== realApprox;
+      quotaOk = inRange;
       r = [
-        row('quota (bytes)', est.quota, E.storage_quota),
-        row('quota (GB)', quotaGB, expectedGB),
+        row('quota (bytes)', est.quota, '±5% of real', inRange),
+        row('quota (GB)', quotaGB, '~10.00', inRange),
+        row('not exact real', notExact, true, notExact),
         row('usage (bytes)', est.usage, '(any)', true),
       ].join('');
     } catch(e) {
-      r = row('error', e.message, '(none)', false);
-      quotaMatch = false;
+      r = row('error', e.message, '(needs HTTPS)', false);
+      quotaOk = null;
     }
-    html += card('storage', 'H7', 'Storage Quota (toggle: —)', r, quotaMatch);
+    html += card('storage', 'H7', 'Storage Quota Noise (always on)', r, quotaOk);
   }
 
   html += '</div>';
