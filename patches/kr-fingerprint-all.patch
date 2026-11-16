@@ -437,10 +437,10 @@ index 0000000000..d869066f6e
 +#endif  // COMPONENTS_KR_FINGERPRINT_PROFILE_DATA_H_
 diff --git a/components/kr_fingerprint/profile_loader.cc b/components/kr_fingerprint/profile_loader.cc
 new file mode 100644
-index 0000000000..fed970136f
+index 0000000000..a2169f9d3c
 --- /dev/null
 +++ b/components/kr_fingerprint/profile_loader.cc
-@@ -0,0 +1,242 @@
+@@ -0,0 +1,245 @@
 +#include "components/kr_fingerprint/profile_loader.h"
 +
 +#include <fstream>
@@ -667,6 +667,9 @@ index 0000000000..fed970136f
 +      p.voices.push_back(std::move(voice));
 +    }
 +  }
++
++  p.storage_quota = static_cast<int64_t>(
++      GetDouble(root, "storage_quota", 0));
 +
 +  return p;
 +}
@@ -1400,6 +1403,81 @@ index 65c71ea9de..09ce0dad36 100644
    RTCIceCandidate* ice_candidate = RTCIceCandidate::Create(platform_candidate);
    MaybeDispatchEvent(RTCPeerConnectionIceEvent::Create(ice_candidate));
  }
+diff --git a/third_party/blink/renderer/modules/quota/storage_manager.cc b/third_party/blink/renderer/modules/quota/storage_manager.cc
+index ef1c723ac2..43fcdad7d2 100644
+--- a/third_party/blink/renderer/modules/quota/storage_manager.cc
++++ b/third_party/blink/renderer/modules/quota/storage_manager.cc
+@@ -26,6 +26,7 @@
+ #include "third_party/blink/renderer/platform/instrumentation/use_counter.h"
+ #include "third_party/blink/renderer/platform/wtf/assertions.h"
+ #include "third_party/blink/renderer/platform/wtf/functional.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ 
+ namespace blink {
+ 
+@@ -68,6 +69,10 @@ void QueryStorageUsageAndQuotaCallback(
+     return;
+   }
+ 
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.data().storage_quota > 0)
++    quota_in_bytes = fp.data().storage_quota;
++
+   StorageEstimate* estimate = StorageEstimate::Create();
+   estimate->setUsage(usage_in_bytes);
+   estimate->setQuota(quota_in_bytes);
+diff --git a/third_party/blink/renderer/modules/speech/speech_synthesis.cc b/third_party/blink/renderer/modules/speech/speech_synthesis.cc
+index 891a81543b..849be602fb 100644
+--- a/third_party/blink/renderer/modules/speech/speech_synthesis.cc
++++ b/third_party/blink/renderer/modules/speech/speech_synthesis.cc
+@@ -44,6 +44,7 @@
+ #include "third_party/blink/renderer/modules/speech/speech_synthesis_event.h"
+ #include "third_party/blink/renderer/modules/speech/speech_synthesis_voice.h"
+ #include "third_party/blink/renderer/platform/instrumentation/use_counter.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ 
+ namespace blink {
+ 
+@@ -89,6 +90,39 @@ void SpeechSynthesis::OnSetVoiceList(
+     voice_list_.push_back(
+         MakeGarbageCollected<SpeechSynthesisVoice>(std::move(mojom_voice)));
+   }
++
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("voices")) {
++    const auto& profile_voices = fp.data().voices;
++    if (!profile_voices.empty()) {
++      HeapVector<Member<SpeechSynthesisVoice>> filtered;
++      for (auto& voice : voice_list_) {
++        for (const auto& pv : profile_voices) {
++          if (voice->name() == String::FromUtf8(pv.name)) {
++            filtered.push_back(voice);
++            break;
++          }
++        }
++      }
++      voice_list_ = std::move(filtered);
++    } else {
++      const auto& lang = fp.locale().language;
++      auto dash = lang.find('-');
++      std::string prefix = (dash != std::string::npos)
++                               ? lang.substr(0, dash)
++                               : lang;
++      HeapVector<Member<SpeechSynthesisVoice>> filtered;
++      for (auto& voice : voice_list_) {
++        std::string vl = voice->lang().Utf8();
++        if (vl.compare(0, prefix.size(), prefix) == 0) {
++          filtered.push_back(voice);
++        }
++      }
++      if (!filtered.empty())
++        voice_list_ = std::move(filtered);
++    }
++  }
++
+   VoicesDidChange();
+ }
+ 
 diff --git a/third_party/blink/renderer/modules/webaudio/audio_buffer.cc b/third_party/blink/renderer/modules/webaudio/audio_buffer.cc
 index 9a66186d8e..36c22f4197 100644
 --- a/third_party/blink/renderer/modules/webaudio/audio_buffer.cc

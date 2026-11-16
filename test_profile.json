@@ -217,5 +217,6 @@
     "downlink": 10.0,
     "rtt": 50,
     "saveData": false
-  }
+  },
+  "storage_quota": 2147483648
 }

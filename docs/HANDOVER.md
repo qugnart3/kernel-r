@@ -77,6 +77,8 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | T15 | Anti-config-leak (D21 bg connections + D22 chrome://version) | `chrome_main_delegate.cc`, `version_ui.cc` | — |
 | H3 | navigator.connection spoofing (effectiveType/rtt/downlink/saveData) | `network_information.cc` | `network` |
 | H4 | maxTouchPoints from profile | `navigator_events.cc` | `screen` |
+| H6 | Voices API filter (by name or locale prefix) | `speech_synthesis.cc` | `voices` |
+| H7 | Storage quota override | `storage_manager.cc` | — (active + quota>0) |
 
 ### Profile cập nhật mới nhất (ĐÃ TEST — PASS 2026-11-16)
 - **Fonts**: Mở rộng từ 17 → 71 fonts (Windows 10 default set đầy đủ) ✓
@@ -89,8 +91,9 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | ~~T14~~ | ~~TLS/H2 (verified stock — 0 net/ changes)~~ | ~~DONE~~ |
 | ~~T15~~ | ~~Anti-config-leak (D21+D22)~~ | ~~DONE~~ |
 | ~~H3-H4~~ | ~~Connection + maxTouchPoints~~ | ~~DONE~~ |
+| ~~H6-H7~~ | ~~Voices filter + Storage quota~~ | ~~DONE~~ |
 | T17 | Launcher + Manager UI (production) | Medium |
-| H5-H11 | hCaptcha remaining gaps (screenX/Y, voices, permissions, storage — all P2+) | Low |
+| H5,H8-H11 | hCaptcha remaining gaps (screenX/Y, permissions — all P2+) | Low |
 | A1-A15 | Automation (Named Pipe + SendMessage+HWND) | Later |
 
 ### Bài học quan trọng (Lessons Learned)
@@ -166,6 +169,12 @@ third_party/blink/renderer/modules/netinfo/
 
 third_party/blink/renderer/core/events/
   navigator_events.cc
+
+third_party/blink/renderer/modules/speech/
+  speech_synthesis.cc
+
+third_party/blink/renderer/modules/quota/
+  storage_manager.cc
 
 content/browser/renderer_host/
   render_process_host_impl.cc

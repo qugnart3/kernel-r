@@ -50,7 +50,10 @@ const PROFILE_EXPECTED = {
   fonts_whitelist: ['Arial','Verdana','Times New Roman','Georgia','Courier New','Trebuchet MS',
     'Tahoma','Segoe UI','Calibri','Cambria','Consolas','Lucida Console','Impact',
     'Comic Sans MS','Palatino Linotype','Book Antiqua','Garamond'],
-  fonts_blocked: ['Papyrus','Fira Code','Bahnschrift','Agency FB']
+  fonts_blocked: ['Papyrus','Fira Code','Bahnschrift','Agency FB'],
+  connection: { effectiveType: '4g', downlink: 10, rtt: 50, saveData: false },
+  navigator_extra: { maxTouchPoints: 10 },
+  storage_quota: 2147483648
 };
 
 function isFontAvailable(font) {
@@ -275,6 +278,66 @@ async function run() {
       if (avail) allMatch = false;
     }
     html += card('fonts', 'T11', 'Font Whitelist (toggle: fonts)', r, allMatch);
+  }
+
+  // H3: Connection
+  {
+    const conn = navigator.connection || {};
+    const r = [
+      row('effectiveType', conn.effectiveType, E.connection.effectiveType),
+      row('downlink', conn.downlink, E.connection.downlink),
+      row('rtt', conn.rtt, E.connection.rtt),
+      row('saveData', conn.saveData, E.connection.saveData),
+    ];
+    const allMatch = conn.effectiveType === E.connection.effectiveType
+      && conn.downlink === E.connection.downlink
+      && conn.rtt === E.connection.rtt
+      && conn.saveData === E.connection.saveData;
+    html += card('connection', 'H3', 'Connection (toggle: network)', r.join(''), allMatch);
+  }
+
+  // H4: maxTouchPoints
+  {
+    const r = [
+      row('maxTouchPoints', navigator.maxTouchPoints, E.navigator_extra.maxTouchPoints),
+    ];
+    const allMatch = navigator.maxTouchPoints === E.navigator_extra.maxTouchPoints;
+    html += card('touch', 'H4', 'maxTouchPoints (toggle: screen)', r.join(''), allMatch);
+  }
+
+  // H6: Voices
+  {
+    const voices = speechSynthesis.getVoices();
+    const voiceNames = voices.map(v => v.name).join(', ');
+    const voiceLangs = [...new Set(voices.map(v => v.lang.split('-')[0]))].join(', ');
+    const allEn = voices.length === 0 || voices.every(v => v.lang.startsWith('en'));
+    const r = [
+      row('voice count', voices.length, '(filtered)', voices.length > 0),
+      row('languages', voiceLangs, 'en', allEn),
+      row('names', voiceNames.substring(0, 80) || '(loading...)', '(en-* only)', allEn),
+    ];
+    html += card('voices', 'H6', 'Voices Filter (toggle: voices)', r.join(''), allEn && voices.length > 0);
+  }
+
+  // H7: Storage Quota
+  {
+    let quotaMatch = null;
+    let r = '';
+    try {
+      const est = await navigator.storage.estimate();
+      const quotaGB = (est.quota / (1024*1024*1024)).toFixed(2);
+      const expectedGB = (E.storage_quota / (1024*1024*1024)).toFixed(2);
+      quotaMatch = est.quota === E.storage_quota;
+      r = [
+        row('quota (bytes)', est.quota, E.storage_quota),
+        row('quota (GB)', quotaGB, expectedGB),
+        row('usage (bytes)', est.usage, '(any)', true),
+      ].join('');
+    } catch(e) {
+      r = row('error', e.message, '(none)', false);
+      quotaMatch = false;
+    }
+    html += card('storage', 'H7', 'Storage Quota (toggle: —)', r, quotaMatch);
   }
 
   html += '</div>';
