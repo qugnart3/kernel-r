@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html><head><title>KR Context Matrix Test</title></head>
+<body>
+<h2>Kernel-R Context Matrix (P4: main = Worker = iframe)</h2>
+<pre id="out">Running tests...</pre>
+<iframe id="testframe" style="display:none"></iframe>
+<script>
+const results = {};
+const o = document.getElementById('out');
+
+// Main frame values
+results.main = {
+  cores: navigator.hardwareConcurrency,
+  memory: navigator.deviceMemory,
+  lang: navigator.language,
+  langs: JSON.stringify(navigator.languages),
+  platform: navigator.platform,
+  tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  tzOffset: new Date().getTimezoneOffset(),
+};
+
+// Worker test
+const workerCode = `
+self.onmessage = function() {
+  self.postMessage({
+    cores: navigator.hardwareConcurrency,
+    memory: navigator.deviceMemory,
+    lang: navigator.language,
+    langs: JSON.stringify(navigator.languages),
+    platform: navigator.platform,
+    tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    tzOffset: new Date().getTimezoneOffset(),
+  });
+};
+`;
+const blob = new Blob([workerCode], {type: 'application/javascript'});
+const worker = new Worker(URL.createObjectURL(blob));
+
+worker.onmessage = function(e) {
+  results.worker = e.data;
+  checkDone();
+};
+worker.postMessage('go');
+
+// iframe test (same-origin)
+const iframe = document.getElementById('testframe');
+const iframeDoc = `<!DOCTYPE html><html><body><script>
+window.parent.postMessage({
+  cores: navigator.hardwareConcurrency,
+  memory: navigator.deviceMemory,
+  lang: navigator.language,
+  langs: JSON.stringify(navigator.languages),
+  platform: navigator.platform,
+  tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  tzOffset: new Date().getTimezoneOffset(),
+}, '*');
+<\/script></body></html>`;
+iframe.srcdoc = iframeDoc;
+
+window.addEventListener('message', function(e) {
+  if (e.data && e.data.cores !== undefined) {
+    results.iframe = e.data;
+    checkDone();
+  }
+});
+
+function checkDone() {
+  if (!results.worker || !results.iframe) return;
+
+  const lines = [];
+  const keys = ['cores', 'memory', 'lang', 'langs', 'platform', 'tz', 'tzOffset'];
+  const labels = {main: 'Main', worker: 'Worker', iframe: 'iframe'};
+
+  lines.push('Context Matrix Results:');
+  lines.push('─'.repeat(70));
+  lines.push(`${'Property'.padEnd(15)} ${'Main'.padEnd(18)} ${'Worker'.padEnd(18)} ${'iframe'.padEnd(18)}`);
+  lines.push('─'.repeat(70));
+
+  let allMatch = true;
+  for (const k of keys) {
+    const m = String(results.main[k]);
+    const w = String(results.worker[k]);
+    const i = String(results.iframe[k]);
+    const match = (m === w && w === i) ? '✓' : '✗ MISMATCH';
+    if (m !== w || w !== i) allMatch = false;
+    lines.push(`${k.padEnd(15)} ${m.padEnd(18)} ${w.padEnd(18)} ${i.padEnd(18)} ${match}`);
+  }
+
+  lines.push('─'.repeat(70));
+  lines.push(allMatch ? 'ALL CONTEXTS MATCH ✓' : 'MISMATCH DETECTED ✗');
+  o.textContent = lines.join('\n');
+}
+
+// Timeout fallback
+setTimeout(() => {
+  if (!results.worker || !results.iframe) {
+    const lines = ['Timeout — partial results:'];
+    lines.push('Main: ' + JSON.stringify(results.main));
+    if (results.worker) lines.push('Worker: ' + JSON.stringify(results.worker));
+    if (results.iframe) lines.push('iframe: ' + JSON.stringify(results.iframe));
+    if (!results.worker) lines.push('Worker: TIMEOUT');
+    if (!results.iframe) lines.push('iframe: TIMEOUT');
+    o.textContent = lines.join('\n');
+  }
+}, 5000);
+</script>
+</body></html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html><head><title>Screen Leak Probe</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Consolas, monospace; background: #0d1117; color: #c9d1d9; padding: 20px; font-size: 13px; }
+h2 { color: #58a6ff; margin: 16px 0 8px; }
+table { border-collapse: collapse; margin-bottom: 16px; }
+td { padding: 3px 12px; border-bottom: 1px solid #21262d; }
+.ok { color: #3fb950; } .bad { color: #f85149; font-weight: bold; }
+.warn { color: #d29922; }
+#probe { position: absolute; top: -9999px; left: -9999px; width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+<h1 style="color:#58a6ff">Screen Leak Probe — All Surfaces</h1>
+<p style="color:#8b949e;margin-bottom:16px">Expected: innerWidth=2560, screen.width=3840, DPR=1.5</p>
+<div id="probe"></div>
+<div id="out"></div>
+<script>
+const EXPECTED = {
+  'screen.width': 3840, 'screen.height': 2160,
+  'screen.availWidth': 3840, 'screen.availHeight': 2112,
+  'screen.colorDepth': 30,
+  'innerWidth': 2560, 'innerHeight': 1306,
+  'outerWidth': 2560, 'outerHeight': 1408,
+  'devicePixelRatio': 1.5,
+};
+
+function check(name, actual, expected) {
+  const match = expected !== undefined ? String(actual) === String(expected) : null;
+  const cls = match === null ? 'warn' : (match ? 'ok' : 'bad');
+  const sym = match === null ? '?' : (match ? '✓' : '✗ LEAK');
+  return `<tr><td>${name}</td><td>${actual}</td><td>${expected ?? '—'}</td><td class="${cls}">${sym}</td></tr>`;
+}
+
+function run() {
+  let html = '';
+
+  // Section 1: window properties
+  html += '<h2>window.* properties</h2><table>';
+  html += check('innerWidth', window.innerWidth, EXPECTED.innerWidth);
+  html += check('innerHeight', window.innerHeight, EXPECTED.innerHeight);
+  html += check('outerWidth', window.outerWidth, EXPECTED.outerWidth);
+  html += check('outerHeight', window.outerHeight, EXPECTED.outerHeight);
+  html += check('devicePixelRatio', window.devicePixelRatio, EXPECTED.devicePixelRatio);
+  html += check('screenX', window.screenX);
+  html += check('screenY', window.screenY);
+  html += check('screenLeft', window.screenLeft);
+  html += check('screenTop', window.screenTop);
+  html += check('pageXOffset', window.pageXOffset);
+  html += check('pageYOffset', window.pageYOffset);
+  html += '</table>';
+
+  // Section 2: screen.* properties
+  html += '<h2>screen.* properties</h2><table>';
+  html += check('screen.width', screen.width, EXPECTED['screen.width']);
+  html += check('screen.height', screen.height, EXPECTED['screen.height']);
+  html += check('screen.availWidth', screen.availWidth, EXPECTED['screen.availWidth']);
+  html += check('screen.availHeight', screen.availHeight, EXPECTED['screen.availHeight']);
+  html += check('screen.colorDepth', screen.colorDepth, EXPECTED['screen.colorDepth']);
+  html += check('screen.pixelDepth', screen.pixelDepth, EXPECTED['screen.colorDepth']);
+  html += check('screen.availLeft', screen.availLeft);
+  html += check('screen.availTop', screen.availTop);
+  html += check('screen.orientation.type', screen.orientation?.type);
+  html += check('screen.orientation.angle', screen.orientation?.angle);
+  html += check('screen.isExtended', screen.isExtended);
+  html += '</table>';
+
+  // Section 3: document.documentElement
+  html += '<h2>document.documentElement.client*</h2><table>';
+  html += check('documentElement.clientWidth', document.documentElement.clientWidth, EXPECTED.innerWidth);
+  html += check('documentElement.clientHeight', document.documentElement.clientHeight, EXPECTED.innerHeight);
+  html += check('body.clientWidth', document.body.clientWidth);
+  html += check('body.clientHeight', document.body.clientHeight);
+  html += '</table>';
+
+  // Section 4: getBoundingClientRect on 100vw element
+  const probe = document.getElementById('probe');
+  const rect = probe.getBoundingClientRect();
+  html += '<h2>getBoundingClientRect (100vw x 100vh element)</h2><table>';
+  html += check('rect.width (100vw)', rect.width, EXPECTED.innerWidth);
+  html += check('rect.height (100vh)', rect.height, EXPECTED.innerHeight);
+  html += '</table>';
+
+  // Section 5: CSS computed values
+  const testEl = document.createElement('div');
+  testEl.style.width = '100vw';
+  testEl.style.height = '100vh';
+  testEl.style.position = 'absolute';
+  testEl.style.top = '-9999px';
+  document.body.appendChild(testEl);
+  const computed = testEl.getBoundingClientRect();
+  html += '<h2>CSS viewport units (100vw/100vh computed)</h2><table>';
+  html += check('100vw computed width', computed.width, EXPECTED.innerWidth);
+  html += check('100vh computed height', computed.height, EXPECTED.innerHeight);
+  html += '</table>';
+  document.body.removeChild(testEl);
+
+  // Section 6: matchMedia queries
+  html += '<h2>matchMedia queries</h2><table>';
+  html += check('(resolution: 1.5dppx)', matchMedia('(resolution: 1.5dppx)').matches, true);
+  html += check('(resolution: 1dppx)', matchMedia('(resolution: 1dppx)').matches, false);
+  html += check('(-webkit-device-pixel-ratio: 1.5)', matchMedia('(-webkit-device-pixel-ratio: 1.5)').matches, true);
+  html += check('(-webkit-device-pixel-ratio: 1)', matchMedia('(-webkit-device-pixel-ratio: 1)').matches, false);
+  html += check('(min-width: 2560px)', matchMedia('(min-width: 2560px)').matches, true);
+  html += check('(min-width: 2561px)', matchMedia('(min-width: 2561px)').matches, false);
+  html += check('(orientation: landscape)', matchMedia('(orientation: landscape)').matches, true);
+  html += '</table>';
+
+  // Section 7: visualViewport
+  html += '<h2>visualViewport</h2><table>';
+  if (window.visualViewport) {
+    html += check('visualViewport.width', visualViewport.width, EXPECTED.innerWidth);
+    html += check('visualViewport.height', visualViewport.height, EXPECTED.innerHeight);
+    html += check('visualViewport.scale', visualViewport.scale);
+    html += check('visualViewport.offsetLeft', visualViewport.offsetLeft);
+    html += check('visualViewport.offsetTop', visualViewport.offsetTop);
+    html += check('visualViewport.pageLeft', visualViewport.pageLeft);
+    html += check('visualViewport.pageTop', visualViewport.pageTop);
+  } else {
+    html += '<tr><td colspan="4">Not available</td></tr>';
+  }
+  html += '</table>';
+
+  // Section 8: scrollWidth/scrollHeight
+  html += '<h2>scroll dimensions</h2><table>';
+  html += check('documentElement.scrollWidth', document.documentElement.scrollWidth);
+  html += check('documentElement.scrollHeight', document.documentElement.scrollHeight);
+  html += check('body.scrollWidth', document.body.scrollWidth);
+  html += check('body.scrollHeight', document.body.scrollHeight);
+  html += '</table>';
+
+  // Summary
+  const leaks = (html.match(/LEAK/g) || []).length;
+  const total = (html.match(/<tr>/g) || []).length;
+  html = `<p style="font-size:16px;margin-bottom:16px;color:${leaks ? '#f85149' : '#3fb950'}">${leaks} leaks found out of ${total} checks</p>` + html;
+
+  document.getElementById('out').innerHTML = html;
+}
+run();
+</script>
+</body></html>

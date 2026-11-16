@@ -1,0 +1,41 @@
+[20852:16400:1116/081703.419:WARNING:chrome\browser\signin\account_consistency_mode_manager.cc:74] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[41980:38156:1116/081703.535:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[41980:38156:1116/081703.546:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: TZ override check: active=1 locale_tz=1
+[41980:38156:1116/081703.546:INFO:third_party\blink\renderer\controller\blink_initializer.cc:171] kr: Setting TZ override to: America/Los_Angeles
+[41980:38156:1116/081703.546:INFO:third_party\blink\renderer\controller\blink_initializer.cc:175] kr: TZ override result status=0
+[41980:38156:1116/081703.546:INFO:third_party\blink\renderer\controller\blink_initializer.cc:180] kr: TZ override SUCCESS
+[20852:16400:1116/081703.590:WARNING:ui\aura\window.cc:1514] StackChildLayerRelativeTo called with unmanaged layer(s). child=WebContentsViewAura child_managed=0 target=WebContentsViewAura target_managed=0
+[20852:16400:1116/081703.591:WARNING:ui\aura\window.cc:1514] StackChildLayerRelativeTo called with unmanaged layer(s). child=WebContentsViewAura child_managed=0 target=WebContentsViewAura target_managed=0
+[30892:38420:1116/081703.608:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[17912:24256:1116/081703.611:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[30892:38420:1116/081703.616:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: TZ override check: active=1 locale_tz=1
+[30892:38420:1116/081703.617:INFO:third_party\blink\renderer\controller\blink_initializer.cc:171] kr: Setting TZ override to: America/Los_Angeles
+[30892:38420:1116/081703.617:INFO:third_party\blink\renderer\controller\blink_initializer.cc:175] kr: TZ override result status=0
+[30892:38420:1116/081703.617:INFO:third_party\blink\renderer\controller\blink_initializer.cc:180] kr: TZ override SUCCESS
+[17912:24256:1116/081703.619:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: TZ override check: active=1 locale_tz=1
+[17912:24256:1116/081703.619:INFO:third_party\blink\renderer\controller\blink_initializer.cc:171] kr: Setting TZ override to: America/Los_Angeles
+[17912:24256:1116/081703.619:INFO:third_party\blink\renderer\controller\blink_initializer.cc:175] kr: TZ override result status=0
+[17912:24256:1116/081703.619:INFO:third_party\blink\renderer\controller\blink_initializer.cc:180] kr: TZ override SUCCESS
+[20852:15444:1116/081703.667:WARNING:chrome\browser\media\router\discovery\discovery_network_list_win.cc:230] Failed to open WLAN handle: The service has not been started. (0x426)
+[37468:50192:1116/081704.095:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[37468:50192:1116/081704.104:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: TZ override check: active=1 locale_tz=1
+[37468:50192:1116/081704.104:INFO:third_party\blink\renderer\controller\blink_initializer.cc:171] kr: Setting TZ override to: America/Los_Angeles
+[37468:50192:1116/081704.104:INFO:third_party\blink\renderer\controller\blink_initializer.cc:175] kr: TZ override result status=0
+[37468:50192:1116/081704.104:INFO:third_party\blink\renderer\controller\blink_initializer.cc:180] kr: TZ override SUCCESS
+[4300:51792:1116/081706.652:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[4300:51792:1116/081706.661:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: TZ override check: active=1 locale_tz=1
+[4300:51792:1116/081706.661:INFO:third_party\blink\renderer\controller\blink_initializer.cc:171] kr: Setting TZ override to: America/Los_Angeles
+[4300:51792:1116/081706.661:INFO:third_party\blink\renderer\controller\blink_initializer.cc:175] kr: TZ override result status=0
+[4300:51792:1116/081706.661:INFO:third_party\blink\renderer\controller\blink_initializer.cc:180] kr: TZ override SUCCESS
+[54504:19656:1116/081706.717:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[54504:19656:1116/081706.725:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: TZ override check: active=1 locale_tz=1
+[54504:19656:1116/081706.725:INFO:third_party\blink\renderer\controller\blink_initializer.cc:171] kr: Setting TZ override to: America/Los_Angeles
+[54504:19656:1116/081706.725:INFO:third_party\blink\renderer\controller\blink_initializer.cc:175] kr: TZ override result status=0
+[54504:19656:1116/081706.725:INFO:third_party\blink\renderer\controller\blink_initializer.cc:180] kr: TZ override SUCCESS
+[20852:13644:1116/081733.459:INFO:chrome\browser\extensions\extension_garbage_collector.cc:212] Garbage collection for extensions on file thread is complete.
+[20852:16400:1116/081825.838:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:54] Requested load of chrome://newtab/ for incorrect profile type.
+[8420:27532:1116/081903.524:ERROR:ui\gl\egl_util.cc:92] EGL Driver message (Error) eglCreateContext: Requested version is not supported
+Warning: eglCreateContext failed with EGL_BAD_ATTRIBUTE
+ - While trying to discover a BackendType::OpenGLES adapter.
+    at CheckEGL (..\..\third_party\dawn\src\dawn\native\opengl\UtilsEGL.cpp:90)
+

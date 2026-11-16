@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html><head><title>KR Fingerprint Test</title></head>
+<body>
+<h2>Kernel-R Fingerprint Check</h2>
+<pre id="out"></pre>
+<script>
+const o = document.getElementById('out');
+const lines = [
+  `screen.width: ${screen.width} (expect 3840)`,
+  `screen.height: ${screen.height} (expect 2160)`,
+  `screen.availWidth: ${screen.availWidth} (expect 3840)`,
+  `screen.availHeight: ${screen.availHeight} (expect 2112)`,
+  `screen.colorDepth: ${screen.colorDepth} (expect 30)`,
+  `navigator.hardwareConcurrency: ${navigator.hardwareConcurrency} (expect 6)`,
+  `navigator.deviceMemory: ${navigator.deviceMemory} (expect 8)`,
+  `navigator.platform: ${navigator.platform} (expect Win32)`,
+  `navigator.webdriver: ${navigator.webdriver} (expect false)`,
+  `navigator.userAgentData.platform: ${navigator.userAgentData?.platform || 'N/A'} (expect Windows)`,
+  `navigator.language: ${navigator.language} (expect en-US)`,
+  `navigator.languages: ${JSON.stringify(navigator.languages)} (expect ["en-US","en"])`,
+  `Intl.DateTimeFormat TZ: ${Intl.DateTimeFormat().resolvedOptions().timeZone} (expect America/Los_Angeles)`,
+  `Date TZ offset: ${new Date().getTimezoneOffset()} (expect 480 for PST or 420 for PDT)`,
+];
+
+// Canvas fingerprint test
+const cvs = document.createElement('canvas');
+cvs.width = 200; cvs.height = 50;
+const ctx = cvs.getContext('2d');
+ctx.fillStyle = '#f60';
+ctx.fillRect(0, 0, 200, 50);
+ctx.fillStyle = '#069';
+ctx.font = '14px Arial';
+ctx.fillText('Canvas FP Test 🎨', 10, 30);
+const dataUrl1 = cvs.toDataURL();
+const dataUrl2 = cvs.toDataURL();
+lines.push(`canvas toDataURL hash: ${dataUrl1.length} chars`);
+lines.push(`canvas toDataURL stable: ${dataUrl1 === dataUrl2}`);
+const imgData = ctx.getImageData(0, 0, 200, 50);
+let sum = 0;
+for (let i = 0; i < imgData.data.length; i++) sum += imgData.data[i];
+lines.push(`canvas getImageData checksum: ${sum}`);
+
+// WebGL fingerprint test
+const gl = document.createElement('canvas').getContext('webgl');
+if (gl) {
+  const di = gl.getExtension('WEBGL_debug_renderer_info');
+  lines.push(`WebGL vendor: ${di ? gl.getParameter(di.UNMASKED_VENDOR_WEBGL) : 'N/A'}`);
+  lines.push(`WebGL renderer: ${di ? gl.getParameter(di.UNMASKED_RENDERER_WEBGL) : 'N/A'}`);
+  lines.push(`MAX_TEXTURE_SIZE: ${gl.getParameter(gl.MAX_TEXTURE_SIZE)} (expect 16384)`);
+  lines.push(`MAX_VERTEX_ATTRIBS: ${gl.getParameter(gl.MAX_VERTEX_ATTRIBS)} (expect 16)`);
+  lines.push(`MAX_RENDERBUFFER_SIZE: ${gl.getParameter(gl.MAX_RENDERBUFFER_SIZE)} (expect 16384)`);
+}
+// Font detection test (measureText-based, like real fingerprinters)
+function isFontAvailable(font) {
+  const c = document.createElement('canvas').getContext('2d');
+  const t = 'mmmmmmmmmmlli';
+  c.font = '72px monospace';
+  const defW = c.measureText(t).width;
+  c.font = '72px "' + font + '", monospace';
+  const testW = c.measureText(t).width;
+  return defW !== testW;
+}
+const testFonts = ['Arial', 'Verdana', 'Papyrus', 'Wingdings', 'Segoe UI', 'Consolas', 'Fira Code', 'Comic Sans MS'];
+const detected = [];
+for (const f of testFonts) {
+  if (isFontAvailable(f)) detected.push(f);
+}
+const notDetected = testFonts.filter(f => !detected.includes(f));
+lines.push(`Fonts detected: ${detected.join(', ')}`);
+lines.push(`Fonts blocked: ${notDetected.join(', ') || 'none'}`);
+lines.push(`Font "Papyrus" renders: ${isFontAvailable('Papyrus')} (expect false - not in whitelist)`);
+lines.push(`Font "Wingdings" renders: ${isFontAvailable('Wingdings')} (expect false - not in whitelist)`);
+lines.push(`Font "Arial" renders: ${isFontAvailable('Arial')} (expect true - in whitelist)`);
+
+// WebAudio fingerprint test
+const actx = new OfflineAudioContext(1, 44100, 44100);
+const osc = actx.createOscillator();
+osc.type = 'triangle';
+osc.frequency.value = 10000;
+const comp = actx.createDynamicsCompressor();
+comp.threshold.value = -50;
+comp.knee.value = 40;
+comp.ratio.value = 12;
+comp.attack.value = 0;
+comp.release.value = 0.25;
+osc.connect(comp);
+comp.connect(actx.destination);
+osc.start(0);
+actx.startRendering().then(buf => {
+  const d = buf.getChannelData(0);
+  const sample4500 = d[4500];
+  lines.push(`WebAudio sample[4500]: ${sample4500}`);
+  // Check determinism: second read should be same
+  const d2 = buf.getChannelData(0);
+  lines.push(`WebAudio deterministic: ${d[4500] === d2[4500]}`);
+  // Sum a range for fingerprint hash
+  let asum = 0;
+  for (let i = 4500; i < 5000; i++) asum += Math.abs(d[i]);
+  lines.push(`WebAudio sum[4500..5000]: ${asum}`);
+  o.textContent = lines.join('\n');
+});
+</script>
+</body></html>

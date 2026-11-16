@@ -1,0 +1,88 @@
+{
+  "captured_on": "2026-11-14",
+  "machine": "Xeon E5-2696v3 18C/36T, 64GB RAM, GTX 1070 8GB, Win10 LTSC 2019 build 18363",
+  "chrome_version": "158.0.8127.37",
+  "gpu": {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 1070 (0x00001B81) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  "canvas_path": [0,0,0,127,0,0,0,0,0,0,0,127,0,0,0,0,0,0,0,0,0,0,0,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  "audio": {
+    "hash_sum": 46.8818347544875,
+    "samples_first20": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+  },
+  "font_metrics": {
+    "Arial": {"w": 648, "h": 82},
+    "Calibri": {"w": 625, "h": 88},
+    "Cambria": {"w": 658, "h": 84},
+    "Consolas": {"w": 515, "h": 84},
+    "Courier New": {"w": 562, "h": 82},
+    "Georgia": {"w": 697, "h": 82},
+    "Impact": {"w": 614, "h": 88},
+    "Segoe UI": {"w": 672, "h": 96},
+    "Tahoma": {"w": 654, "h": 87},
+    "Times New Roman": {"w": 620, "h": 83},
+    "Trebuchet MS": {"w": 661, "h": 84},
+    "Verdana": {"w": 760, "h": 87},
+    "Comic Sans MS": {"w": 619, "h": 100},
+    "Palatino Linotype": {"w": 698, "h": 98},
+    "Garamond": {"w": 515, "h": 84},
+    "Bookman Old Style": {"w": 515, "h": 84},
+    "Century Gothic": {"w": 515, "h": 84}
+  },
+  "memory": {
+    "jsHeapSizeLimit": 3760000000,
+    "totalJSHeapSize": 10000000
+  },
+  "storage": {
+    "quota": 10737418240
+  },
+  "uach": {
+    "brands": [
+      {"brand": "Not.A/Brand", "version": "24"},
+      {"brand": "Chromium", "version": "158"}
+    ],
+    "fullVersionList": [
+      {"brand": "Not.A/Brand", "version": "24.0.0.0"},
+      {"brand": "Chromium", "version": "158.0.8127.37"}
+    ],
+    "platformVersion": "8.0.0"
+  },
+  "voices": [
+    {"name": "Microsoft David - English (United States)", "lang": "en-US"},
+    {"name": "Microsoft Mark - English (United States)", "lang": "en-US"},
+    {"name": "Microsoft Zira - English (United States)", "lang": "en-US"}
+  ],
+  "plugins": {
+    "count": 5,
+    "list": ["PDF Viewer", "Chrome PDF Viewer", "Chromium PDF Viewer", "Microsoft Edge PDF Viewer", "WebKit built-in PDF"],
+    "mimeTypes_count": 2
+  },
+  "window": {
+    "chrome_height": 95,
+    "screen": {"width": 1920, "height": 1080, "availWidth": 1920, "availHeight": 1040, "colorDepth": 24, "pixelDepth": 24},
+    "dpr": 1
+  },
+  "navigator": {
+    "hardwareConcurrency": 36,
+    "deviceMemory": 32,
+    "language": "en-US",
+    "languages": ["en-US", "en"],
+    "maxTouchPoints": 10,
+    "platform": "Win32"
+  },
+  "connection": {
+    "effectiveType": "4g",
+    "downlink": 1.4,
+    "rtt": 100
+  },
+  "notes": {
+    "M6_heapSizeLimit": "3760000000 — cần verify mapping device_memory → heapSizeLimit",
+    "M7_storageQuota": "10737418240 = 10GB — disk 476GB",
+    "M8_notABrand": "Not.A/Brand v24 — formula cho Chrome 158 confirmed",
+    "M10_voices": "3 voices en-US (David, Mark, Zira) — Win10 LTSC default",
+    "M12_taskbar": "1080 - 1040 = 40px taskbar",
+    "platformVersion": "8.0.0 = Win10 1903 (build 18363)",
+    "maxTouchPoints": "10 — bất ngờ, LTSC 2019 không có touch. Có thể do driver/config"
+  }
+}

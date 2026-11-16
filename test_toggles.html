@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html><head>
+<title>KR Toggle Verification Dashboard</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+h1 { color: #58a6ff; margin-bottom: 8px; font-size: 22px; }
+.subtitle { color: #8b949e; margin-bottom: 20px; font-size: 13px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; }
+.card h3 { font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.card h3 .tag { font-size: 11px; background: #1f6feb; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: normal; }
+.card h3 .status { font-size: 12px; margin-left: auto; }
+.pass { color: #3fb950; } .fail { color: #f85149; } .skip { color: #8b949e; }
+table { width: 100%; font-size: 12px; border-collapse: collapse; }
+td, th { padding: 4px 8px; text-align: left; border-bottom: 1px solid #21262d; }
+th { color: #8b949e; font-weight: normal; }
+td.val { font-family: 'Consolas', monospace; }
+td.match { color: #3fb950; } td.mismatch { color: #f85149; }
+.summary { margin-top: 20px; padding: 16px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; }
+.summary h3 { margin-bottom: 8px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin: 2px; }
+.badge.on { background: #238636; color: #fff; } .badge.off { background: #da3633; color: #fff; }
+.full { grid-column: 1 / -1; }
+.instructions { background: #1c2128; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-bottom: 16px; font-size: 13px; color: #8b949e; line-height: 1.6; }
+.instructions code { background: #282e36; padding: 2px 6px; border-radius: 3px; color: #79c0ff; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>Kernel-R Toggle Verification Dashboard</h1>
+<p class="subtitle">T0-T12 fingerprint spoofing verification. Each card tests one toggle group.</p>
+
+<div class="instructions">
+  To test: edit <code>test_profile.json</code> toggles (true/false), relaunch Chrome with <code>--kr-profile</code>.<br>
+  "Expected" = profile value. "Actual" = what JS sees. Match = spoofing works. Mismatch when toggle ON = bug.
+</div>
+
+<div id="dashboard">Loading...</div>
+
+<script>
+const PROFILE_EXPECTED = {
+  screen: { w: 1920, h: 1080, avail_w: 1920, avail_h: 1032, color_depth: 24 },
+  navigator: { cores: 8, device_memory: 16, platform: 'Win32', webdriver: false },
+  locale: { language: 'en-US', languages: '["en-US","en"]', timezone: 'America/Los_Angeles', tzOffset: 480 },
+  gpu: {
+    vendor: 'Google Inc. (NVIDIA)',
+    renderer: 'ANGLE (NVIDIA, NVIDIA GeForce GTX 1070 (0x00001B81) Direct3D11 vs_5_0 ps_5_0, D3D11)',
+    MAX_TEXTURE_SIZE: 16384, MAX_VERTEX_ATTRIBS: 16, MAX_RENDERBUFFER_SIZE: 16384
+  },
+  fonts_whitelist: ['Arial','Verdana','Times New Roman','Georgia','Courier New','Trebuchet MS',
+    'Tahoma','Segoe UI','Calibri','Cambria','Consolas','Lucida Console','Impact',
+    'Comic Sans MS','Palatino Linotype','Book Antiqua','Garamond'],
+  fonts_blocked: ['Papyrus','Fira Code','Bahnschrift','Agency FB']
+};
+
+function isFontAvailable(font) {
+  const c = document.createElement('canvas').getContext('2d');
+  const t = 'mmmmmmmmmmlli';
+  c.font = '72px monospace';
+  const defW = c.measureText(t).width;
+  c.font = '72px "' + font + '", monospace';
+  return defW !== c.measureText(t).width;
+}
+
+async function getWebAudioSample() {
+  const ctx = new OfflineAudioContext(1, 44100, 44100);
+  const osc = ctx.createOscillator();
+  osc.type = 'triangle'; osc.frequency.value = 10000;
+  const comp = ctx.createDynamicsCompressor();
+  comp.threshold.value = -50; comp.knee.value = 40;
+  comp.ratio.value = 12; comp.attack.value = 0; comp.release.value = 0.25;
+  osc.connect(comp); comp.connect(ctx.destination); osc.start(0);
+  const buf = await ctx.startRendering();
+  const d = buf.getChannelData(0);
+  const d2 = buf.getChannelData(0);
+  let sum = 0;
+  for (let i = 4500; i < 5000; i++) sum += Math.abs(d[i]);
+  return { sample4500: d[4500], deterministic: d[4500] === d2[4500], sum: sum };
+}
+
+function getCanvasHash() {
+  const cvs = document.createElement('canvas');
+  cvs.width = 200; cvs.height = 50;
+  const ctx = cvs.getContext('2d');
+  ctx.fillStyle = '#f60'; ctx.fillRect(0, 0, 200, 50);
+  ctx.fillStyle = '#069'; ctx.font = '14px Arial';
+  ctx.fillText('Canvas FP Test', 10, 30);
+  const d1 = cvs.toDataURL();
+  const d2 = cvs.toDataURL();
+  const img = ctx.getImageData(0, 0, 200, 50);
+  let sum = 0;
+  for (let i = 0; i < img.data.length; i++) sum += img.data[i];
+  return { stable: d1 === d2, checksum: sum, len: d1.length };
+}
+
+async function getWorkerTz() {
+  return new Promise(resolve => {
+    const code = `self.onmessage=()=>self.postMessage({
+      tz:Intl.DateTimeFormat().resolvedOptions().timeZone,
+      offset:new Date().getTimezoneOffset()
+    })`;
+    const w = new Worker(URL.createObjectURL(new Blob([code],{type:'application/javascript'})));
+    w.onmessage = e => { w.terminate(); resolve(e.data); };
+    w.postMessage('go');
+    setTimeout(() => resolve({tz:'TIMEOUT',offset:'TIMEOUT'}), 3000);
+  });
+}
+
+function row(prop, actual, expected, check) {
+  const match = check !== undefined ? check : String(actual) === String(expected);
+  return `<tr>
+    <td>${prop}</td>
+    <td class="val">${actual}</td>
+    <td class="val">${expected}</td>
+    <td class="${match ? 'match' : 'mismatch'}">${match ? '&check;' : '&cross;'}</td>
+  </tr>`;
+}
+
+function card(id, tag, title, rows, allMatch) {
+  const st = allMatch === null ? 'skip' : (allMatch ? 'pass' : 'fail');
+  const label = allMatch === null ? 'N/A' : (allMatch ? 'PASS' : 'FAIL');
+  return `<div class="card" id="card-${id}">
+    <h3><span class="tag">${tag}</span> ${title} <span class="status ${st}">${label}</span></h3>
+    <table><tr><th>Property</th><th>Actual</th><th>Expected</th><th></th></tr>${rows}</table>
+  </div>`;
+}
+
+async function run() {
+  const E = PROFILE_EXPECTED;
+  let html = '<div class="grid">';
+
+  // T5+T6: Screen
+  {
+    const r = [
+      row('screen.width', screen.width, E.screen.w),
+      row('screen.height', screen.height, E.screen.h),
+      row('screen.availWidth', screen.availWidth, E.screen.avail_w),
+      row('screen.availHeight', screen.availHeight, E.screen.avail_h),
+      row('screen.colorDepth', screen.colorDepth, E.screen.color_depth),
+    ];
+    const ok = r.every(s => s.includes('match'));
+    html += card('screen', 'T6', 'Screen (toggle: screen)', r.join(''), ok);
+  }
+
+  // H1: Window / DPR (screen toggle — hCaptcha cross-check)
+  {
+    const r = [
+      row('innerWidth', window.innerWidth, 1920),
+      row('innerHeight', window.innerHeight, 919),
+      row('outerWidth', window.outerWidth, 1920),
+      row('outerHeight', window.outerHeight, 1032),
+      row('devicePixelRatio', window.devicePixelRatio, 1.0),
+      row('matchMedia DPR', window.matchMedia('(resolution: 1dppx)').matches, true),
+      row('matchMedia webkit-dpr', window.matchMedia('(-webkit-device-pixel-ratio: 1)').matches, true),
+      row('documentElement.clientWidth', document.documentElement.clientWidth, 1920),
+      row('documentElement.clientHeight', document.documentElement.clientHeight, 919),
+    ];
+    const allMatch = window.innerWidth === 1920 && window.outerWidth === 1920
+      && window.devicePixelRatio === 1.0
+      && document.documentElement.clientWidth === 1920;
+    html += card('window', 'H1', 'Window / DPR (toggle: screen)', r.join(''), allMatch);
+  }
+
+  // T5+T6: CPU/Memory
+  {
+    const r = [
+      row('hardwareConcurrency', navigator.hardwareConcurrency, E.navigator.cores),
+      row('deviceMemory', navigator.deviceMemory, E.navigator.device_memory),
+    ];
+    const ok = r.every(s => s.includes('"match"'));
+    const allMatch = String(navigator.hardwareConcurrency) === String(E.navigator.cores)
+      && String(navigator.deviceMemory) === String(E.navigator.device_memory);
+    html += card('cpu', 'T6', 'CPU/Memory (toggle: cpu_memory)', r.join(''), allMatch);
+  }
+
+  // T5: Navigator UA
+  {
+    const r = [
+      row('platform', navigator.platform, E.navigator.platform),
+      row('webdriver', navigator.webdriver, E.navigator.webdriver),
+      row('userAgentData.platform', navigator.userAgentData?.platform || 'N/A', 'Windows'),
+    ];
+    const allMatch = navigator.platform === E.navigator.platform
+      && navigator.webdriver === E.navigator.webdriver;
+    html += card('ua', 'T5', 'UA / Navigator (toggle: screen)', r.join(''), allMatch);
+  }
+
+  // T7: Locale/Timezone
+  {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const offset = new Date().getTimezoneOffset();
+    const workerTz = await getWorkerTz();
+    const dateStr = new Date().toString();
+    const tzAbbr = dateStr.match(/\(([^)]+)\)/)?.[1] || 'N/A';
+    const intlLocale = Intl.NumberFormat().resolvedOptions().locale;
+    const r = [
+      row('language', navigator.language, E.locale.language),
+      row('languages', JSON.stringify(navigator.languages), E.locale.languages),
+      row('timezone (main)', tz, E.locale.timezone),
+      row('tzOffset (main)', offset, E.locale.tzOffset),
+      row('timezone (worker)', workerTz.tz, E.locale.timezone),
+      row('tzOffset (worker)', workerTz.offset, E.locale.tzOffset),
+      row('Date TZ abbr', tzAbbr, '(matches TZ)', tzAbbr !== 'N/A'),
+      row('Intl.NumberFormat locale', intlLocale, E.locale.language.split('-')[0], intlLocale.startsWith(E.locale.language.split('-')[0])),
+    ];
+    const allMatch = navigator.language === E.locale.language
+      && tz === E.locale.timezone && String(offset) === String(E.locale.tzOffset)
+      && workerTz.tz === E.locale.timezone;
+    html += card('locale', 'T7+T12', 'Locale / Timezone (toggle: locale_tz)', r.join(''), allMatch);
+  }
+
+  // T8: Canvas
+  {
+    const c = getCanvasHash();
+    const r = [
+      row('toDataURL stable', c.stable, true),
+      row('checksum', c.checksum, '(noised)', c.stable),
+      row('dataURL length', c.len, '(varies)', true),
+    ];
+    html += card('canvas', 'T8', 'Canvas 2D Noise (toggle: canvas)', r.join(''), c.stable);
+  }
+
+  // T9: WebGL
+  {
+    const gl = document.createElement('canvas').getContext('webgl');
+    const di = gl?.getExtension('WEBGL_debug_renderer_info');
+    const vendor = di ? gl.getParameter(di.UNMASKED_VENDOR_WEBGL) : 'N/A';
+    const renderer = di ? gl.getParameter(di.UNMASKED_RENDERER_WEBGL) : 'N/A';
+    const maxTex = gl ? gl.getParameter(gl.MAX_TEXTURE_SIZE) : 'N/A';
+    const maxVA = gl ? gl.getParameter(gl.MAX_VERTEX_ATTRIBS) : 'N/A';
+    const maxRB = gl ? gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) : 'N/A';
+    const r = [
+      row('vendor', vendor, E.gpu.vendor),
+      row('renderer', renderer.substring(0, 50) + '...', E.gpu.renderer.substring(0, 50) + '...',
+          renderer === E.gpu.renderer),
+      row('MAX_TEXTURE_SIZE', maxTex, E.gpu.MAX_TEXTURE_SIZE),
+      row('MAX_VERTEX_ATTRIBS', maxVA, E.gpu.MAX_VERTEX_ATTRIBS),
+      row('MAX_RENDERBUFFER_SIZE', maxRB, E.gpu.MAX_RENDERBUFFER_SIZE),
+    ];
+    const allMatch = vendor === E.gpu.vendor && renderer === E.gpu.renderer
+      && String(maxTex) === String(E.gpu.MAX_TEXTURE_SIZE);
+    html += card('webgl', 'T9', 'WebGL GPU (toggle: gpu_webgl)', r.join(''), allMatch);
+  }
+
+  // T10: WebAudio
+  {
+    const a = await getWebAudioSample();
+    const r = [
+      row('sample[4500]', a.sample4500.toFixed(10), '(noised)', true),
+      row('deterministic', a.deterministic, true),
+      row('sum[4500..5000]', a.sum.toFixed(6), '(noised)', a.deterministic),
+    ];
+    html += card('audio', 'T10', 'WebAudio Noise (toggle: audio)', r.join(''), a.deterministic);
+  }
+
+  // T11: Fonts
+  {
+    const whitelisted = ['Arial', 'Verdana', 'Segoe UI', 'Consolas', 'Comic Sans MS', 'Georgia'];
+    const blocked = ['Papyrus', 'Fira Code', 'Bahnschrift', 'Agency FB'];
+    let allMatch = true;
+    let r = '';
+    for (const f of whitelisted) {
+      const avail = isFontAvailable(f);
+      r += row(f + ' (whitelist)', avail, true);
+      if (!avail) allMatch = false;
+    }
+    for (const f of blocked) {
+      const avail = isFontAvailable(f);
+      r += row(f + ' (blocked)', avail, false);
+      if (avail) allMatch = false;
+    }
+    html += card('fonts', 'T11', 'Font Whitelist (toggle: fonts)', r, allMatch);
+  }
+
+  html += '</div>';
+
+  // Summary bar
+  html += '<div class="summary"><h3>Toggle Summary</h3>';
+  const toggleNames = ['screen','cpu_memory','gpu_webgl','canvas','audio','fonts','locale_tz','network','voices','permissions','window_size'];
+  const cardResults = {
+    screen: document.querySelector ? true : true, // will read from cards after render
+  };
+  html += '<p style="margin-top:8px; color:#8b949e; font-size:12px;">Toggle states are read from profile at launch. Edit <code>test_profile.json</code> to change, then relaunch.</p>';
+  html += '</div>';
+
+  document.getElementById('dashboard').innerHTML = html;
+
+  // Count pass/fail from rendered cards
+  const cards = document.querySelectorAll('.card .status');
+  let pass = 0, fail = 0;
+  cards.forEach(s => { if (s.classList.contains('pass')) pass++; else if (s.classList.contains('fail')) fail++; });
+  const sumEl = document.querySelector('.summary h3');
+  sumEl.innerHTML = `Results: <span class="pass">${pass} PASS</span> &nbsp; <span class="fail">${fail} FAIL</span> &nbsp; of ${cards.length} groups`;
+}
+
+run();
+</script>
+</body></html>

@@ -1,0 +1,1138 @@
+[38784:27980:1116/134509.224:VERBOSE1:components\policy\core\common\policy_service_impl.cc:626] Taking initial snapshot of POLICY_DOMAIN_CHROME policies
+[38784:27980:1116/134509.226:VERBOSE1:components\variations\service\variations_field_trial_creator.cc:608] Applying FieldTrialTestingConfig
+[38784:27980:1116/134509.228:VERBOSE1:components\variations\service\variations_field_trial_creator.cc:407] VariationsSetupComplete
+[38784:27980:1116/134509.232:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for browser/global.
+[38784:27980:1116/134509.232:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for browser/*.
+[38784:27980:1116/134509.250:VERBOSE1:chrome\browser\media\webrtc\webrtc_event_log_manager.cc:126] WebRTC remote-bound event logging enabled.
+[38784:27980:1116/134509.256:VERBOSE1:components\proxy_config\pref_proxy_config_tracker_impl.cc:510] 0x225400508780: set chrome proxy config service to 0x2254005912c0
+[38784:27980:1116/134509.265:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [13:45:09.266] Display: EVENT: screen_win.cc:1111 Displays updated, count: 1
+[38784:27980:1116/134509.265:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [13:45:09.266] Display: EVENT: screen_win.cc:1113 Display[3200039571] bounds=[0,0 1920x1080], workarea=[0,0 1920x1040], scale=1, rotation=0, panel_rotation=0 external detected
+[38784:20652:1116/134509.276:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Optimization Guide On DeviceModels Manifest
+[38784:27980:1116/134509.277:VERBOSE1:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:213] Cloud management controller initialization aborted as CBCM is not enabled. Please use the `--enable-chrome-browser-cloud-management` command line flag to enable it if you are not using the official Google Chrome build.
+[38784:27980:1116/134509.277:VERBOSE1:chrome\installer\util\install_util.cc:221] No existing Chrome install found.
+[38784:27980:1116/134509.278:VERBOSE1:chrome\browser\enterprise\platform_auth\platform_auth_provider_manager.cc:125] PlatformAuthProviderManager disabled
+[38784:27980:1116/134509.279:VERBOSE1:components\policy\core\common\cloud\user_cloud_policy_store.cc:186] [policy_type=google/chrome/user] Initiating immediate policy load from disk
+[38784:27980:1116/134509.279:VERBOSE1:components\policy\core\common\cloud\user_cloud_policy_store.cc:304] [policy_type=google/chrome/user] No policy found on disk
+[38784:27980:1116/134509.279:VERBOSE1:components\policy\core\common\cloud\user_cloud_policy_store.cc:186] [policy_type=google/extension-install-cloud-policy/chrome/user] Initiating immediate policy load from disk
+[38784:27980:1116/134509.280:VERBOSE1:components\policy\core\common\cloud\user_cloud_policy_store.cc:304] [policy_type=google/extension-install-cloud-policy/chrome/user] No policy found on disk
+[38784:27980:1116/134509.280:VERBOSE1:components\policy\core\common\policy_service_impl.cc:626] Taking initial snapshot of POLICY_DOMAIN_CHROME policies
+[24496:10188:1116/134509.295:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.net..workService/global.
+[24496:10188:1116/134509.295:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.netwo..etworkService/*.
+[24496:10188:1116/134509.295:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.netw..tworkService/main.
+[20008:48280:1116/134509.296:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for gpu-process/global.
+[38784:27980:1116/134509.296:WARNING:chrome\browser\signin\account_consistency_mode_manager.cc:74] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[38784:27980:1116/134509.296:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134509.296:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134509.301:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:355] MutablePO2TS::MutablePO2TS
+[38784:27980:1116/134509.301:VERBOSE1:components\proxy_config\pref_proxy_config_tracker_impl.cc:510] 0x22540050a940: set chrome proxy config service to 0x225400595280
+[38784:27980:1116/134509.307:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134509.307:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.307:VERBOSE1:google_apis\gaia\gaia_auth_util.cc:53] Canonicalized @gmail.com to @gmail.com
+[38784:27980:1116/134509.307:VERBOSE1:google_apis\gaia\gaia_auth_util.cc:53] Canonicalized @gmail.com to @gmail.com
+[38784:27980:1116/134509.307:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.307:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:29572:1116/134509.308:VERBOSE1:components\signin\public\webdata\token_service_table.cc:259] Loaded tokens: result = 3 ; number of tokens loaded = 0
+[38784:27980:1116/134509.310:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.311:VERBOSE1:components\proxy_config\pref_proxy_config_tracker_impl.cc:510] 0x22540050b480: set chrome proxy config service to 0x225400cb1dc0
+[38784:27980:1116/134509.311:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.311:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134509.313:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.313:VERBOSE1:components\actor\core\aggregated_journal.cc:173] [ActorTool]: GlicActorPolicyChecker::ComputeActOnWebCapability: outcome=kNo reasons=kAccountCapabilityIneligible 
+[38784:27980:1116/134509.313:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.313:VERBOSE1:components\actor\core\aggregated_journal.cc:173] [ActorTool]: GlicActorPolicyChecker::ComputeActOnWebCapability: outcome=kNo reasons=kAccountCapabilityIneligible 
+[38784:27980:1116/134509.313:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.313:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.313:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.313:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.314:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.314:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.314:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.314:VERBOSE1:google_apis\gaia\gaia_auth_util.cc:53] Canonicalized @gmail.com to @gmail.com
+[38784:27980:1116/134509.314:VERBOSE1:google_apis\gaia\gaia_auth_util.cc:53] Canonicalized @gmail.com to @gmail.com
+[38784:27980:1116/134509.314:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134509.314:VERBOSE1:components\signin\core\browser\account_reconcilor.cc:145] AccountReconcilor::AccountReconcilor
+[38784:27980:1116/134509.314:VERBOSE1:components\signin\core\browser\account_reconcilor.cc:168] AccountReconcilor::Initialize
+[38784:27980:1116/134509.314:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134509.314:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134509.314:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.315:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.316:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.317:VERBOSE1:components\segmentation_platform\internal\database\cached_result_provider.cc:54] CachedResultProvider loaded prefs with results from previous session: PredictionResult: timestamp: 13439251969246156 result 0: 0 for segmentation key shopping_user
+[38784:27980:1116/134509.320:VERBOSE1:extensions\browser\extension_registrar.cc:585] AddComponentExtension Chromium PDF Viewer
+[38784:27980:1116/134509.321:VERBOSE1:extensions\browser\extension_registrar.cc:585] AddComponentExtension Gemini in Chrome
+[38784:27980:1116/134509.322:VERBOSE1:extensions\browser\extension_registrar.cc:585] AddComponentExtension Contextual Tasks
+[10276:15464:1116/134509.324:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.sto..rageService/global.
+[10276:15464:1116/134509.324:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.stora..torageService/*.
+[38784:27980:1116/134509.324:VERBOSE1:chrome\browser\profiles\profile_manager.cc:2072] ForceSigninCheck: 0, 0, 1
+[10276:15464:1116/134509.324:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.stor..orageService/main.
+[38784:27980:1116/134509.324:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:47824:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Subresource Filter Rules
+[38784:27980:1116/134509.327:VERBOSE1:components\component_updater\installer_policies\on_device_head_suggest_component_installer.cc:60] On Device Head Component will fetch model for locale: ENUS500000
+[38784:27980:1116/134509.327:VERBOSE1:chrome\browser\component_updater\trust_token_key_commitments_component_installer.cc:22] Registering Trust Token Key Commitments component.
+[38784:29572:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for OnDeviceHeadSuggest
+[38784:9044:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Optimization Hints
+[38784:27980:1116/134509.327:VERBOSE1:chrome\browser\component_updater\privacy_sandbox_attestations_component_installer.cc:182] Registering Privacy Sandbox Attestations component
+[38784:49304:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Trust Token Key Commitments
+[38784:27980:1116/134509.327:VERBOSE1:components\component_updater\installer_policies\actor_safety_lists_component_installer.cc:134] Registering Actor Safety Lists Component.
+[38784:45036:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Privacy Sandbox Attestations
+[38784:36968:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Actor Safety Lists
+[38784:27980:1116/134509.327:VERBOSE1:chrome\browser\component_updater\indigo_component_installer.cc:132] Registering Indigo component.
+[38784:38500:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Certificate Error Assistant
+[38784:27980:1116/134509.327:VERBOSE1:chrome\browser\component_updater\file_type_policies_component_installer.cc:127] Registering File Type Policies component.
+[38784:55208:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Indigo
+[38784:20652:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for File Type Policies
+[38784:29572:1116/134509.327:VERBOSE1:components\component_updater\installer_policies\on_device_head_suggest_component_installer.cc:84] On Device head model is successfully installed at directory: C:\Users\h\AppData\Local\Chromium\User Data\OnDeviceHeadSuggestModel\20251024.824731831.14
+[38784:31300:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for CRLSet
+[38784:27980:1116/134509.327:VERBOSE1:chrome\browser\component_updater\hyphenation_component_installer.cc:154] Registering Hyphenation component.
+[38784:9044:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for MEI Preload
+[38784:47824:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for PKI Metadata
+[38784:27980:1116/134509.327:VERBOSE1:chrome\browser\component_updater\dictation_connector_component_installer.cc:187] Registering Dictation Connector component.
+[38784:29572:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Safety Tips
+[38784:47880:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Origin Trials
+[38784:49304:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Hyphenation
+[38784:12592:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Crowd Deny
+[38784:27980:1116/134509.327:VERBOSE1:chrome\browser\component_updater\translate_kit_component_installer.cc:211] Registering TranslateKit component.
+[38784:7896:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Dictation Connector
+[38784:36968:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Zxcvbn Data Dictionaries
+[38784:9044:1116/134509.327:VERBOSE1:components\component_updater\component_installer.cc:332] Preinstalled component found for MEI Preload at C:\src\chromium\src\out\KernelR\MEIPreload with version 1.0.7.1652906823.
+[38784:27980:1116/134509.327:VERBOSE1:chrome\browser\component_updater\wasm_tts_engine_component_installer.cc:304] Registering WASM TTS Engine component.
+[38784:27980:1116/134509.328:VERBOSE1:chrome\browser\component_updater\captcha_provider_component_installer.cc:175] Registering Captcha Provider component.
+[38784:49304:1116/134509.328:VERBOSE1:components\component_updater\component_installer.cc:332] Preinstalled component found for Hyphenation at C:\src\chromium\src\out\KernelR\hyphen-data with version 1.0.0.0.
+[38784:20652:1116/134509.328:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for WASM TTS Engine
+[38784:24152:1116/134509.328:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Amount Extraction Heuristic Regexes
+[38784:27980:1116/134509.328:VERBOSE1:chrome\browser\component_updater\component_extension_installer.cc:146] Uninstalling AIM Eligibility Component Extension.
+[38784:45036:1116/134509.328:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Captcha Providers
+[38784:27980:1116/134509.328:VERBOSE1:chrome\browser\component_updater\component_extension_installer.cc:146] Uninstalling New Tab Page Component Extension.
+[38784:47824:1116/134509.328:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for SODA Library
+[38784:9044:1116/134509.328:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for SODA en-US Models
+[38784:27980:1116/134509.329:VERBOSE1:chrome\browser\profiles\profile_manager.cc:1404] AddKeepAlive(Default, kBrowserWindow). keep_alives=[kWaitingForFirstBrowserWindow (1), kBrowserWindow (1)]
+[38784:27980:1116/134509.329:VERBOSE1:chrome\browser\profiles\profile_manager.cc:1487] ClearFirstBrowserWindowKeepAlive(Default). keep_alives=[kBrowserWindow (1)]
+[38784:27980:1116/134509.329:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.329:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.330:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.331:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.331:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.331:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.331:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.331:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.331:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.331:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:29572:1116/134509.331:VERBOSE1:components\sessions\core\command_storage_backend.cc:590] CommandStorageBackend::ReadLastSessionCommands, reading from: C:\Users\h\AppData\Local\Chromium\User Data\Default\Sessions\Session_13439273311090546 encrypted: 0
+[38784:27980:1116/134509.332:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.332:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:29572:1116/134509.332:VERBOSE1:components\sessions\core\command_storage_backend.cc:590] CommandStorageBackend::ReadLastSessionCommands, reading from: C:\Users\h\AppData\Local\Chromium\User Data\Default\Sessions_Encrypted\Session_13439273311091970 encrypted: 1
+[38784:47824:1116/134509.332:VERBOSE1:components\sessions\core\command_storage_backend.cc:590] CommandStorageBackend::ReadLastSessionCommands, reading from: C:\Users\h\AppData\Local\Chromium\User Data\Default\Sessions\Tabs_13439284968393682 encrypted: 0
+[38784:27980:1116/134509.335:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:47824:1116/134509.336:VERBOSE1:components\sessions\core\command_storage_backend.cc:590] CommandStorageBackend::ReadLastSessionCommands, reading from: C:\Users\h\AppData\Local\Chromium\User Data\Default\Sessions_Encrypted\Tabs_13439284968395984 encrypted: 1
+[38784:27980:1116/134509.372:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.372:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.372:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.377:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[15612:20204:1116/134509.380:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[15612:20204:1116/134509.380:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[15612:20204:1116/134509.382:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[15612:20204:1116/134509.387:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[15612:20204:1116/134509.387:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=0 tz=America/Los_Angeles
+[38784:27980:1116/134509.397:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.414:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.414:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[15612:20204:1116/134509.415:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x5114020321c8
+  URL:                    
+  context_type:           WEBUI
+  effective extension id: (none)
+  effective context type: WEBUI
+[15612:20204:1116/134509.415:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[15612:20204:1116/134509.416:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 1
+[38784:27980:1116/134509.423:VERBOSE1:chrome\browser\enterprise\data_protection\data_protection_navigation_observer.cc:278] enterprise.data_protection: same document navigation: 0
+[38784:27980:1116/134509.423:VERBOSE1:chrome\browser\enterprise\data_protection\data_protection_navigation_observer.cc:280] enterprise.data_protection: URL to scan: file:///C:/src/kernel-r/test_toggles.html
+[38784:27980:1116/134509.424:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.425:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.426:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.426:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134509.429:WARNING:ui\aura\window.cc:1514] StackChildLayerRelativeTo called with unmanaged layer(s). child=WebContentsViewAura child_managed=0 target=WebContentsViewAura target_managed=0
+[38784:27980:1116/134509.429:WARNING:ui\aura\window.cc:1514] StackChildLayerRelativeTo called with unmanaged layer(s). child=WebContentsViewAura child_managed=0 target=WebContentsViewAura target_managed=0
+[38784:27980:1116/134509.432:VERBOSE1:chrome\browser\ui\views\omnibox\omnibox_popup_closer.cc:72] Closing omnibox popup with reason: kRevertAll
+[20008:48280:1116/134509.437:VERBOSE1:components\viz\service\main\viz_main_impl.cc:87] VizNullHypothesis is disabled (not a warning)
+[38784:27980:1116/134509.438:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[15612:20204:1116/134509.438:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/lit/v3_0/lit.rollup.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.438:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.438:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.438:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/cr.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.438:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://webui-toolbar.top-chrome/strings.m.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.443:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/assert.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.443:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/assert.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.443:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/promise_resolver.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.443:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[17336:31384:1116/134509.448:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[17336:31384:1116/134509.448:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[39720:27164:1116/134509.448:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[39720:27164:1116/134509.448:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[38784:27980:1116/134509.449:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [13:45:09.449] Display: EVENT: screen_win.cc:1111 Displays updated, count: 1
+[38784:27980:1116/134509.449:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [13:45:09.449] Display: EVENT: screen_win.cc:1113 Display[3200039571] bounds=[0,0 1920x1080], workarea=[0,0 1920x1040], scale=1, rotation=0, panel_rotation=0 external detected
+[17336:31384:1116/134509.450:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[39720:27164:1116/134509.450:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[17336:31384:1116/134509.454:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[17336:31384:1116/134509.454:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=0 tz=America/Los_Angeles
+[39720:27164:1116/134509.454:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[39720:27164:1116/134509.454:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=0 tz=America/Los_Angeles
+[38784:27980:1116/134509.458:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.470:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.477:VERBOSE1:chrome\browser\ui\views\omnibox\omnibox_popup_closer.cc:72] Closing omnibox popup with reason: kBrowserWidgetMoved
+[38784:27980:1116/134509.488:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Optimization Guide On DeviceModels Manifest
+[38784:27980:1116/134509.488:VERBOSE1:components\component_updater\component_updater_service.cc:185] CrxUpdateService starting up. First update attempt will take place in 60 s seconds. Next update attempt will take place in 18000 s seconds. 
+[38784:27980:1116/134509.488:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 1.20261108.2 in C:\Users\h\AppData\Local\Chromium\User Data\OptimizationGuideModelsManifest\1.20261108.2
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:658] MutablePO2TS::OnWebDataServiceRequestDone. Result type: 6
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:720] MutablePO2TS::LoadAllCredentialsIntoMemory; 0 credential(s).
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.492:VERBOSE1:google_apis\gaia\gaia_auth_util.cc:53] Canonicalized @gmail.com to @gmail.com
+[38784:27980:1116/134509.492:VERBOSE1:google_apis\gaia\gaia_auth_util.cc:53] Canonicalized @gmail.com to @gmail.com
+[38784:27980:1116/134509.493:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[24496:39768:1116/134509.493:VERBOSE1:net\proxy_resolution\configured_proxy_resolution_service.cc:1236] Failed configuring with PAC script, falling-back to manual proxy servers.
+[24496:39768:1116/134509.493:VERBOSE1:net\proxy_resolution\configured_proxy_resolution_service.cc:1236] Failed configuring with PAC script, falling-back to manual proxy servers.
+[38784:20652:1116/134509.494:WARNING:chrome\browser\media\router\discovery\discovery_network_list_win.cc:230] Failed to open WLAN handle: The service has not been started. (0x426)
+[38784:27980:1116/134509.495:VERBOSE1:chrome\browser\local_discovery\service_discovery_device_lister.cc:36] DeviceListerStart: service_type: _googlecast._tcp.local
+[38784:27980:1116/134509.495:VERBOSE1:chrome\browser\local_discovery\service_discovery_device_lister.cc:42] DiscoverNewDevices: service_type: _googlecast._tcp.local
+[38784:27980:1116/134509.495:VERBOSE1:components\segmentation_platform\internal\selection\request_dispatcher.cc:147] Computed result for chrome_user_engagement: Status: Failed
+[38784:27980:1116/134509.496:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Optimization Hints
+[38784:27980:1116/134509.496:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 778 in C:\Users\h\AppData\Local\Chromium\User Data\OptimizationHints\778
+[38784:27980:1116/134509.496:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Subresource Filter Rules
+[38784:27980:1116/134509.496:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 9.73.1 in C:\Users\h\AppData\Local\Chromium\User Data\Subresource Filter\Unindexed Rules\9.73.1
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for OnDeviceHeadSuggest
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 20251024.824731831.14 in C:\Users\h\AppData\Local\Chromium\User Data\OnDeviceHeadSuggestModel\20251024.824731831.14
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Trust Token Key Commitments
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 2026.10.12.1 in C:\Users\h\AppData\Local\Chromium\User Data\TrustTokenKeyCommitments\2026.10.12.1
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\installer_policies\trust_token_key_commitments_component_installer_policy.cc:112] Component ready, version 2026.10.12.1 in C:\Users\h\AppData\Local\Chromium\User Data\TrustTokenKeyCommitments\2026.10.12.1
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Actor Safety Lists
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 9.8200.9609 in C:\Users\h\AppData\Local\Chromium\User Data\ActorSafetyLists\9.8200.9609
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\installer_policies\actor_safety_lists_component_installer.cc:96] Actor Safety Lists ready, version 9.8200.9609 in C:\Users\h\AppData\Local\Chromium\User Data\ActorSafetyLists\9.8200.9609
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Indigo
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Privacy Sandbox Attestations
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 2025.6.16.0 in C:\Users\h\AppData\Local\Chromium\User Data\PrivacySandboxAttestationsPreloaded\2025.6.16.0
+[38784:27980:1116/134509.497:VERBOSE1:chrome\browser\component_updater\privacy_sandbox_attestations_component_installer.cc:113] Privacy Sandbox Attestations Component ready, version 2025.6.16.0 in C:\Users\h\AppData\Local\Chromium\User Data\PrivacySandboxAttestationsPreloaded\2025.6.16.0
+[38784:27980:1116/134509.497:VERBOSE1:chrome\browser\component_updater\privacy_sandbox_attestations_component_installer.cc:189] Received privacy sandbox attestations file
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Certificate Error Assistant
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 7 in C:\Users\h\AppData\Local\Chromium\User Data\SSLErrorAssistant\7
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for File Type Policies
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 159.0.8152.0 in C:\Users\h\AppData\Local\Chromium\User Data\FileTypePolicies\159.0.8152.0
+[38784:27980:1116/134509.497:VERBOSE1:chrome\browser\component_updater\file_type_policies_component_installer.cc:90] Component ready, version 159.0.8152.0 in C:\Users\h\AppData\Local\Chromium\User Data\FileTypePolicies\159.0.8152.0
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Origin Trials
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for CRLSet
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 10906 in C:\Users\h\AppData\Local\Chromium\User Data\CertificateRevocation\10906
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for PKI Metadata
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 1834 in C:\Users\h\AppData\Local\Chromium\User Data\PKIMetadata\1834
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Safety Tips
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 3092 in C:\Users\h\AppData\Local\Chromium\User Data\SafetyTips\3092
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Hyphenation
+[38784:27980:1116/134509.497:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 120.0.6050.0 in C:\Users\h\AppData\Local\Chromium\User Data\hyphen-data\120.0.6050.0
+[38784:27980:1116/134509.497:VERBOSE1:chrome\browser\component_updater\hyphenation_component_installer.cc:114] Hyphenation Component ready, version 120.0.6050.0 in C:\Users\h\AppData\Local\Chromium\User Data\hyphen-data\120.0.6050.0
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Crowd Deny
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 2026.11.12.125 in C:\Users\h\AppData\Local\Chromium\User Data\Crowd Deny\2026.11.12.125
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for MEI Preload
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 1.1.0.3 in C:\Users\h\AppData\Local\Chromium\User Data\MEIPreload\1.1.0.3
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Captcha Providers
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 8.5419.4434 in C:\Users\h\AppData\Local\Chromium\User Data\CaptchaProviders\8.5419.4434
+[38784:27980:1116/134509.498:VERBOSE1:chrome\browser\component_updater\captcha_provider_component_installer.cc:97] Captcha Providers Component ready, version 8.5419.4434 in C:\Users\h\AppData\Local\Chromium\User Data\CaptchaProviders\8.5419.4434
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Amount Extraction Heuristic Regexes
+[38784:20652:1116/134509.498:VERBOSE1:chrome\browser\component_updater\captcha_provider_component_installer.cc:50] Reading Captcha Providers from file: C:\Users\h\AppData\Local\Chromium\User Data\CaptchaProviders\8.5419.4434\captcha_providers.json
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 4 in C:\Users\h\AppData\Local\Chromium\User Data\AmountExtractionHeuristicRegexes\4
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Dictation Connector
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 20260928.1 in C:\Users\h\AppData\Local\Chromium\User Data\DictationConnector\20260928.1
+[38784:27980:1116/134509.498:VERBOSE1:chrome\browser\component_updater\dictation_connector_component_installer.cc:138] Dictation Connector component ready, version 20260928.1 in C:\Users\h\AppData\Local\Chromium\User Data\DictationConnector\20260928.1
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for SODA en-US Models
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 1.5075.0 in C:\Users\h\AppData\Local\Chromium\User Data\SODALanguagePacks\en-US\1.5075.0
+[38784:27980:1116/134509.498:VERBOSE1:chrome\browser\component_updater\soda_language_pack_component_installer.cc:126] Component ready, version 1.5075.0 in C:\Users\h\AppData\Local\Chromium\User Data\SODALanguagePacks\en-US\1.5075.0
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for SODA Library
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 1.2.12 in C:\Users\h\AppData\Local\Chromium\User Data\SODA\1.2.12
+[38784:27980:1116/134509.498:VERBOSE1:chrome\browser\component_updater\soda_component_installer.cc:192] Component ready, version 1.2.12 in C:\Users\h\AppData\Local\Chromium\User Data\SODA\1.2.12
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Zxcvbn Data Dictionaries
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 3 in C:\Users\h\AppData\Local\Chromium\User Data\ZxcvbnData\3
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for WASM TTS Engine
+[38784:27980:1116/134509.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 20261029.1 in C:\Users\h\AppData\Local\Chromium\User Data\WasmTtsEngine\20261029.1
+[38784:27980:1116/134509.498:VERBOSE1:chrome\browser\component_updater\wasm_tts_engine_component_installer.cc:151] Component ready, version 20261029.1 in C:\Users\h\AppData\Local\Chromium\User Data\WasmTtsEngine\20261029.1
+[24496:39768:1116/134509.507:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:53600:1116/134509.508:VERBOSE1:content\browser\loader\file_url_loader_factory.cc:477] FileURLLoader::Start: file:///C:/src/kernel-r/test_toggles.html
+[24496:39768:1116/134509.525:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/async/folae?async=_fmt:pb&udm=50&client_locale=en-US&client_country=us
+[38784:27980:1116/134509.528:VERBOSE1:components\privacy_sandbox\privacy_sandbox_attestations\privacy_sandbox_attestations.cc:444] Parsed Privacy Sandbox Attestation list version: 2025.6.16.0
+[38784:27980:1116/134509.528:VERBOSE1:components\privacy_sandbox\privacy_sandbox_attestations\privacy_sandbox_attestations.cc:446] Number of attestation entries: 265
+[38784:27980:1116/134509.528:VERBOSE1:chrome\browser\component_updater\captcha_provider_component_installer.cc:144] Received Captcha Providers.
+[38784:27980:1116/134509.532:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [13:45:09.532] Display: EVENT: screen_win.cc:1111 Displays updated, count: 1
+[24496:39768:1116/134509.532:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:27980:1116/134509.532:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [13:45:09.532] Display: EVENT: screen_win.cc:1113 Display[3200039571] bounds=[0,0 1920x1080], workarea=[0,0 1920x1040], scale=1, rotation=0, panel_rotation=0 external detected
+[24496:39768:1116/134509.532:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:27980:1116/134509.533:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.537:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:262] Acquiring <PartitionedLockId>{id: 0x31, partition: 0} for SynchronizeInstalledApps@chrome\browser\web_applications\externally_managed_app_manager.cc:186
+[38784:27980:1116/134509.537:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:243] All locks acquired for SynchronizeInstalledApps@chrome\browser\web_applications\externally_managed_app_manager.cc:186
+[39720:27164:1116/134509.539:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x6e3c02032698
+  URL:                    
+  context_type:           WEB_PAGE
+  effective extension id: (none)
+  effective context type: WEB_PAGE
+[39720:27164:1116/134509.540:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[39720:27164:1116/134509.540:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 1
+[24496:39768:1116/134509.540:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard&laf=b64bin
+[38784:27980:1116/134509.541:VERBOSE1:extensions\browser\extension_registrar.cc:585] AddComponentExtension VoiceTyping Connector Extension
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Session.TotalDuration
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Commerce.PriceDrops.ActiveTabNavigationComplete.IsProductDetailPage
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing Autofill_PolledCreditCardSuggestions
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing IOS.ParcelTracking.Tracked.AutoTrack
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Omnibox.SuggestionUsed.ClientSummarizedResultType
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing MetadataWriter
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Blink.FedCm.AccountsDialogShown
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Blink.FedCm.Status.RequestIdToken
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Blink.FedCm.CancelReason
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Blink.FedCm.IsSignInUser
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Sync.DeviceCount2
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Sync.DeviceCount2.Phone
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Sync.DeviceCount2.Desktop
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Sync.DeviceCount2.Tablet
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing MobileBookmarkManagerOpen
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing NewTabPage.MostVisited.Clicked
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing TabGroup.Created.OpenInNewTab
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing Android.HistoryPage.OpenItem
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing MobileMenuRecentTabs
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing PasswordManager.ManagePasswordsReferrer
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing PasswordManager.ProfileStore.TotalAccountsHiRes3.WithScheme.Https
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing PasswordManager.FillingAssistance
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing PasswordManager.SavedPasswordIsGenerated
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing PasswordManager.SaveUIDismissalReason
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing PasswordManager.SaveUIDismissalReason
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing IOS.CredentialExtension.IsEnabled.Startup
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Session.TotalDuration
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing SafeBrowsing.Settings.EnhancedProtectionClicked
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing MagicStack.Clank.NewTabPage.Module.TopImpressionV2
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing NewTabPage.SearchBox.Lens
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing MobileOmniboxLens
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing TasksSurface.FakeBox.Lens
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing Notifications.Tips.Lens
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing Notifications.Scheduler.NotificationLifeCycleEvent.Tips
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing PasswordManager.AccountStore.TotalAccountsHiRes3.ByType.Overall
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing PasswordManager.ProfileStore.TotalAccountsHiRes3.ByType.Overall
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing MagicStack.Clank.NewTabPage.Module.TopImpressionV2
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:61] Segmentation platform started observing TabGroups.Sync.TabGroup.Created.GroupCreateOrigin
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing MobileNTPShown
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing Suggestions.ContextMenu.PinItem
+[38784:27980:1116/134509.543:VERBOSE1:components\segmentation_platform\internal\signals\signal_filter_processor.cc:54] Segmentation platform started observing MobileMenuRecentTabs
+[24496:39768:1116/134509.544:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134509.544:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[17336:31384:1116/134509.549:INFO:third_party\blink\renderer\core\timezone\timezone_controller.cc:262] kr: OnTimeZoneChange RESETTING to "Etc/GMT-7"
+[38784:27980:1116/134509.554:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[24496:39768:1116/134509.555:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:27980:1116/134509.555:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.555:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.555:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.557:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:286] Releasing <PartitionedLockId>{id: 0x31, partition: 0} requested by SynchronizeInstalledApps@chrome\browser\web_applications\externally_managed_app_manager.cc:186
+[38784:27980:1116/134509.557:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:318] Acquiring <PartitionedLockId>{id: 0x31, partition: 0} for ScheduleAllFixes@chrome\browser\web_applications\generated_icon_fix_manager.cc:79
+[38784:27980:1116/134509.557:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:243] All locks acquired for ScheduleAllFixes@chrome\browser\web_applications\generated_icon_fix_manager.cc:79
+[24496:39768:1116/134509.563:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:27980:1116/134509.581:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:286] Releasing <PartitionedLockId>{id: 0x31, partition: 0} requested by ScheduleAllFixes@chrome\browser\web_applications\generated_icon_fix_manager.cc:79
+[38784:27980:1116/134509.581:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:318] Acquiring <PartitionedLockId>{id: 0x31, partition: 0} for OnSyncBridgeReady@chrome\browser\web_applications\web_app_provider.cc:551
+[38784:27980:1116/134509.581:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:243] All locks acquired for OnSyncBridgeReady@chrome\browser\web_applications\web_app_provider.cc:551
+[24496:39768:1116/134509.582:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:7zJx87-qKk5UqFWeAlTj1Z8pLIO7WBsf53y-yOCj0l0&cup2hreq=a73d2eb9166c4ed5f9375aa788f2dda337ce26d45c17c407e4c3dddf16c783db
+[38784:27980:1116/134509.582:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:286] Releasing <PartitionedLockId>{id: 0x31, partition: 0} requested by OnSyncBridgeReady@chrome\browser\web_applications\web_app_provider.cc:551
+[24496:39768:1116/134509.583:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134509.585:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 748 uncompressed:983
+[24496:39768:1116/134509.599:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134509.599:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134509.599:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134509.599:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134509.600:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134509.601:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 694 uncompressed:977
+[39720:27164:1116/134509.607:INFO:third_party\blink\renderer\core\timezone\timezone_controller.cc:262] kr: OnTimeZoneChange RESETTING to "Etc/GMT-7"
+[24496:39768:1116/134509.639:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 30 uncompressed:885
+[24496:39768:1116/134509.651:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 26 uncompressed:1895
+[38784:27980:1116/134509.652:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.746:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:136] GetSegmentResult: segment=OPTIMIZATION_TARGET_SEGMENTATION_DEVICE_SWITCHER ignoring DB score, executing model.
+[38784:27980:1116/134509.746:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:277] ExecuteModelAndGetScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_DEVICE_SWITCHER server segment info not available
+[38784:27980:1116/134509.746:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:210] OnGotModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_DEVICE_SWITCHER failed to get database model score, trying default model.
+[38784:27980:1116/134509.790:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.790:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.790:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.790:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134509.796:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.796:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.796:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.796:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[39720:27164:1116/134509.801:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::AudioHandler ({sample_rate=0}) [type=AudioDestinationNode]
+[39720:27164:1116/134509.801:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::AudioHandler ({sample_rate=44100}) [type=OscillatorNode]
+[39720:27164:1116/134509.804:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::AudioHandler ({sample_rate=44100}) [type=DynamicsCompressorNode]
+[39720:27164:1116/134509.804:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AN::connect ({output=[index:0, type:OscillatorNode]} --> {input=[index:0, type:DynamicsCompressorNode]})
+[39720:27164:1116/134509.804:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AN::connect ({output=[index:0, type:DynamicsCompressorNode]} --> {input=[index:0, type:AudioDestinationNode]})
+[15612:20204:1116/134509.804:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x5114022c1d98
+  URL:                    
+  context_type:           WEBUI
+  effective extension id: (none)
+  effective context type: WEBUI
+[15612:20204:1116/134509.805:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[39720:45708:1116/134509.805:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::ProcessIfNecessary => (processing is alive [frames=128]) [type=OscillatorNode]
+[39720:45708:1116/134509.805:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::ProcessIfNecessary => (processing is alive [frames=128]) [type=DynamicsCompressorNode]
+[15612:20204:1116/134509.805:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 2
+[15612:20204:1116/134509.811:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x5114022cb428
+  URL:                    
+  context_type:           WEBUI
+  effective extension id: (none)
+  effective context type: WEBUI
+[15612:20204:1116/134509.811:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[15612:20204:1116/134509.811:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 3
+[15612:20204:1116/134509.843:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://omnibox-popup.top-chrome/strings.m.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.843:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.843:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/lit/v3_0/lit.rollup.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.843:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.843:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.843:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.843:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.843:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/color_change_listener/color_change_listener.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.847:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/assert.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://omnibox-popup.top-chrome/strings.m.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/lit/v3_0/lit.rollup.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/color_change_listener/color_change_listener.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/big_buffer.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16_converter.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url_converter.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.848:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time_converters.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.849:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.856:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.856:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/assert.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.857:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.857:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/big_buffer.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.857:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.857:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16_converter.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.857:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.857:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.857:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url_converter.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.858:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.858:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.858:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.858:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time_converters.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.858:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.858:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.858:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.858:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38784:27980:1116/134509.885:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.885:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.897:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[15612:20204:1116/134509.919:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.920:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.920:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[15612:20204:1116/134509.920:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38784:27980:1116/134509.963:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134509.975:VERBOSE1:components\update_client\request_sender.cc:321] Request completed from url: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:7zJx87-qKk5UqFWeAlTj1Z8pLIO7WBsf53y-yOCj0l0&cup2hreq=a73d2eb9166c4ed5f9375aa788f2dda337ce26d45c17c407e4c3dddf16c783db
+[38784:27980:1116/134509.975:VERBOSE1:components\component_updater\component_updater_service.cc:529] Update completed with error 0
+[24496:39768:1116/134509.976:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:UMO4Mj5qXGheBCHj8uyO74ETECieJBq96qvTG1l68WA&cup2hreq=a8fbd7643d9d862d0b38bd8fe8b34f9a5191e2a26777235b7d1a41377ebb2ebd
+[24496:39768:1116/134509.976:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134510.002:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134510.002:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:27980:1116/134510.008:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[24496:39768:1116/134510.014:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134510.014:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134510.015:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:27980:1116/134510.284:VERBOSE1:components\update_client\request_sender.cc:321] Request completed from url: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:UMO4Mj5qXGheBCHj8uyO74ETECieJBq96qvTG1l68WA&cup2hreq=a8fbd7643d9d862d0b38bd8fe8b34f9a5191e2a26777235b7d1a41377ebb2ebd
+[38784:27980:1116/134510.284:VERBOSE1:components\component_updater\component_updater_service.cc:529] Update completed with error 0
+[24496:39768:1116/134510.285:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:CPnbSxmEbTgTAt3euvT0sdTB2KrEn-YKqeG7_cUjwXQ&cup2hreq=2d1027bcd26fbd4d46e6efc0ec12121a072c5ed648f867ef55602cfb6d79f84f
+[24496:39768:1116/134510.285:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 425 uncompressed:618
+[24496:39768:1116/134510.483:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:5444
+[38784:27980:1116/134510.495:VERBOSE1:components\update_client\request_sender.cc:321] Request completed from url: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:CPnbSxmEbTgTAt3euvT0sdTB2KrEn-YKqeG7_cUjwXQ&cup2hreq=2d1027bcd26fbd4d46e6efc0ec12121a072c5ed648f867ef55602cfb6d79f84f
+[38784:27980:1116/134510.495:VERBOSE1:components\component_updater\component_updater_service.cc:529] Update completed with error 0
+[39720:27164:1116/134510.808:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2444] GetAIPageContent SYNC MainFrame: 1
+[39720:27164:1116/134510.811:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2447] GetAIPageContent SYNC DONE
+[38784:26336:1116/134512.487:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for browser/io.
+[38784:27980:1116/134512.487:VERBOSE1:chrome\browser\permissions\prediction_service\prediction_model_handler_provider_factory.cc:64] [PermissionsAI]: PredictionModelHandlerProviderFactory::BuildServiceInstanceForBrowserContext
+[38784:27980:1116/134512.487:VERBOSE1:chrome\browser\permissions\prediction_service\prediction_model_handler_provider_factory.cc:92] [PermissionsAI]: PassageEmbeddingsServiceController available, passage_embedder setup.true
+[38784:27980:1116/134512.487:VERBOSE1:chrome\browser\permissions\prediction_service\prediction_model_handler_provider.cc:55] [PermissionsAI] PredictionModelHandlerProvider ctor passage_embedder available: true
+[38784:27980:1116/134512.487:VERBOSE1:chrome\browser\permissions\prediction_service\prediction_model_handler_provider.cc:58] [PermissionsAI] PredictionModelHandlerProvider ctor optimization_guide available: true
+[38784:27980:1116/134512.487:VERBOSE1:chrome\browser\permissions\prediction_service\prediction_model_handler_provider.cc:100] [PermissionsAI] PredictionModelHandlerProvider init AIv4
+[38784:47824:1116/134512.487:VERBOSE1:components\component_updater\component_installer.cc:513] StartRegistration for Optimization Guide Geolocation Permission Predictions
+[38784:27980:1116/134512.497:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134512.497:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[24496:39768:1116/134512.498:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/search/warmup.html
+[38784:27980:1116/134512.498:VERBOSE1:components\component_updater\component_installer.cc:584] FinishRegistration for Optimization Guide Geolocation Permission Predictions
+[38784:27980:1116/134512.498:VERBOSE1:components\component_updater\component_installer.cc:622] Component ready, version 2026.11.13.1608 in C:\Users\h\AppData\Local\Chromium\User Data\OptGuidePredictionModels\GeolocationPermissions\2026.11.13.1608
+[17336:31384:1116/134512.513:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x252c0203c1f8
+  URL:                    
+  context_type:           WEB_PAGE
+  effective extension id: (none)
+  effective context type: WEB_PAGE
+[17336:31384:1116/134512.514:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[17336:31384:1116/134512.514:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 1
+[38784:27980:1116/134512.515:VERBOSE1:chrome\browser\profiles\profile_manager.cc:1404] AddKeepAlive(Default, kExtensionUpdater). keep_alives=[kBrowserWindow (1), kExtensionUpdater (1)]
+[24496:39768:1116/134512.516:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:b2AEKMl-7e7_8nV9Bb41JmpoRywaK0ChyuYumLavVQM&cup2hreq=c51419b065ec7fe9cf08086c47ae8c32c7c30a6980fb83f0215c9867e24f8ba3
+[38784:44500:1116/134512.519:VERBOSE1:components\component_updater\installer_policies\trust_token_key_commitments_component_installer_policy.cc:49] Reading trust token key commitments from file: C:\Users\h\AppData\Local\Chromium\User Data\TrustTokenKeyCommitments\2026.10.12.1\keys.json
+[38784:44500:1116/134512.520:VERBOSE1:chrome\browser\component_updater\file_type_policies_component_installer.cc:45] Reading Download File Types from file: C:\Users\h\AppData\Local\Chromium\User Data\FileTypePolicies\159.0.8152.0\download_file_types.pb
+[24496:39768:1116/134512.520:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://fonts.gstatic.com/s/googlesans/v29/4UaGrENHsxJlGDuGo1OIlL3Owp4.woff2
+[55028:27948:1116/134512.520:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[55028:27948:1116/134512.520:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[38784:26336:1116/134512.521:VERBOSE1:net\dns\mdns_client_impl.cc:204] Sockets ready:2
+[24496:39768:1116/134512.522:VERBOSE1:services\network\trust_tokens\trust_token_key_commitment_parser.cc:231] Successfully parsed 3 issuers' Trust Tokens key commitments.
+[55028:27948:1116/134512.523:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[55028:27948:1116/134512.527:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[55028:27948:1116/134512.527:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=0 tz=America/Los_Angeles
+[24496:39768:1116/134512.529:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:27980:1116/134512.538:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:262] Acquiring <PartitionedLockId>{id: 0x31, partition: 0} for SynchronizeInstalledApps@chrome\browser\web_applications\externally_managed_app_manager.cc:186
+[38784:27980:1116/134512.538:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:243] All locks acquired for SynchronizeInstalledApps@chrome\browser\web_applications\externally_managed_app_manager.cc:186
+[17300:7256:1116/134512.542:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.chr..ssorMetrics/global.
+[17300:7256:1116/134512.542:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.chrom..cessorMetrics/*.
+[17300:7256:1116/134512.542:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.chro..essorMetrics/main.
+[38784:27980:1116/134512.547:VERBOSE1:chrome\browser\web_applications\locks\partitioned_lock_manager.cc:286] Releasing <PartitionedLockId>{id: 0x31, partition: 0} requested by SynchronizeInstalledApps@chrome\browser\web_applications\externally_managed_app_manager.cc:186
+[55028:27948:1116/134512.548:INFO:third_party\blink\renderer\core\timezone\timezone_controller.cc:262] kr: OnTimeZoneChange RESETTING to "Etc/GMT-7"
+[24496:39768:1116/134512.558:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134512.558:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38680:26460:1116/134512.562:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[38680:26460:1116/134512.562:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[38680:26460:1116/134512.563:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[38680:26460:1116/134512.568:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[38680:26460:1116/134512.568:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=0 tz=America/Los_Angeles
+[24496:39768:1116/134512.570:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134512.570:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134512.571:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134512.572:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 441 uncompressed:650
+[38680:26460:1116/134512.590:INFO:third_party\blink\renderer\core\timezone\timezone_controller.cc:262] kr: OnTimeZoneChange RESETTING to "Etc/GMT-7"
+[24496:39768:1116/134512.810:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:5444
+[38784:27980:1116/134512.820:VERBOSE1:components\update_client\request_sender.cc:321] Request completed from url: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:b2AEKMl-7e7_8nV9Bb41JmpoRywaK0ChyuYumLavVQM&cup2hreq=c51419b065ec7fe9cf08086c47ae8c32c7c30a6980fb83f0215c9867e24f8ba3
+[38784:27980:1116/134512.821:VERBOSE1:chrome\browser\profiles\profile_manager.cc:1466] RemoveKeepAlive(Default, kExtensionUpdater). keep_alives=[kBrowserWindow (1)]
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:226] GetCachedModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_CHROME_LOW_USER_ENGAGEMENT does not have a segment info.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:172] OnGotModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_CHROME_LOW_USER_ENGAGEMENT failed to get score from database, executing server model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:277] ExecuteModelAndGetScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_CHROME_LOW_USER_ENGAGEMENT server segment info not available
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:201] OnGotModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_CHROME_LOW_USER_ENGAGEMENT failed to get score from executing server model, getting score from default model from db.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:240] GetCachedModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_CHROME_LOW_USER_ENGAGEMENT has expired or unavailable result.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:210] OnGotModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_CHROME_LOW_USER_ENGAGEMENT failed to get database model score, trying default model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:295] ExecuteModelAndGetScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_CHROME_LOW_USER_ENGAGEMENT signal collection not met
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:226] GetCachedModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SEARCH_USER does not have a segment info.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:172] OnGotModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SEARCH_USER failed to get score from database, executing server model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:277] ExecuteModelAndGetScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SEARCH_USER server segment info not available
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:201] OnGotModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SEARCH_USER failed to get score from executing server model, getting score from default model from db.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:240] GetCachedModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SEARCH_USER has expired or unavailable result.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:210] OnGotModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SEARCH_USER failed to get database model score, trying default model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:295] ExecuteModelAndGetScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SEARCH_USER signal collection not met
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:226] GetCachedModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SHOPPING_USER does not have a segment info.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:172] OnGotModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SHOPPING_USER failed to get score from database, executing server model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:277] ExecuteModelAndGetScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SHOPPING_USER server segment info not available
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:201] OnGotModelScore: segment=OPTIMIZATION_TARGET_SEGMENTATION_SHOPPING_USER failed to get score from executing server model, getting score from default model from db.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:252] GetCachedModelScore: Retrieved prediction from database: PredictionResult: timestamp: 13439251969246156 result 0: 0 for segment OPTIMIZATION_TARGET_SEGMENTATION_SHOPPING_USER
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:29] ComputeDiscreteMapping: segment=: result=0, rank=0
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:226] GetCachedModelScore: segment=CROSS_DEVICE_USER_SEGMENT does not have a segment info.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:172] OnGotModelScore: segment=CROSS_DEVICE_USER_SEGMENT failed to get score from database, executing server model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:277] ExecuteModelAndGetScore: segment=CROSS_DEVICE_USER_SEGMENT server segment info not available
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:201] OnGotModelScore: segment=CROSS_DEVICE_USER_SEGMENT failed to get score from executing server model, getting score from default model from db.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:240] GetCachedModelScore: segment=CROSS_DEVICE_USER_SEGMENT has expired or unavailable result.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:210] OnGotModelScore: segment=CROSS_DEVICE_USER_SEGMENT failed to get database model score, trying default model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:295] ExecuteModelAndGetScore: segment=CROSS_DEVICE_USER_SEGMENT signal collection not met
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:226] GetCachedModelScore: segment=RESUME_HEAVY_USER_SEGMENT does not have a segment info.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:172] OnGotModelScore: segment=RESUME_HEAVY_USER_SEGMENT failed to get score from database, executing server model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:277] ExecuteModelAndGetScore: segment=RESUME_HEAVY_USER_SEGMENT server segment info not available
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:201] OnGotModelScore: segment=RESUME_HEAVY_USER_SEGMENT failed to get score from executing server model, getting score from default model from db.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:240] GetCachedModelScore: segment=RESUME_HEAVY_USER_SEGMENT has expired or unavailable result.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:210] OnGotModelScore: segment=RESUME_HEAVY_USER_SEGMENT failed to get database model score, trying default model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:295] ExecuteModelAndGetScore: segment=RESUME_HEAVY_USER_SEGMENT signal collection not met
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:226] GetCachedModelScore: segment=PASSWORD_MANAGER_USER does not have a segment info.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:172] OnGotModelScore: segment=PASSWORD_MANAGER_USER failed to get score from database, executing server model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:277] ExecuteModelAndGetScore: segment=PASSWORD_MANAGER_USER server segment info not available
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:201] OnGotModelScore: segment=PASSWORD_MANAGER_USER failed to get score from executing server model, getting score from default model from db.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:240] GetCachedModelScore: segment=PASSWORD_MANAGER_USER has expired or unavailable result.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:210] OnGotModelScore: segment=PASSWORD_MANAGER_USER failed to get database model score, trying default model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:295] ExecuteModelAndGetScore: segment=PASSWORD_MANAGER_USER signal collection not met
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:226] GetCachedModelScore: segment=CHROME_USER_ENGAGEMENT does not have a segment info.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:172] OnGotModelScore: segment=CHROME_USER_ENGAGEMENT failed to get score from database, executing server model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:277] ExecuteModelAndGetScore: segment=CHROME_USER_ENGAGEMENT server segment info not available
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:201] OnGotModelScore: segment=CHROME_USER_ENGAGEMENT failed to get score from executing server model, getting score from default model from db.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:240] GetCachedModelScore: segment=CHROME_USER_ENGAGEMENT has expired or unavailable result.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:210] OnGotModelScore: segment=CHROME_USER_ENGAGEMENT failed to get database model score, trying default model.
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:295] ExecuteModelAndGetScore: segment=CHROME_USER_ENGAGEMENT signal collection not met
+[38784:27980:1116/134514.545:VERBOSE1:components\segmentation_platform\internal\database\cached_result_writer.cc:106] IsPrefUpdateRequiredForClient: previous client_result for segmentation_key: shopping_user has not yet expired. Expiration: 2026-11-17 21:32:49.246221 UTC
+[38784:53600:1116/134539.325:INFO:chrome\browser\extensions\extension_garbage_collector.cc:212] Garbage collection for extensions on file thread is complete.
+[24496:39768:1116/134609.493:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:FGjVb4qOmZMdNP9HmS-C1ldBcmU7nRS0J5s12Tns7A4&cup2hreq=47b742e7f552b35c9a9237505a433be98b65946c79051e8699b014685e112c38
+[24496:39768:1116/134609.494:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134609.496:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134609.496:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:130] TlsClient: SSL_do_handshake returned when entering early data. After retry, rv=-1, SSL_in_early_data=1
+[24496:39768:1116/134609.536:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134609.537:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134609.537:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 1011 uncompressed:1411
+[38784:27980:1116/134609.747:VERBOSE1:components\segmentation_platform\internal\execution\model_executor_impl.cc:191] Segmentation model input:  feature 0: 1 feature 1: 0 feature 2: 0 feature 3: 0 feature 4: 0 feature 5: 0 feature 6: 0 feature 7: 0 feature 8: 0 feature 9: 0 for segment OPTIMIZATION_TARGET_SEGMENTATION_DEVICE_SWITCHER
+[38784:27980:1116/134609.747:VERBOSE1:components\segmentation_platform\internal\execution\model_executor_impl.cc:220] Segmentation model result:  output 0: 0 output 1: 0 output 2: 0 output 3: 0 output 4: 0 output 5: 0 output 6: 0 output 7: 1 for segment OPTIMIZATION_TARGET_SEGMENTATION_DEVICE_SWITCHER
+[38784:27980:1116/134609.747:VERBOSE1:components\segmentation_platform\internal\execution\model_executor_impl.cc:278] Model: OPTIMIZATION_TARGET_SEGMENTATION_DEVICE_SWITCHER version: 1 execution status: 0, output size: 8
+[38784:27980:1116/134609.747:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:29] ComputeDiscreteMapping: segment=: result=0, rank=0
+[38784:27980:1116/134609.747:VERBOSE1:components\segmentation_platform\internal\selection\segment_result_provider.cc:359] OnModelExecuted: Default model executed successfully. Result: PredictionResult: timestamp: 13439285169748229 result 0: 0 result 1: 0 result 2: 0 result 3: 0 result 4: 0 result 5: 0 result 6: 0 result 7: 1 for segment OPTIMIZATION_TARGET_SEGMENTATION_DEVICE_SWITCHER
+[38784:27980:1116/134609.747:VERBOSE1:components\segmentation_platform\internal\selection\request_dispatcher.cc:147] Computed result for device_switcher: Status: Succeeded output 0: NotSynced
+[24496:39768:1116/134609.879:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:5445
+[38784:27980:1116/134609.891:VERBOSE1:components\update_client\request_sender.cc:321] Request completed from url: https://update.googleapis.com/service/update2/json?cup2key=ML-DSA-44-16:FGjVb4qOmZMdNP9HmS-C1ldBcmU7nRS0J5s12Tns7A4&cup2hreq=47b742e7f552b35c9a9237505a433be98b65946c79051e8699b014685e112c38
+[38784:27980:1116/134609.893:VERBOSE1:components\component_updater\component_updater_service.cc:529] Update completed with error 0
+[19180:7284:1116/134709.302:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for gpu-process/global.
+[20008:48280:1116/134709.402:ERROR:ui\gl\egl_util.cc:92] EGL Driver message (Error) eglCreateContext: Requested version is not supported
+[19180:7284:1116/134709.432:VERBOSE1:components\viz\service\main\viz_main_impl.cc:87] VizNullHypothesis is disabled (not a warning)
+[38784:27980:1116/134720.084:VERBOSE1:chrome\browser\process_singleton_win.cc:111] Handling STARTUP request from another process
+[36264:41776:1116/134720.087:VERBOSE1:base\metrics\statistics_recorder.cc:636] Collections of all histograms
+Histogram: Chrome.ProcessSingleton.NotifyResult recorded 1 samples, mean = 1.0 (flags = 0x41)
+0  O                                                                         (0 = 0.0%)
+1  -O                                                                        (1 = 100.0%) {0.0%}
+2  ... 
+
+Histogram: Chrome.ProcessSingleton.TimeToNotify recorded 1 samples, mean = 0.0 (flags = 0x41)
+0  -O                                                                        (1 = 100.0%)
+10 ... 
+
+Histogram: Startup.LoadTime.RecordedProcessCreation recorded 1 samples, mean = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  -O                                                                        (1 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: UMA.PersistentAllocator.BrowserMetrics.UsedPct recorded 0 samples (flags = 0x41)
+0 ... 
+
+Histogram: UMA.PersistentAllocator.EarlyHistograms.BrowserMetrics recorded 1 samples, mean = 2.0 (flags = 0x41)
+0  ... 
+2  -O                                                                        (1 = 100.0%) {0.0%}
+3  ... 
+
+Histogram: UMA.PersistentHistograms.InitResult recorded 1 samples, mean = 2.0 (flags = 0x41)
+0  ... 
+2  -O                                                                        (1 = 100.0%) {0.0%}
+3  ... 
+
+Histogram: Windows.ReplaceFileResult recorded 2 samples, mean = 7.0 (flags = 0x1)
+0  ... 
+7  --O                                                                       (2 = 100.0%) {0.0%}
+8  ... 
+
+
+[38784:27980:1116/134720.090:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.090:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.095:VERBOSE1:chrome\browser\enterprise\data_protection\data_protection_navigation_observer.cc:278] enterprise.data_protection: same document navigation: 0
+[38784:27980:1116/134720.095:VERBOSE1:chrome\browser\enterprise\data_protection\data_protection_navigation_observer.cc:280] enterprise.data_protection: URL to scan: file:///C:/src/kernel-r/test_toggles.html
+[38784:27980:1116/134720.096:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.096:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.096:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.096:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/134720.108:WARNING:ui\aura\window.cc:1514] StackChildLayerRelativeTo called with unmanaged layer(s). child=WebContentsViewAura child_managed=0 target=WebContentsViewAura target_managed=0
+[38784:27980:1116/134720.108:WARNING:ui\aura\window.cc:1514] StackChildLayerRelativeTo called with unmanaged layer(s). child=WebContentsViewAura child_managed=0 target=WebContentsViewAura target_managed=0
+[38784:27980:1116/134720.111:VERBOSE1:chrome\browser\ui\views\omnibox\omnibox_popup_closer.cc:72] Closing omnibox popup with reason: kRevertAll
+[38784:27980:1116/134720.112:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[37676:30136:1116/134720.113:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[37676:30136:1116/134720.113:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[37676:30136:1116/134720.115:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[38784:27980:1116/134720.117:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.117:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[24496:39768:1116/134720.119:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:53600:1116/134720.120:VERBOSE1:content\browser\loader\file_url_loader_factory.cc:477] FileURLLoader::Start: file:///C:/src/kernel-r/test_toggles.html
+[37676:30136:1116/134720.120:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[37676:30136:1116/134720.120:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=1 tz=America/Los_Angeles
+[37676:30136:1116/134720.120:INFO:third_party\blink\renderer\controller\blink_initializer.cc:177] kr: Phase1 ICU timezone set to America/Los_Angeles
+[37676:30136:1116/134720.127:INFO:third_party\blink\renderer\controller\blink_initializer.cc:195] kr: Phase2 SetTimeZoneOverride status=0 handle=yes
+[37676:30136:1116/134720.127:INFO:third_party\blink\renderer\controller\blink_initializer.cc:202] kr: TZ guard set to America/Los_Angeles
+[37676:30136:1116/134720.127:INFO:third_party\blink\renderer\controller\blink_initializer.cc:210] kr: ICU verify after override: America/Los_Angeles
+[24496:39768:1116/134720.127:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134720.127:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:130] TlsClient: SSL_do_handshake returned when entering early data. After retry, rv=-1, SSL_in_early_data=1
+[37676:30136:1116/134720.140:INFO:third_party\blink\renderer\core\timezone\timezone_controller.cc:265] kr: OnTimeZoneChange BLOCKED (override active), ignoring "Etc/GMT-7"
+[24496:39768:1116/134720.161:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/134720.161:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[55028:27948:1116/134720.170:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x7be402032698
+  URL:                    
+  context_type:           WEB_PAGE
+  effective extension id: (none)
+  effective context type: WEB_PAGE
+[55028:27948:1116/134720.171:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[55028:27948:1116/134720.171:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 1
+[38784:27980:1116/134720.172:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.172:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.172:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.173:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.173:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.173:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.175:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.175:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.232:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/134720.233:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[24496:39768:1116/134720.233:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/search/warmup.html
+[17336:31384:1116/134720.245:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x252c0215df40
+  URL:                    
+  context_type:           WEB_PAGE
+  effective extension id: (none)
+  effective context type: WEB_PAGE
+[17336:31384:1116/134720.245:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[17336:31384:1116/134720.245:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 2
+[55028:27948:1116/134720.274:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::AudioHandler ({sample_rate=0}) [type=AudioDestinationNode]
+[55028:27948:1116/134720.275:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::AudioHandler ({sample_rate=44100}) [type=OscillatorNode]
+[55028:27948:1116/134720.277:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::AudioHandler ({sample_rate=44100}) [type=DynamicsCompressorNode]
+[55028:27948:1116/134720.277:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AN::connect ({output=[index:0, type:OscillatorNode]} --> {input=[index:0, type:DynamicsCompressorNode]})
+[55028:27948:1116/134720.277:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AN::connect ({output=[index:0, type:DynamicsCompressorNode]} --> {input=[index:0, type:AudioDestinationNode]})
+[55028:49236:1116/134720.278:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::ProcessIfNecessary => (processing is alive [frames=128]) [type=OscillatorNode]
+[55028:49236:1116/134720.278:VERBOSE1:third_party\blink\renderer\platform\webrtc\webrtc_logging.cc:35] [WA]AH::ProcessIfNecessary => (processing is alive [frames=128]) [type=DynamicsCompressorNode]
+[55028:27948:1116/134721.355:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2444] GetAIPageContent SYNC MainFrame: 1
+[55028:27948:1116/134721.359:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2447] GetAIPageContent SYNC DONE
+[24496:39768:1116/134726.530:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://safebrowsing.googleapis.com/v5/hashLists:batchGet?$req=CgVzZS00YgoIbWNyeC0xNmIKBnV3cy00YgoGbXdiLTRiCgViaS00YgoFbXctNGIKCWNzZGRhLTMyYg==&$ct=application/x-protobuf&key=dummytoken
+[17336:31384:1116/134739.108:VERBOSE1:extensions\renderer\dispatcher.cc:685] Num tracked contexts: 1
+[17336:31384:1116/134739.110:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[17336:31384:1116/134739.110:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[38784:27980:1116/135009.319:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140009.324:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[24496:39768:1116/140039.593:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140039.594:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:130] TlsClient: SSL_do_handshake returned when entering early data. After retry, rv=-1, SSL_in_early_data=1
+[24496:39768:1116/140039.630:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140039.630:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[38784:27980:1116/140049.184:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [14:00:49.184] Display: EVENT: screen_win.cc:1111 Displays updated, count: 1
+[38784:27980:1116/140049.184:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [14:00:49.184] Display: EVENT: screen_win.cc:1113 Display[3200039571] bounds=[0,0 1920x1080], workarea=[0,0 1920x1040], scale=1, rotation=0, panel_rotation=0 external detected
+[38784:27980:1116/140049.187:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.384:VERBOSE1:chrome\browser\ui\views\omnibox\omnibox_popup_closer.cc:72] Closing omnibox popup with reason: kMouseClickOutside
+[38784:27980:1116/140055.471:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.471:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.475:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/140055.480:VERBOSE1:chrome\browser\enterprise\data_protection\data_protection_navigation_observer.cc:278] enterprise.data_protection: same document navigation: 0
+[38784:27980:1116/140055.480:VERBOSE1:chrome\browser\enterprise\data_protection\data_protection_navigation_observer.cc:280] enterprise.data_protection: URL to scan: chrome://new-tab-page/
+[38784:27980:1116/140055.480:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.480:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.481:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.481:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[38784:27980:1116/140055.494:WARNING:ui\aura\window.cc:1514] StackChildLayerRelativeTo called with unmanaged layer(s). child=WebContentsViewAura child_managed=0 target=WebContentsViewAura target_managed=0
+[38784:27980:1116/140055.494:WARNING:ui\aura\window.cc:1514] StackChildLayerRelativeTo called with unmanaged layer(s). child=WebContentsViewAura child_managed=0 target=WebContentsViewAura target_managed=0
+[41520:25168:1116/140055.498:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[41520:25168:1116/140055.498:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[38784:27980:1116/140055.498:VERBOSE1:chrome\browser\ui\views\omnibox\omnibox_popup_closer.cc:72] Closing omnibox popup with reason: kRevertAll
+[38784:27980:1116/140055.499:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[41520:25168:1116/140055.499:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[38784:27980:1116/140055.503:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.503:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[41520:25168:1116/140055.504:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[41520:25168:1116/140055.504:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=1 tz=America/Los_Angeles
+[41520:25168:1116/140055.504:INFO:third_party\blink\renderer\controller\blink_initializer.cc:177] kr: Phase1 ICU timezone set to America/Los_Angeles
+[41520:25168:1116/140055.512:INFO:third_party\blink\renderer\controller\blink_initializer.cc:195] kr: Phase2 SetTimeZoneOverride status=0 handle=yes
+[41520:25168:1116/140055.512:INFO:third_party\blink\renderer\controller\blink_initializer.cc:202] kr: TZ guard set to America/Los_Angeles
+[41520:25168:1116/140055.512:INFO:third_party\blink\renderer\controller\blink_initializer.cc:210] kr: ICU verify after override: America/Los_Angeles
+[38680:26460:1116/140055.516:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x77cc02032698
+  URL:                    
+  context_type:           WEBUI
+  effective extension id: (none)
+  effective context type: WEBUI
+[38680:26460:1116/140055.517:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[38680:26460:1116/140055.518:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 1
+[38784:27980:1116/140055.524:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.524:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.524:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.525:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.525:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.525:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38680:26460:1116/140055.526:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x77cc021487e0
+  URL:                    
+  context_type:           WEB_PAGE
+  effective extension id: (none)
+  effective context type: WEBUI
+[38680:26460:1116/140055.526:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[38680:26460:1116/140055.526:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 2
+[41520:25168:1116/140055.528:INFO:third_party\blink\renderer\core\timezone\timezone_controller.cc:265] kr: OnTimeZoneChange BLOCKED (override active), ignoring "Etc/GMT-7"
+[38680:26460:1116/140055.553:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://new-tab-page/shared.rollup.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.553:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/color_change_listener/color_change_listener.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.553:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.553:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/lit/v3_0/lit.rollup.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.553:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.553:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.553:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/cr.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.553:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://new-tab-page/strings.m.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.554:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.554:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/skia/public/mojom/skcolor.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.554:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.554:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/most_visited/most_visited.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.554:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/composebox/composebox_query.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.560:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.560:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/assert.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.560:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time_converters.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/assert.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/promise_resolver.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/big_buffer.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16_converter.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url_converter.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.561:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.562:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.562:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.562:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo_browser_proxy.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.562:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/components/ntp_tiles/tile_source.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.562:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/text_direction.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.562:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/skia/public/mojom/skcolor.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.562:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.570:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.570:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.570:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.570:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.571:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.571:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.578:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/lit/v3_0/lit.rollup.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.578:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.578:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/most_visited/most_visited.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.578:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/skia/public/mojom/skcolor.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.578:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.578:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.578:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/composebox/composebox_query.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.578:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.578:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38784:27980:1116/140055.638:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[24496:39768:1116/140055.652:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/async/ddljson?async=ntp:2
+[24496:39768:1116/140055.654:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 637 uncompressed:840
+[24496:39768:1116/140055.715:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 30 uncompressed:890
+[38784:27980:1116/140055.715:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.780:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.780:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[24496:39768:1116/140055.780:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/search/warmup.html
+[24496:39768:1116/140055.781:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/complete/s?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=&oit=0&oft=1&pgcl=20&gs_rn=42&sugkey=dummytoken
+[24496:39768:1116/140055.782:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 98 uncompressed:923
+[17336:31384:1116/140055.791:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x252c0217f6e8
+  URL:                    
+  context_type:           WEB_PAGE
+  effective extension id: (none)
+  effective context type: WEB_PAGE
+[17336:31384:1116/140055.791:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[17336:31384:1116/140055.791:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 2
+[38680:26460:1116/140055.801:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://new-tab-page/shared.rollup.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/composebox/composebox_query.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/js/load_time_data.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/lit/v3_0/lit.rollup.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://new-tab-page/strings.m.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/composebox/composebox.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/text_direction.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/most_visited/most_visited.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/cr_components/page_image_service/page_image_service.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/skia/public/mojom/skcolor.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.802:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.804:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.804:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/components/omnibox/browser/searchbox.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.804:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.804:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.804:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo_browser_proxy.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/big_buffer.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/time.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/unguessable_token.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/ui/base/mojom/window_open_disposition.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/ui/gfx/geometry/mojom/geometry.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/ui/gfx/range/mojom/range.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/components/omnibox/composebox/composebox_query.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/components/omnibox/browser/fusebox_action.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/components/omnibox/browser/omnibox.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.808:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/components/omnibox/browser/suggest_template_info.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.812:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.812:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/unguessable_token.mojom-converters.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.812:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/unguessable_token_converter.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.812:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.812:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.813:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.813:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.814:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.814:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/components/omnibox/composebox/composebox_query.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.814:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.814:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.814:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/mojom/base/string16.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.814:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/url/mojom/url.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.815:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/components/omnibox/browser/fusebox_action.mojom-webui.js\" skips prefix match because of non-special URL scheme"
+[38680:26460:1116/140055.815:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome://resources/mojo/mojo/public/js/bindings.js\" skips prefix match because of non-special URL scheme"
+[24496:39768:1116/140055.832:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:571
+[38784:27980:1116/140055.867:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140055.867:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[24496:39768:1116/140055.868:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/async/newtab_ogb?hl=en-US&async=abp:1,fixed:0
+[24496:39768:1116/140055.869:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/complete/s?ats=4,2&aits=1,2&client=chrome-ntp-action&gs_ri=&xssi=t&q=&oit=0&pgcl=41&gs_rn=42&sugkey=dummytoken
+[24496:39768:1116/140055.870:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 60 uncompressed:775
+[24496:39768:1116/140055.870:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 100 uncompressed:925
+[24496:39768:1116/140055.916:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:570
+[24496:39768:1116/140055.936:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 30 uncompressed:892
+[24496:39768:1116/140055.954:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/complete/s?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=1&oit=4&cp=1&pgcl=7&gs_rn=42&psi=sC3QJ0ckW_Fodv4x&sugkey=dummytoken
+[24496:39768:1116/140055.954:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 114 uncompressed:943
+[37676:30136:1116/140055.973:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x5a3402033320
+  URL:                    
+  context_type:           WEBUI_UNTRUSTED
+  effective extension id: (none)
+  effective context type: WEBUI_UNTRUSTED
+[37676:30136:1116/140055.974:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[37676:30136:1116/140055.975:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 1
+[24496:39768:1116/140055.976:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.gstatic.com/og/_/js/k=og.asy.en_US.oMuyDsAN2vk.2019.O/rt=j/m=_ac,_awd,ada,lldp,qads,abld/exm=/d=1/ed=1/rs=AA2YrTsgGLae7Fpk8fllqH59JelpSa2PJw
+[38784:27980:1116/140055.978:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [14:00:55.973] Geolocation: DEBUG: location_provider_manager.cc:103 LocationProviderManager::LocationProviderManager: provider_manager_mode_ is initialized to kPlatformOnly
+[38784:27980:1116/140055.981:VERBOSE1:components\device_event_log\device_event_log_impl.cc:214] [14:00:55.980] Geolocation: DEBUG: geolocation_provider_impl.cc:391 Stop provider.
+[24496:39768:1116/140055.983:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.gstatic.com/og/_/ss/k=og.asy.YuhT9rVKyT8.L.W.O/m=ll_tdm,adcgm3,ll_fw,abld/excm=/d=1/ed=1/ct=zgms/rs=AA2YrTsDzx3eUpNW7Z3v92mabCYutivCDQ
+[37676:30136:1116/140055.986:VERBOSE1:third_party\blink\renderer\core\script\modulator_impl_base.cc:142] "Import Map: \"chrome-untrusted://new-tab-page/one_google_bar_api.js\" skips prefix match because of non-special URL scheme"
+[24496:39768:1116/140056.010:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:570
+[24496:39768:1116/140056.012:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQensKC1JyEXZXaCAuPkTy0LCkJXTLb8VLqjjV1vcgOt-mdHqkNFzRhL_c&s=10
+[38784:27980:1116/140056.015:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:54] Requested load of chrome://newtab/ for incorrect profile type.
+[24496:39768:1116/140056.040:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://ogads-pa.clients6.google.com/$rpc/google.internal.onegoogle.asyncdata.v1.AsyncDataService/GetAsyncData
+[18956:36408:1116/140056.041:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.dat..oderService/global.
+[18956:36408:1116/140056.041:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.data_..ecoderService/*.
+[18956:36408:1116/140056.042:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.data..coderService/main.
+[24496:39768:1116/140056.053:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140056.089:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140056.089:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140056.101:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140056.102:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140056.103:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140056.104:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 343 uncompressed:555
+[24496:39768:1116/140056.156:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 20 uncompressed:527
+[24496:39768:1116/140056.157:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://ogads-pa.clients6.google.com/$rpc/google.internal.onegoogle.asyncdata.v1.AsyncDataService/GetAsyncData
+[24496:39768:1116/140056.157:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140056.157:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:130] TlsClient: SSL_do_handshake returned when entering early data. After retry, rv=-1, SSL_in_early_data=1
+[24496:39768:1116/140056.197:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140056.197:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140056.198:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 841 uncompressed:1128
+[24496:39768:1116/140056.228:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQensKC1JyEXZXaCAuPkTy0LCkJXTLb8VLqjjV1vcgOt-mdHqkNFzRhL_c&s=10
+[38784:27980:1116/140056.243:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:54] Requested load of chrome://newtab/ for incorrect profile type.
+[24496:39768:1116/140056.254:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 20 uncompressed:579
+[50268:15256:1116/140056.255:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.dat..oderService/global.
+[50268:15256:1116/140056.255:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.data_..ecoderService/*.
+[50268:15256:1116/140056.255:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for utility.data..coderService/main.
+[38680:26460:1116/140056.817:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2444] GetAIPageContent SYNC MainFrame: 1
+[37676:30136:1116/140056.817:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2444] GetAIPageContent SYNC MainFrame: 0
+[37676:30136:1116/140056.818:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2447] GetAIPageContent SYNC DONE
+[38680:26460:1116/140056.819:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2447] GetAIPageContent SYNC DONE
+[38784:27980:1116/140056.911:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:54] Requested load of chrome://newtab/ for incorrect profile type.
+[24496:39768:1116/140057.021:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://play.google.com/log?format=json&hasfast=true
+[24496:39768:1116/140057.035:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140057.058:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140057.059:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140057.071:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140057.071:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140057.072:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140057.073:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 294 uncompressed:486
+[24496:39768:1116/140057.113:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 15 uncompressed:462
+[24496:39768:1116/140057.113:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://play.google.com/log?format=json&hasfast=true
+[24496:39768:1116/140057.114:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140057.115:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:130] TlsClient: SSL_do_handshake returned when entering early data. After retry, rv=-1, SSL_in_early_data=1
+[24496:39768:1116/140057.161:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140057.162:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\tls_handshaker.cc:109] TlsClient: Continuing handshake
+[24496:39768:1116/140057.162:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 722 uncompressed:994
+[24496:39768:1116/140057.218:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 15 uncompressed:400
+[24496:39768:1116/140057.218:VERBOSE1:services\network\url_loader.cc:1335] Will sniff content for mime type: https://play.google.com/log?format=json&hasfast=true
+[24496:39768:1116/140057.337:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/complete/s?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=l&oit=1&cp=1&pgcl=7&gs_rn=42&psi=sC3QJ0ckW_Fodv4x&sugkey=dummytoken
+[24496:39768:1116/140057.337:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 114 uncompressed:943
+[38784:27980:1116/140057.349:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140057.349:VERBOSE1:chrome\browser\signin\account_consistency_mode_manager.cc:100] Desktop Identity Consistency disabled as sign-in to Chrome is not allowed
+[24496:39768:1116/140057.349:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: http://localhost:7700/
+[41520:25168:1116/140057.369:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  0x36cc02032698
+  URL:                    
+  context_type:           WEB_PAGE
+  effective extension id: (none)
+  effective context type: WEB_PAGE
+[41520:25168:1116/140057.370:VERBOSE1:extensions\renderer\script_context.cc:150] Created context:
+  extension id:           (none)
+  frame:                  (nil)
+  URL:                    
+  context_type:           UNSPECIFIED
+  effective extension id: (none)
+  effective context type: UNSPECIFIED
+[41520:25168:1116/140057.370:VERBOSE1:extensions\renderer\dispatcher.cc:490] Num tracked contexts: 1
+[24496:39768:1116/140057.374:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: http://localhost:7700/api/profile
+[50784:48352:1116/140057.377:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[50784:48352:1116/140057.377:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[38784:27980:1116/140057.377:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:54] Requested load of chrome://newtab/ for incorrect profile type.
+[50784:48352:1116/140057.379:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[50784:48352:1116/140057.384:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[50784:48352:1116/140057.384:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=1 tz=America/Los_Angeles
+[50784:48352:1116/140057.384:INFO:third_party\blink\renderer\controller\blink_initializer.cc:177] kr: Phase1 ICU timezone set to America/Los_Angeles
+[24496:39768:1116/140057.389:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:570
+[50784:48352:1116/140057.392:INFO:third_party\blink\renderer\controller\blink_initializer.cc:195] kr: Phase2 SetTimeZoneOverride status=0 handle=yes
+[50784:48352:1116/140057.392:INFO:third_party\blink\renderer\controller\blink_initializer.cc:202] kr: TZ guard set to America/Los_Angeles
+[50784:48352:1116/140057.392:INFO:third_party\blink\renderer\controller\blink_initializer.cc:210] kr: ICU verify after override: America/Los_Angeles
+[50784:48352:1116/140057.403:INFO:third_party\blink\renderer\core\timezone\timezone_controller.cc:265] kr: OnTimeZoneChange BLOCKED (override active), ignoring "Etc/GMT-7"
+[24496:39768:1116/140057.568:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/complete/s?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=lo&oit=1&cp=2&pgcl=7&gs_rn=42&psi=sC3QJ0ckW_Fodv4x&sugkey=dummytoken
+[24496:39768:1116/140057.568:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 114 uncompressed:944
+[38784:27980:1116/140057.593:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:54] Requested load of chrome://newtab/ for incorrect profile type.
+[24496:39768:1116/140057.619:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:570
+[24496:39768:1116/140057.789:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/complete/s?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=loc&oit=1&cp=3&pgcl=7&gs_rn=42&psi=sC3QJ0ckW_Fodv4x&sugkey=dummytoken
+[24496:39768:1116/140057.790:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 115 uncompressed:945
+[24496:39768:1116/140057.844:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:570
+[24496:39768:1116/140057.970:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: https://www.google.com/complete/s?client=chrome-omni&gs_ri=chrome-ext-ansg&xssi=t&q=loca&oit=1&cp=4&pgcl=7&gs_rn=42&psi=sC3QJ0ckW_Fodv4x&sugkey=dummytoken
+[24496:39768:1116/140057.970:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1770] QPACK headers sent compressed: 116 uncompressed:946
+[24496:39768:1116/140058.024:VERBOSE1:net\third_party\quiche\src\quiche\quic\core\http\quic_spdy_session.cc:1777] QPACK headers received compressed: 19 uncompressed:570
+[38784:27980:1116/140058.084:VERBOSE1:chrome\browser\ui\views\omnibox\omnibox_popup_closer.cc:72] Closing omnibox popup with reason: kRevertAll
+[38784:27980:1116/140058.086:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:54] Requested load of chrome://newtab/ for incorrect profile type.
+[38784:27980:1116/140058.093:VERBOSE1:chrome\browser\ui\views\omnibox\omnibox_popup_closer.cc:72] Closing omnibox popup with reason: kRevertAll
+[38784:27980:1116/140058.095:VERBOSE1:chrome\browser\ui\views\omnibox\omnibox_popup_closer.cc:72] Closing omnibox popup with reason: kRevertAll
+[38784:27980:1116/140058.096:VERBOSE1:chrome\browser\ui\views\omnibox\omnibox_popup_closer.cc:72] Closing omnibox popup with reason: kBlur
+[17336:31384:1116/140058.100:VERBOSE1:extensions\renderer\dispatcher.cc:685] Num tracked contexts: 1
+[38784:27980:1116/140058.100:VERBOSE1:chrome\browser\enterprise\data_protection\data_protection_navigation_observer.cc:278] enterprise.data_protection: same document navigation: 0
+[38784:27980:1116/140058.100:VERBOSE1:chrome\browser\enterprise\data_protection\data_protection_navigation_observer.cc:280] enterprise.data_protection: URL to scan: http://localhost:7700/
+[17336:31384:1116/140058.102:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[17336:31384:1116/140058.102:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[38784:27980:1116/140058.104:VERBOSE1:content\browser\back_forward_cache\back_forward_cache_impl.cc:876] BackForwardCacheImpl::GetCurrentBackForwardCacheEligibility: chrome://new-tab-page/ : No: scheme is not HTTP or HTTPS
+[38784:27980:1116/140058.104:VERBOSE1:content\browser\back_forward_cache\back_forward_cache_impl.cc:876] BackForwardCacheImpl::GetCompleteBackForwardCacheEligibilityForReporting: chrome://new-tab-page/ : No: scheme is not HTTP or HTTPS
+[38680:26460:1116/140058.105:VERBOSE1:extensions\renderer\dispatcher.cc:685] Num tracked contexts: 1
+[37676:30136:1116/140058.106:VERBOSE1:extensions\renderer\dispatcher.cc:685] Num tracked contexts: 0
+[38680:26460:1116/140058.107:VERBOSE1:extensions\renderer\dispatcher.cc:685] Num tracked contexts: 0
+[37676:30136:1116/140058.108:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[37676:30136:1116/140058.108:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[38680:26460:1116/140058.109:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[38680:26460:1116/140058.109:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[38680:26460:1116/140058.109:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[38680:26460:1116/140058.109:VERBOSE1:extensions\renderer\script_context.cc:163] Destroyed context for extension
+  extension id: 
+  effective extension id: 
+[38784:27980:1116/140058.109:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140058.110:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140058.110:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140058.110:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140058.111:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140058.111:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140058.111:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140058.111:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140058.111:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[38784:27980:1116/140058.111:VERBOSE1:components\signin\internal\identity_manager\mutable_profile_oauth2_token_service_delegate.cc:461] MutablePO2TS::RefreshTokenIsAvailable
+[24300:27576:1116/140058.115:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[24300:27576:1116/140058.115:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[24300:27576:1116/140058.117:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[24300:27576:1116/140058.122:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[24300:27576:1116/140058.122:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=1 tz=America/Los_Angeles
+[24300:27576:1116/140058.122:INFO:third_party\blink\renderer\controller\blink_initializer.cc:177] kr: Phase1 ICU timezone set to America/Los_Angeles
+[24300:27576:1116/140058.130:INFO:third_party\blink\renderer\controller\blink_initializer.cc:195] kr: Phase2 SetTimeZoneOverride status=0 handle=yes
+[24300:27576:1116/140058.130:INFO:third_party\blink\renderer\controller\blink_initializer.cc:202] kr: TZ guard set to America/Los_Angeles
+[24300:27576:1116/140058.130:INFO:third_party\blink\renderer\controller\blink_initializer.cc:210] kr: ICU verify after override: America/Los_Angeles
+[24496:39768:1116/140058.131:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: http://localhost:7700/favicon.ico
+[24300:27576:1116/140058.140:INFO:third_party\blink\renderer\core\timezone\timezone_controller.cc:265] kr: OnTimeZoneChange BLOCKED (override active), ignoring "Etc/GMT-7"
+[41520:25168:1116/140059.135:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2444] GetAIPageContent SYNC MainFrame: 1
+[41520:25168:1116/140059.136:VERBOSE1:third_party\blink\renderer\modules\content_extraction\ai_page_content_agent.cc:2447] GetAIPageContent SYNC DONE
+[14516:41728:1116/140059.151:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/global.
+[14516:41728:1116/140059.151:VERBOSE1:base\allocator\scheduler_loop_quarantine_config.cc:202] No entry found for renderer/*.
+[14516:41728:1116/140059.153:INFO:third_party\webrtc\rtc_base\cpu_info.cc:77] Available number of cores: 36
+[14516:41728:1116/140059.158:INFO:third_party\blink\renderer\platform\kr_fingerprint\fingerprint_profile.cc:25] kr: FingerprintProfile initialized, seed=67b4df8a...
+[14516:41728:1116/140059.158:INFO:third_party\blink\renderer\controller\blink_initializer.cc:167] kr: Phase1 check: active=1 locale_tz=1 tz=America/Los_Angeles
+[14516:41728:1116/140059.158:INFO:third_party\blink\renderer\controller\blink_initializer.cc:177] kr: Phase1 ICU timezone set to America/Los_Angeles
+[14516:41728:1116/140059.165:INFO:third_party\blink\renderer\controller\blink_initializer.cc:195] kr: Phase2 SetTimeZoneOverride status=0 handle=yes
+[14516:41728:1116/140059.165:INFO:third_party\blink\renderer\controller\blink_initializer.cc:202] kr: TZ guard set to America/Los_Angeles
+[14516:41728:1116/140059.165:INFO:third_party\blink\renderer\controller\blink_initializer.cc:210] kr: ICU verify after override: America/Los_Angeles
+[14516:41728:1116/140059.179:INFO:third_party\blink\renderer\core\timezone\timezone_controller.cc:265] kr: OnTimeZoneChange BLOCKED (override active), ignoring "Etc/GMT-7"
+[24496:39768:1116/140100.261:VERBOSE1:net\base\network_delegate.cc:38] NetworkDelegate::NotifyBeforeURLRequest: http://localhost:7700/api/launch
