@@ -78,7 +78,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | H3 | navigator.connection spoofing (effectiveType/rtt/downlink/saveData) | `network_information.cc` | `network` |
 | H4 | maxTouchPoints from profile | `navigator_events.cc` | `screen` |
 | H6 | Voices API filter (by name or locale prefix) | `speech_synthesis.cc` | `voices` |
-| H7 | Storage quota override | `storage_manager.cc` | — (active + quota>0) |
+| H7 | Storage quota noise ±5% | `storage_manager.cc`, `fingerprint_profile.cc` | — (always active) |
 
 ### Profile cập nhật mới nhất (ĐÃ TEST — PASS 2026-11-16)
 - **Fonts**: Mở rộng từ 17 → 71 fonts (Windows 10 default set đầy đủ) ✓
@@ -126,9 +126,9 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 ## RÀNG BUỘC TUYỆT ĐỐI
 - **KHÔNG dùng Playwright, Puppeteer, CDP, hay bất kỳ external automation tool nào**
 - Automation sẽ qua 2-tier system: Named Pipe C++ (logic) + SendMessage+HWND (input, OS level)
-- Tất cả thay đổi chưa commit (T1-T12, H1-H2 đều local changes)
+- Chromium changes chưa commit upstream — tất cả nằm trong patch file `patches/kr-fingerprint-all.patch`
 
-## Files đã sửa (chưa commit)
+## Files đã sửa trong Chromium (tracked via patch)
 ```
 components/kr_fingerprint/
   BUILD.gn, deterministic_noise.cc/h, kr_switches.cc/h, 
