@@ -373,17 +373,16 @@ async function run() {
     html += card('permissions', 'H8', 'Permissions API (toggle: permissions)', r, permOk);
   }
 
-  // H10: ontouchstart consistency
+  // H10: ontouchstart info (NOT enforced — Windows desktop: tp=10 + no ontouchstart = normal)
   {
     const tp = navigator.maxTouchPoints;
     const hasTouch = 'ontouchstart' in window;
-    const consistent = (tp > 0) === hasTouch;
     const r = [
       row('maxTouchPoints', tp, E.navigator_extra.maxTouchPoints),
-      row('"ontouchstart" in window', hasTouch, tp > 0),
-      row('consistent', consistent, true),
+      row('"ontouchstart" in window', hasTouch, 'N/A (desktop=false normal)', !hasTouch),
     ].join('');
-    html += card('touch-consistency', 'H10', 'Touch Consistency (screen)', r, consistent);
+    const ok = (tp == E.navigator_extra.maxTouchPoints) && !hasTouch;
+    html += card('touch-info', 'H10', 'Touch Info (desktop)', r, ok);
   }
 
   html += '</div>';
