@@ -940,6 +940,31 @@ index a57561775c..5c8827376c 100644
    LocalDOMWindow* window = navigator.DomWindow();
    return window ? window->GetFrame()->GetSettings()->GetMaxTouchPoints() : 0;
  }
+diff --git a/third_party/blink/renderer/core/exported/web_view_impl.cc b/third_party/blink/renderer/core/exported/web_view_impl.cc
+index 5aca41e3ac..cf2653e8e2 100644
+--- a/third_party/blink/renderer/core/exported/web_view_impl.cc
++++ b/third_party/blink/renderer/core/exported/web_view_impl.cc
+@@ -184,6 +184,7 @@
+ #include "third_party/blink/renderer/platform/keyboard_codes.h"
+ #include "third_party/blink/renderer/platform/loader/fetch/unique_identifier.h"
+ #include "third_party/blink/renderer/platform/runtime_enabled_features.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "third_party/blink/renderer/platform/scheduler/public/page_scheduler.h"
+ #include "third_party/blink/renderer/platform/theme/web_theme_engine_helper.h"
+ #include "third_party/blink/renderer/platform/weborigin/known_ports.h"
+@@ -1742,6 +1743,12 @@ void WebView::ApplyWebPreferences(const web_pref::WebPreferences& prefs,
+   settings->SetPrimaryPointerType(prefs.primary_pointer_type);
+   settings->SetAvailableHoverTypes(prefs.available_hover_types);
+   settings->SetPrimaryHoverType(prefs.primary_hover_type);
++
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("screen")) {
++    bool has_touch = fp.navigator().max_touch_points > 0;
++    RuntimeEnabledFeatures::SetTouchEventFeatureDetectionEnabled(has_touch);
++  }
+   settings->SetOutputDeviceUpdateAbilityType(
+       prefs.output_device_update_ability_type);
+   settings->SetBarrelButtonForDragEnabled(prefs.barrel_button_for_drag_enabled);
 diff --git a/third_party/blink/renderer/core/frame/local_dom_window.cc b/third_party/blink/renderer/core/frame/local_dom_window.cc
 index 3c8005efb9..074e569df4 100644
 --- a/third_party/blink/renderer/core/frame/local_dom_window.cc
@@ -1403,6 +1428,29 @@ index 65c71ea9de..09ce0dad36 100644
    RTCIceCandidate* ice_candidate = RTCIceCandidate::Create(platform_candidate);
    MaybeDispatchEvent(RTCPeerConnectionIceEvent::Create(ice_candidate));
  }
+diff --git a/third_party/blink/renderer/modules/permissions/permissions.cc b/third_party/blink/renderer/modules/permissions/permissions.cc
+index e36c344035..7e5457c8dd 100644
+--- a/third_party/blink/renderer/modules/permissions/permissions.cc
++++ b/third_party/blink/renderer/modules/permissions/permissions.cc
+@@ -28,6 +28,7 @@
+ #include "third_party/blink/renderer/platform/bindings/exception_code.h"
+ #include "third_party/blink/renderer/platform/wtf/functional.h"
+ #include "third_party/blink/renderer/platform/wtf/vector.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "third_party/blink/renderer/platform/wtf/wtf_size_t.h"
+ 
+ namespace blink {
+@@ -276,6 +277,10 @@ void Permissions::TaskComplete(
+       resolver->GetExecutionContext()->IsContextDestroyed())
+     return;
+ 
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("permissions"))
++    result->status = mojom::blink::PermissionStatus::ASK;
++
+   PermissionStatusListener* listener = GetOrCreatePermissionStatusListener(
+       std::move(result), std::move(descriptor));
+   if (listener)
 diff --git a/third_party/blink/renderer/modules/quota/storage_manager.cc b/third_party/blink/renderer/modules/quota/storage_manager.cc
 index ef1c723ac2..8efc28c30b 100644
 --- a/third_party/blink/renderer/modules/quota/storage_manager.cc

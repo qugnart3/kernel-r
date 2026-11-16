@@ -1,5 +1,20 @@
 # CHANGELOG — Kernel-R
 
+## 2026-11-16 — H8+H10: Permissions API + Touch consistency
+
+### Sửa
+- **permissions.cc**: Override `TaskComplete()` — khi permissions toggle enabled, force `result->status = mojom::blink::PermissionStatus::ASK` → tất cả `navigator.permissions.query()` trả "prompt" thay vì real permission state
+- **web_view_impl.cc**: Override `RuntimeEnabledFeatures::SetTouchEventFeatureDetectionEnabled()` — khi screen toggle enabled, set `has_touch = (max_touch_points > 0)` từ profile → `"ontouchstart" in window` khớp với `navigator.maxTouchPoints`
+- **test_toggles.html**: Thêm 2 test cards mới: H8 Permissions API, H10 Touch Consistency
+
+### Thiết kế
+- H8: Override tại callback level (`TaskComplete`) — mỗi query() trả "prompt" bất kể permission thật. Không cần mock PermissionService, chỉ override result status
+- H10: `ontouchstart` property existence controlled bởi `TouchEventFeatureDetection` runtime flag. Override flag trong `ApplyFingerprintSettings()` (web_view_impl.cc) — cùng chỗ maxTouchPoints đã được set bởi H4
+
+### Context
+- hCaptcha cross-check: `"ontouchstart" in window` vs `navigator.maxTouchPoints > 0` — nếu không khớp → red flag
+- hCaptcha check permissions: nếu trả "granted" cho camera/microphone trên fresh profile → suspicious
+
 ## 2026-11-16 — H6-H7: Voices filter + Storage quota noise
 
 ### Sửa

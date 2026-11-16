@@ -351,6 +351,41 @@ async function run() {
     html += card('storage', 'H7', 'Storage Quota Noise (always on)', r, quotaOk);
   }
 
+  // H8: Permissions API
+  {
+    let permOk = null;
+    let r = '';
+    try {
+      const notif = await navigator.permissions.query({name: 'notifications'});
+      const geo = await navigator.permissions.query({name: 'geolocation'});
+      const mic = await navigator.permissions.query({name: 'microphone'});
+      const allPrompt = notif.state === 'prompt' && geo.state === 'prompt' && mic.state === 'prompt';
+      permOk = allPrompt;
+      r = [
+        row('notifications', notif.state, 'prompt'),
+        row('geolocation', geo.state, 'prompt'),
+        row('microphone', mic.state, 'prompt'),
+      ].join('');
+    } catch(e) {
+      r = row('error', e.message, '(none)', false);
+      permOk = null;
+    }
+    html += card('permissions', 'H8', 'Permissions API (toggle: permissions)', r, permOk);
+  }
+
+  // H10: ontouchstart consistency
+  {
+    const tp = navigator.maxTouchPoints;
+    const hasTouch = 'ontouchstart' in window;
+    const consistent = (tp > 0) === hasTouch;
+    const r = [
+      row('maxTouchPoints', tp, E.navigator_extra.maxTouchPoints),
+      row('"ontouchstart" in window', hasTouch, tp > 0),
+      row('consistent', consistent, true),
+    ].join('');
+    html += card('touch-consistency', 'H10', 'Touch Consistency (screen)', r, consistent);
+  }
+
   html += '</div>';
 
   // Summary bar
