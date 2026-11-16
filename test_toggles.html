@@ -54,11 +54,14 @@ const PROFILE_EXPECTED = {
 };
 
 function isFontAvailable(font) {
+  if (document.fonts && document.fonts.check) {
+    return document.fonts.check('12px "' + font + '"');
+  }
   const c = document.createElement('canvas').getContext('2d');
   const t = 'mmmmmmmmmmlli';
-  c.font = '72px monospace';
+  c.font = '72px sans-serif';
   const defW = c.measureText(t).width;
-  c.font = '72px "' + font + '", monospace';
+  c.font = '72px "' + font + '", sans-serif';
   return defW !== c.measureText(t).width;
 }
 
