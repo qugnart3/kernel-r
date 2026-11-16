@@ -54,15 +54,17 @@ const PROFILE_EXPECTED = {
 };
 
 function isFontAvailable(font) {
-  if (document.fonts && document.fonts.check) {
-    return document.fonts.check('12px "' + font + '"');
-  }
   const c = document.createElement('canvas').getContext('2d');
   const t = 'mmmmmmmmmmlli';
   c.font = '72px sans-serif';
-  const defW = c.measureText(t).width;
+  const w1 = c.measureText(t).width;
+  c.font = '72px serif';
+  const w2 = c.measureText(t).width;
   c.font = '72px "' + font + '", sans-serif';
-  return defW !== c.measureText(t).width;
+  const w3 = c.measureText(t).width;
+  c.font = '72px "' + font + '", serif';
+  const w4 = c.measureText(t).width;
+  return w3 !== w1 || w4 !== w2;
 }
 
 async function getWebAudioSample() {
