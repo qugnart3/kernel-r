@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>KR WebRTC Leak Test</title>
+<style>
+body { font-family: monospace; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+h1 { color: #00d4ff; }
+h2 { color: #ffaa00; margin-top: 30px; }
+.pass { color: #00ff88; font-weight: bold; }
+.fail { color: #ff4444; font-weight: bold; }
+.warn { color: #ffaa00; font-weight: bold; }
+.info { color: #aaaaaa; }
+pre { background: #0d1117; padding: 10px; border-radius: 4px; overflow-x: auto; }
+#results { margin-top: 20px; }
+.test-item { padding: 8px; margin: 4px 0; border-left: 3px solid #333; padding-left: 12px; }
+</style>
+</head>
+<body>
+<h1>KR WebRTC Leak Test</h1>
+<p class="info">Tests whether local/private IP addresses leak through WebRTC ICE candidates.</p>
+
+<div id="results">
+<h2>ICE Candidates</h2>
+<div id="candidates"></div>
+
+<h2>Summary</h2>
+<div id="summary"></div>
+</div>
+
+<script>
+const privateRanges = [
+  /^10\./,
+  /^192\.168\./,
+  /^172\.(1[6-9]|2[0-9]|3[01])\./,
+  /^169\.254\./,
+  /^127\./,
+  /^fc/,
+  /^fd/,
+  /^fe80:/,
+  /^::1$/
+];
+
+function isPrivateIP(ip) {
+  return privateRanges.some(r => r.test(ip));
+}
+
+function log(container, text, cls) {
+  const div = document.createElement('div');
+  div.className = 'test-item';
+  div.innerHTML = `<span class="${cls}">${text}</span>`;
+  document.getElementById(container).appendChild(div);
+}
+
+async function testWebRTC() {
+  log('summary', 'Running...', 'warn');
+
+  const candidates = [];
+  const privateIPs = [];
+  const publicIPs = [];
+  const mdnsAddresses = [];
+
+  try {
+    const pc = new RTCPeerConnection({
+      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    });
+
+    pc.createDataChannel('test');
+
+    pc.onicecandidate = (e) => {
+      if (!e.candidate) return;
+
+      const c = e.candidate;
+      const line = c.candidate;
+      candidates.push(line);
+
+      // Extract IP from candidate line
+      // Format: candidate:... typ host/srflx/relay ...
+      const parts = line.split(' ');
+      const ip = parts[4] || '';
+      const type = parts[7] || '';
+
+      if (ip.endsWith('.local')) {
+        mdnsAddresses.push(ip);
+        log('candidates', `[mDNS] ${line}`, 'info');
+      } else if (isPrivateIP(ip)) {
+        privateIPs.push(ip);
+        log('candidates', `[PRIVATE LEAK] ${ip} (${type}) — ${line}`, 'fail');
+      } else {
+        publicIPs.push(ip);
+        log('candidates', `[PUBLIC] ${ip} (${type}) — ${line}`, 'pass');
+      }
+    };
+
+    pc.onicegatheringstatechange = () => {
+      if (pc.iceGatheringState === 'complete') {
+        showSummary();
+        pc.close();
+      }
+    };
+
+    const offer = await pc.createOffer();
+    await pc.setLocalDescription(offer);
+
+    // Timeout fallback
+    setTimeout(() => {
+      if (pc.iceGatheringState !== 'complete') {
+        showSummary();
+        pc.close();
+      }
+    }, 10000);
+
+  } catch (err) {
+    log('summary', `Error: ${err.message}`, 'fail');
+  }
+
+  function showSummary() {
+    const s = document.getElementById('summary');
+    s.innerHTML = '';
+
+    log('summary', `Total candidates: ${candidates.length}`, 'info');
+    log('summary', `mDNS addresses: ${mdnsAddresses.length}`, 'info');
+    log('summary', `Public IPs: ${publicIPs.length} — ${publicIPs.join(', ') || 'none'}`, 'info');
+
+    if (privateIPs.length === 0) {
+      log('summary', 'PASS — No private IP leak detected', 'pass');
+    } else {
+      log('summary', `FAIL — ${privateIPs.length} private IP(s) leaked: ${privateIPs.join(', ')}`, 'fail');
+    }
+
+    if (candidates.length === 0) {
+      log('summary', 'NOTE: No candidates at all (WebRTC may be fully blocked or no network)', 'warn');
+    }
+  }
+}
+
+testWebRTC();
+</script>
+</body>
+</html>

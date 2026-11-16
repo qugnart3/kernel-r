@@ -72,6 +72,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | T12 | Context Matrix (timezone Worker/iframe consistency) | `blink_initializer.cc` (TimeZoneController) | `locale_tz` |
 | H1 | Screen leak fixes (innerWidth/outerWidth/DPR/matchMedia) | `local_dom_window.cc`, `media_values.cc` | `screen` |
 | H2 | Accept-Language header override | `profile_network_context_service.cc` | `locale_tz` |
+| T13 | WebRTC IP leak prevention (2 layers) | `renderer_preferences_util.cc`, `rtc_peer_connection.cc` | `webrtc` |
 
 ### Profile cập nhật mới nhất (ĐÃ TEST — PASS 2026-11-16)
 - **Fonts**: Mở rộng từ 17 → 71 fonts (Windows 10 default set đầy đủ) ✓
@@ -80,7 +81,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 ### CHƯA LÀM
 | Task | Mô tả | Priority |
 |------|--------|----------|
-| T13 | WebRTC (local IP leak, ICE candidates) | High |
+| ~~T13~~ | ~~WebRTC (local IP leak, ICE candidates)~~ | ~~DONE~~ |
 | T14 | TLS/H2 (JA3/JA4 fingerprint, HTTP/2 settings) | High |
 | T15 | Anti-config-leak (permissions API, voices, misc) | Medium |
 | T17 | Launcher + Manager UI (production) | Medium |
@@ -149,9 +150,15 @@ third_party/blink/renderer/modules/webaudio/
 third_party/blink/renderer/modules/webgl/
   webgl_rendering_context_base.cc
 
+third_party/blink/renderer/modules/peerconnection/
+  rtc_peer_connection.cc
+
 content/browser/renderer_host/
   render_process_host_impl.cc
 content/browser/BUILD.gn
+
+chrome/browser/
+  renderer_preferences_util.cc, BUILD.gn
 
 chrome/browser/net/
   profile_network_context_service.cc, BUILD.gn

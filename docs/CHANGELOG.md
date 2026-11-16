@@ -1,5 +1,21 @@
 # CHANGELOG — Kernel-R
 
+## 2026-11-16 — T13: WebRTC IP leak prevention (webrtc)
+
+### Thêm
+- **profile_data.h**: Thêm `webrtc` toggle vào `TogglesData` (default true)
+- **profile_loader.cc**: Parse `webrtc` toggle từ JSON
+- **fingerprint_profile.cc**: Thêm `"webrtc"` vào `IsToggleEnabled()`
+- **renderer_preferences_util.cc**: Lớp 1 — override WebRTC IP handling policy thành `kDefaultPublicInterfaceOnly` khi `--kr-profile` active (browser process)
+- **rtc_peer_connection.cc**: Lớp 2 — filter ICE candidates chứa private IP (10.x, 192.168.x, 172.16-31.x, 169.254.x, 127.x, fc/fd, fe80:, ::1) khi webrtc toggle enabled (renderer process, belt-and-suspenders)
+- **chrome/browser/BUILD.gn**: Thêm dependency `//components/kr_fingerprint`
+- **test_profile.json**: Thêm `"webrtc": true`
+- **test_webrtc.html**: Test page kiểm tra WebRTC IP leak
+
+### Thiết kế
+- Lớp 1 (browser): Chromium tự chặn enumerate local interfaces, chỉ dùng default route → ICE candidates chỉ có public IP
+- Lớp 2 (renderer): Drop candidate nếu address là private IP → phòng trường hợp policy bị bypass
+
 ## 2026-11-16 — H2: Accept-Language header override (locale_tz)
 
 ### Sửa

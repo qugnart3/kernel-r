@@ -1,0 +1,214 @@
+diff --git a/chrome/browser/BUILD.gn b/chrome/browser/BUILD.gn
+index f0f529901a..01ea9e9713 100644
+--- a/chrome/browser/BUILD.gn
++++ b/chrome/browser/BUILD.gn
+@@ -1341,6 +1341,7 @@ source_set("core") {
+     "//components/history_embeddings/core",
+     "//components/input",
+     "//components/javascript_dialogs",
++    "//components/kr_fingerprint",
+     "//components/language/content/browser",
+     "//components/language/core/browser",
+     "//components/language/core/common",
+diff --git a/chrome/browser/renderer_preferences_util.cc b/chrome/browser/renderer_preferences_util.cc
+index 1186e59080..12863ae85a 100644
+--- a/chrome/browser/renderer_preferences_util.cc
++++ b/chrome/browser/renderer_preferences_util.cc
+@@ -28,6 +28,8 @@
+ #include "components/prefs/pref_service.h"
+ #include "components/universal_optout/features.h"
+ #include "components/universal_optout/prefs.h"
++#include "base/command_line.h"
++#include "components/kr_fingerprint/kr_switches.h"
+ #include "content/public/browser/renderer_preferences_util.h"
+ #include "media/media_buildflags.h"
+ #include "third_party/blink/public/common/peerconnection/webrtc_ip_handling_policy.h"
+@@ -172,6 +174,12 @@ void UpdateFromSystemSettings(blink::RendererPreferences* prefs,
+   prefs->webrtc_ip_handling_policy = blink::ToWebRTCIPHandlingPolicy(
+       pref_service->GetString(prefs::kWebRTCIPHandlingPolicy));
+ 
++  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
++          kr::switches::kKrProfile)) {
++    prefs->webrtc_ip_handling_policy =
++        blink::mojom::WebRtcIpHandlingPolicy::kDefaultPublicInterfaceOnly;
++  }
++
+   for (const base::Value& entry :
+        pref_service->GetList(prefs::kWebRTCIPHandlingUrl)) {
+     const base::DictValue& dict = entry.GetDict();
+diff --git a/components/kr_fingerprint/profile_data.h b/components/kr_fingerprint/profile_data.h
+index 71bc73322c..d869066f6e 100644
+--- a/components/kr_fingerprint/profile_data.h
++++ b/components/kr_fingerprint/profile_data.h
+@@ -98,6 +98,7 @@ struct TogglesData {
+   bool voices = true;
+   bool permissions = true;
+   bool window_size = true;
++  bool webrtc = true;
+ };
+ 
+ struct ProfileData {
+diff --git a/components/kr_fingerprint/profile_loader.cc b/components/kr_fingerprint/profile_loader.cc
+index 233f181400..fed970136f 100644
+--- a/components/kr_fingerprint/profile_loader.cc
++++ b/components/kr_fingerprint/profile_loader.cc
+@@ -151,6 +151,7 @@ TogglesData ParseToggles(const base::DictValue& d) {
+   t.voices = GetBool(d, "voices", true);
+   t.permissions = GetBool(d, "permissions", true);
+   t.window_size = GetBool(d, "window_size", true);
++  t.webrtc = GetBool(d, "webrtc", true);
+   return t;
+ }
+ 
+diff --git a/third_party/blink/renderer/controller/blink_initializer.cc b/third_party/blink/renderer/controller/blink_initializer.cc
+index c01f1823ed..33aff22104 100644
+--- a/third_party/blink/renderer/controller/blink_initializer.cc
++++ b/third_party/blink/renderer/controller/blink_initializer.cc
+@@ -40,6 +40,7 @@
+ #include "components/kr_fingerprint/profile_loader.h"
+ #include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "third_party/blink/renderer/core/timezone/timezone_controller.h"
++#include "third_party/icu/source/i18n/unicode/timezone.h"
+ #include "build/build_config.h"
+ #include "mojo/public/cpp/bindings/binder_map.h"
+ #include "partition_alloc/page_allocator.h"
+@@ -159,9 +160,31 @@ void InitializeCommon(Platform* platform, mojo::BinderMap* binders) {
+   WebViewExtensions::Initialize();
+ #endif
+ 
+-  // BlinkInitializer::Initialize() must be called before InitializeMainThread
++  // Phase 1: Set ICU timezone BEFORE blink init so TimeZoneController
++  // reads our override as the "host" timezone.
++  {
++    const auto& fp = blink::kr::FingerprintProfile::Get();
++    LOG(INFO) << "kr: Phase1 check: active=" << fp.IsActive()
++              << " locale_tz=" << (fp.IsActive() ? fp.IsToggleEnabled("locale_tz") : false)
++              << " tz=" << (fp.IsActive() ? fp.locale().timezone : "N/A");
++    if (fp.IsActive() && fp.IsToggleEnabled("locale_tz")) {
++      const std::string& tz = fp.locale().timezone;
++      if (!tz.empty()) {
++        std::unique_ptr<icu::TimeZone> timezone(icu::TimeZone::createTimeZone(
++            icu::UnicodeString(tz.c_str(), -1, US_INV)));
++        if (timezone && *timezone != icu::TimeZone::getUnknown()) {
++          icu::TimeZone::adoptDefault(timezone.release());
++          LOG(INFO) << "kr: Phase1 ICU timezone set to " << tz;
++        }
++      }
++    }
++  }
++
+   GetBlinkInitializer().Initialize();
+ 
++  // Phase 2: Set TimeZoneOverride guard to block Mojo resets, AND
++  // force-set ICU again + notify V8 isolates via ChangeTimeZoneOverride
++  // if the override was already set by Phase 1's CanonicalEquals match.
+   {
+     const auto& fp = blink::kr::FingerprintProfile::Get();
+     if (fp.IsActive() && fp.IsToggleEnabled("locale_tz")) {
+@@ -169,10 +192,22 @@ void InitializeCommon(Platform* platform, mojo::BinderMap* binders) {
+       if (!tz.empty()) {
+         auto result = TimeZoneController::SetTimeZoneOverride(
+             String::FromUtf8(tz));
++        LOG(INFO) << "kr: Phase2 SetTimeZoneOverride status="
++                  << static_cast<int>(result.status)
++                  << " handle=" << (result.handle ? "yes" : "null");
+         if (result.status ==
+-            TimeZoneController::TimeZoneOverrideStatus::kSuccess) {
++            TimeZoneController::TimeZoneOverrideStatus::kSuccess &&
++            result.handle) {
+           std::ignore = result.handle.release();
++          LOG(INFO) << "kr: TZ guard set to " << tz;
+         }
++        // Verify ICU is correct
++        std::unique_ptr<icu::TimeZone> check(icu::TimeZone::createDefault());
++        icu::UnicodeString check_id;
++        check->getID(check_id);
++        std::string check_str;
++        check_id.toUTF8String(check_str);
++        LOG(INFO) << "kr: ICU verify after override: " << check_str;
+       }
+     }
+   }
+diff --git a/third_party/blink/renderer/core/timezone/timezone_controller.cc b/third_party/blink/renderer/core/timezone/timezone_controller.cc
+index 270c78bfd0..1dea8755c2 100644
+--- a/third_party/blink/renderer/core/timezone/timezone_controller.cc
++++ b/third_party/blink/renderer/core/timezone/timezone_controller.cc
+@@ -5,6 +5,7 @@
+ #include "third_party/blink/renderer/core/timezone/timezone_controller.h"
+ 
+ #include "base/command_line.h"
++#include "base/logging.h"
+ #include "base/feature_list.h"
+ #include "mojo/public/cpp/bindings/pending_remote.h"
+ #include "mojo/public/cpp/bindings/remote.h"
+@@ -257,8 +258,13 @@ void TimeZoneController::OnTimeZoneChange(const String& timezone_id) {
+   // override is removed.
+   instance().host_timezone_id_ = timezone_id;
+ 
+-  if (!HasTimeZoneOverride())
++  if (!HasTimeZoneOverride()) {
++    LOG(INFO) << "kr: OnTimeZoneChange RESETTING to " << timezone_id;
+     SetIcuTimeZoneAndNotifyV8(timezone_id);
++  } else {
++    LOG(INFO) << "kr: OnTimeZoneChange BLOCKED (override active), ignoring "
++              << timezone_id;
++  }
+ }
+ 
+ const String& TimeZoneController::GetHostTimezoneId() {
+diff --git a/third_party/blink/renderer/modules/peerconnection/rtc_peer_connection.cc b/third_party/blink/renderer/modules/peerconnection/rtc_peer_connection.cc
+index 65c71ea9de..09ce0dad36 100644
+--- a/third_party/blink/renderer/modules/peerconnection/rtc_peer_connection.cc
++++ b/third_party/blink/renderer/modules/peerconnection/rtc_peer_connection.cc
+@@ -156,6 +156,7 @@
+ #include "third_party/blink/renderer/platform/mediastream/media_stream_source.h"
+ #include "third_party/blink/renderer/platform/peerconnection/rtc_answer_options_platform.h"
+ #include "third_party/blink/renderer/platform/peerconnection/rtc_ice_candidate_platform.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "third_party/blink/renderer/platform/peerconnection/rtc_offer_options_platform.h"
+ #include "third_party/blink/renderer/platform/peerconnection/rtc_peer_connection_handler_client.h"
+ #include "third_party/blink/renderer/platform/peerconnection/rtc_rtp_receiver_platform.h"
+@@ -2619,6 +2620,31 @@ void RTCPeerConnection::DidGenerateICECandidate(
+   DCHECK(!closed_);
+   DCHECK(GetExecutionContext()->IsContextThread());
+   DCHECK(platform_candidate);
++
++  auto& fp = blink::kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("webrtc")) {
++    const String& addr = platform_candidate->Address();
++    if (!addr.empty()) {
++      std::string a = addr.Utf8();
++      bool is_private = false;
++      if (a.rfind("10.", 0) == 0 || a.rfind("192.168.", 0) == 0 ||
++          a.rfind("169.254.", 0) == 0 || a.rfind("127.", 0) == 0 ||
++          a.rfind("fc", 0) == 0 || a.rfind("fd", 0) == 0 ||
++          a.rfind("fe80:", 0) == 0 || a == "::1") {
++        is_private = true;
++      } else if (a.rfind("172.", 0) == 0) {
++        size_t dot2 = a.find('.', 4);
++        if (dot2 != std::string::npos) {
++          int octet2 = atoi(a.substr(4, dot2 - 4).c_str());
++          if (octet2 >= 16 && octet2 <= 31)
++            is_private = true;
++        }
++      }
++      if (is_private)
++        return;
++    }
++  }
++
+   RTCIceCandidate* ice_candidate = RTCIceCandidate::Create(platform_candidate);
+   MaybeDispatchEvent(RTCPeerConnectionIceEvent::Create(ice_candidate));
+ }
+diff --git a/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc
+index a18ffc6a81..2ce949f47c 100644
+--- a/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc
++++ b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc
+@@ -46,6 +46,7 @@ bool FingerprintProfile::IsToggleEnabled(std::string_view group) const {
+   if (group == "voices") return t.voices;
+   if (group == "permissions") return t.permissions;
+   if (group == "window_size") return t.window_size;
++  if (group == "webrtc") return t.webrtc;
+   return false;
+ }
+ 

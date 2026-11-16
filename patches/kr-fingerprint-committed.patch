@@ -1,0 +1,1570 @@
+diff --git a/build/config/unsafe_buffers_paths.txt b/build/config/unsafe_buffers_paths.txt
+index 1bc60565f7..7a66ec67c4 100644
+--- a/build/config/unsafe_buffers_paths.txt
++++ b/build/config/unsafe_buffers_paths.txt
+@@ -19,6 +19,9 @@ $../../
+ -chrome/elevation_service/internal/
+ -chrome/installer/mac/third_party/
+ -chromeos/assistant/internal
++-components/kr_fingerprint/
++-third_party/blink/renderer/platform/graphics/image_data_buffer.cc
++-third_party/blink/renderer/platform/kr_fingerprint/
+ -components/optimization_guide/internal/
+ -ios/third_party/
+ -net/third_party/
+diff --git a/chrome/browser/net/BUILD.gn b/chrome/browser/net/BUILD.gn
+index d46845bbd8..7d89af675f 100644
+--- a/chrome/browser/net/BUILD.gn
++++ b/chrome/browser/net/BUILD.gn
+@@ -229,6 +229,7 @@ source_set("impl") {
+     "//sandbox/policy",
+     "//services/network:network_service",
+     "//services/strings",
++    "//components/kr_fingerprint",
+   ]
+ 
+   if (enable_extensions_core) {
+diff --git a/chrome/browser/net/profile_network_context_service.cc b/chrome/browser/net/profile_network_context_service.cc
+index ec1e9b7c18..3bf3bd5d91 100644
+--- a/chrome/browser/net/profile_network_context_service.cc
++++ b/chrome/browser/net/profile_network_context_service.cc
+@@ -10,6 +10,9 @@
+ #include <string_view>
+ 
+ #include "base/base64.h"
++#include "base/no_destructor.h"
++#include "components/kr_fingerprint/kr_switches.h"
++#include "components/kr_fingerprint/profile_loader.h"
+ #include "base/byte_size.h"
+ #include "base/check_op.h"
+ #include "base/command_line.h"
+@@ -711,6 +714,21 @@ void ProfileNetworkContextService::OnThirdPartyCookieBlockingChanged(
+ }
+ 
+ std::string ProfileNetworkContextService::ComputeAcceptLanguage() const {
++  const base::CommandLine& cmd = *base::CommandLine::ForCurrentProcess();
++  if (cmd.HasSwitch(kr::switches::kKrProfile)) {
++    static base::NoDestructor<std::optional<kr::ProfileData>> cached_profile(
++        kr::LoadProfileFromFile(
++            cmd.GetSwitchValueASCII(kr::switches::kKrProfile)));
++    if (*cached_profile && (*cached_profile)->toggles.locale_tz &&
++        !(*cached_profile)->locale.languages.empty()) {
++      std::string lang_list;
++      for (const auto& lang : (*cached_profile)->locale.languages) {
++        if (!lang_list.empty()) lang_list += ",";
++        lang_list += lang;
++      }
++      return net::HttpUtil::GenerateAcceptLanguageHeader(lang_list);
++    }
++  }
+   return ComputeAcceptLanguageFromPref(
+       content::ReduceAcceptLanguageUtils::GetLanguagesWithMaxCount(
+           profile_->IsOffTheRecord() ? language::GetIncognitoLanguageList(
+diff --git a/components/kr_fingerprint/BUILD.gn b/components/kr_fingerprint/BUILD.gn
+new file mode 100644
+index 0000000000..fc3044125c
+--- /dev/null
++++ b/components/kr_fingerprint/BUILD.gn
+@@ -0,0 +1,17 @@
++import("//build/config/features.gni")
++
++source_set("kr_fingerprint") {
++  sources = [
++    "deterministic_noise.cc",
++    "deterministic_noise.h",
++    "kr_switches.h",
++    "profile_data.h",
++    "profile_loader.cc",
++    "profile_loader.h",
++  ]
++
++  deps = [
++    "//base",
++    "//third_party/boringssl",
++  ]
++}
+diff --git a/components/kr_fingerprint/deterministic_noise.cc b/components/kr_fingerprint/deterministic_noise.cc
+new file mode 100644
+index 0000000000..0885f276e1
+--- /dev/null
++++ b/components/kr_fingerprint/deterministic_noise.cc
+@@ -0,0 +1,51 @@
++#include "components/kr_fingerprint/deterministic_noise.h"
++
++#include <cstring>
++
++#include "third_party/boringssl/src/include/openssl/sha.h"
++#include "third_party/boringssl/src/include/openssl/siphash.h"
++
++namespace kr {
++
++DeterministicNoise::DeterministicNoise(const std::string& seed,
++                                       const std::string& domain)
++    : seed_(seed), domain_(domain) {
++  std::string material = seed + "|" + domain;
++  uint8_t digest[SHA256_DIGEST_LENGTH];
++  SHA256(reinterpret_cast<const uint8_t*>(material.data()), material.size(),
++         digest);
++  memcpy(&key_[0], digest, 8);
++  memcpy(&key_[1], digest + 8, 8);
++}
++
++uint64_t DeterministicNoise::Hash(const uint8_t* data, size_t len) const {
++  return SIPHASH_24(key_, data, len);
++}
++
++uint64_t DeterministicNoise::Hash(const std::string& data) const {
++  return Hash(reinterpret_cast<const uint8_t*>(data.data()), data.size());
++}
++
++double DeterministicNoise::Uniform01() const {
++  uint64_t c = counter_++;
++  uint64_t h = Hash(reinterpret_cast<const uint8_t*>(&c), sizeof(c));
++  return static_cast<double>(h >> 11) / static_cast<double>(1ULL << 53);
++}
++
++double DeterministicNoise::UniformRange(double lo, double hi) const {
++  return lo + Uniform01() * (hi - lo);
++}
++
++int32_t DeterministicNoise::IntRange(int32_t lo, int32_t hi) const {
++  if (lo >= hi) return lo;
++  uint64_t c = counter_++;
++  uint64_t h = Hash(reinterpret_cast<const uint8_t*>(&c), sizeof(c));
++  return lo + static_cast<int32_t>(h % static_cast<uint64_t>(hi - lo));
++}
++
++DeterministicNoise DeterministicNoise::WithSubDomain(
++    const std::string& sub) const {
++  return DeterministicNoise(seed_, domain_ + "." + sub);
++}
++
++}  // namespace kr
+diff --git a/components/kr_fingerprint/deterministic_noise.h b/components/kr_fingerprint/deterministic_noise.h
+new file mode 100644
+index 0000000000..21ca2ea1e1
+--- /dev/null
++++ b/components/kr_fingerprint/deterministic_noise.h
+@@ -0,0 +1,31 @@
++#ifndef COMPONENTS_KR_FINGERPRINT_DETERMINISTIC_NOISE_H_
++#define COMPONENTS_KR_FINGERPRINT_DETERMINISTIC_NOISE_H_
++
++#include <cstdint>
++#include <string>
++
++namespace kr {
++
++class DeterministicNoise {
++ public:
++  DeterministicNoise(const std::string& seed, const std::string& domain);
++
++  uint64_t Hash(const uint8_t* data, size_t len) const;
++  uint64_t Hash(const std::string& data) const;
++
++  double Uniform01() const;
++  double UniformRange(double lo, double hi) const;
++  int32_t IntRange(int32_t lo, int32_t hi) const;
++
++  DeterministicNoise WithSubDomain(const std::string& sub) const;
++
++ private:
++  uint64_t key_[2];
++  std::string seed_;
++  std::string domain_;
++  mutable uint64_t counter_ = 0;
++};
++
++}  // namespace kr
++
++#endif  // COMPONENTS_KR_FINGERPRINT_DETERMINISTIC_NOISE_H_
+diff --git a/components/kr_fingerprint/kr_switches.h b/components/kr_fingerprint/kr_switches.h
+new file mode 100644
+index 0000000000..e4b1c9d6f9
+--- /dev/null
++++ b/components/kr_fingerprint/kr_switches.h
+@@ -0,0 +1,12 @@
++#ifndef COMPONENTS_KR_FINGERPRINT_KR_SWITCHES_H_
++#define COMPONENTS_KR_FINGERPRINT_KR_SWITCHES_H_
++
++namespace kr {
++namespace switches {
++
++inline constexpr char kKrProfile[] = "kr-profile";
++
++}  // namespace switches
++}  // namespace kr
++
++#endif  // COMPONENTS_KR_FINGERPRINT_KR_SWITCHES_H_
+diff --git a/components/kr_fingerprint/profile_data.h b/components/kr_fingerprint/profile_data.h
+new file mode 100644
+index 0000000000..71bc73322c
+--- /dev/null
++++ b/components/kr_fingerprint/profile_data.h
+@@ -0,0 +1,121 @@
++#ifndef COMPONENTS_KR_FINGERPRINT_PROFILE_DATA_H_
++#define COMPONENTS_KR_FINGERPRINT_PROFILE_DATA_H_
++
++#include <array>
++#include <cstdint>
++#include <string>
++#include <vector>
++
++namespace kr {
++
++struct ScreenData {
++  int w = 1920;
++  int h = 1080;
++  int avail_w = 1920;
++  int avail_h = 1040;
++  double dpr = 1.0;
++  int color_depth = 24;
++  int inner_w = 1920;
++  int inner_h = 925;
++  int outer_w = 1920;
++  int outer_h = 1040;
++};
++
++struct NavigatorData {
++  int cores = 8;
++  int device_memory = 8;
++  std::string platform = "Win32";
++  int max_touch_points = 0;
++  bool webdriver = false;
++  bool cookie_enabled = true;
++  bool pdf_viewer_enabled = true;
++  int plugins_count = 5;
++  int mime_types_count = 2;
++};
++
++struct GpuData {
++  std::string vendor;
++  std::string renderer;
++  int max_texture_size = 16384;
++  int max_cube_map_texture_size = 16384;
++  int max_texture_image_units = 16;
++  int max_vertex_attribs = 16;
++  int max_vertex_uniform_vectors = 4095;
++  int max_fragment_uniform_vectors = 1024;
++  int max_renderbuffer_size = 16384;
++  int max_varying_vectors = 30;
++  int max_vertex_texture_image_units = 16;
++  int max_samples = 8;
++  int max_3d_texture_size = 2048;
++  int max_array_texture_layers = 2048;
++  int max_draw_buffers = 8;
++  int max_uniform_buffer_bindings = 24;
++  int max_combined_texture_image_units = 32;
++  int max_color_attachments = 8;
++  int uniform_buffer_offset_alignment = 256;
++  int max_texture_lod_bias = 2;
++  std::array<int, 2> max_viewport_dims = {32767, 32767};
++  std::array<float, 2> aliased_line_width_range = {1.0f, 1.0f};
++  std::array<float, 2> aliased_point_size_range = {1.0f, 1024.0f};
++  std::vector<std::string> extensions;
++};
++
++struct LocaleData {
++  std::string timezone = "America/New_York";
++  std::string language = "en-US";
++  std::vector<std::string> languages = {"en-US", "en"};
++};
++
++struct CanvasData {
++  std::string mode = "spoofed";
++  double gamma = 1.8;
++  double contrast = 0.5;
++};
++
++struct ConnectionData {
++  std::string effective_type = "4g";
++  double downlink = 10.0;
++  int rtt = 50;
++  bool save_data = false;
++};
++
++struct VoiceData {
++  std::string name;
++  std::string lang;
++  bool is_default = false;
++  bool local_service = true;
++};
++
++struct TogglesData {
++  bool screen = true;
++  bool cpu_memory = true;
++  bool gpu_webgl = true;
++  bool canvas = true;
++  bool audio = true;
++  bool fonts = true;
++  bool locale_tz = true;
++  bool network = true;
++  bool voices = true;
++  bool permissions = true;
++  bool window_size = true;
++};
++
++struct ProfileData {
++  int schema = 1;
++  std::string seed;
++  TogglesData toggles;
++  ScreenData screen;
++  NavigatorData navigator;
++  GpuData gpu;
++  LocaleData locale;
++  CanvasData canvas;
++  ConnectionData connection;
++  std::vector<VoiceData> voices;
++  std::vector<std::string> fonts;
++  int64_t js_heap_size_limit = 0;
++  int64_t storage_quota = 0;
++};
++
++}  // namespace kr
++
++#endif  // COMPONENTS_KR_FINGERPRINT_PROFILE_DATA_H_
+diff --git a/components/kr_fingerprint/profile_loader.cc b/components/kr_fingerprint/profile_loader.cc
+new file mode 100644
+index 0000000000..233f181400
+--- /dev/null
++++ b/components/kr_fingerprint/profile_loader.cc
+@@ -0,0 +1,241 @@
++#include "components/kr_fingerprint/profile_loader.h"
++
++#include <fstream>
++#include <sstream>
++
++#include "base/json/json_reader.h"
++#include "base/logging.h"
++#include "base/values.h"
++
++namespace kr {
++
++namespace {
++
++std::string GetString(const base::DictValue& dict, const char* key,
++                      const std::string& fallback = "") {
++  const std::string* v = dict.FindString(key);
++  return v ? *v : fallback;
++}
++
++int GetInt(const base::DictValue& dict, const char* key, int fallback = 0) {
++  return dict.FindInt(key).value_or(fallback);
++}
++
++double GetDouble(const base::DictValue& dict, const char* key,
++                 double fallback = 0.0) {
++  return dict.FindDouble(key).value_or(fallback);
++}
++
++bool GetBool(const base::DictValue& dict, const char* key,
++             bool fallback = false) {
++  return dict.FindBool(key).value_or(fallback);
++}
++
++ScreenData ParseScreen(const base::DictValue& d) {
++  ScreenData s;
++  s.w = GetInt(d, "w", 1920);
++  s.h = GetInt(d, "h", 1080);
++  s.avail_w = GetInt(d, "avail_w", 1920);
++  s.avail_h = GetInt(d, "avail_h", 1040);
++  s.dpr = GetDouble(d, "dpr", 1.0);
++  s.color_depth = GetInt(d, "color_depth", 24);
++  s.inner_w = GetInt(d, "inner_w", 1920);
++  s.inner_h = GetInt(d, "inner_h", 925);
++  s.outer_w = GetInt(d, "outer_w", 1920);
++  s.outer_h = GetInt(d, "outer_h", 1040);
++  return s;
++}
++
++NavigatorData ParseNavigator(const base::DictValue& d) {
++  NavigatorData n;
++  n.cores = GetInt(d, "cores", 8);
++  n.device_memory = GetInt(d, "device_memory", 8);
++  n.platform = GetString(d, "platform", "Win32");
++  n.max_touch_points = GetInt(d, "max_touch_points", 0);
++  n.webdriver = GetBool(d, "webdriver", false);
++  n.cookie_enabled = GetBool(d, "cookie_enabled", true);
++  n.pdf_viewer_enabled = GetBool(d, "pdf_viewer_enabled", true);
++  n.plugins_count = GetInt(d, "plugins_count", 5);
++  n.mime_types_count = GetInt(d, "mime_types_count", 2);
++  return n;
++}
++
++GpuData ParseGpu(const base::DictValue& d) {
++  GpuData g;
++  g.vendor = GetString(d, "vendor");
++  g.renderer = GetString(d, "renderer");
++
++  const base::DictValue* params = d.FindDict("params");
++  if (params) {
++    g.max_texture_size = GetInt(*params, "MAX_TEXTURE_SIZE", 16384);
++    g.max_cube_map_texture_size =
++        GetInt(*params, "MAX_CUBE_MAP_TEXTURE_SIZE", 16384);
++    g.max_texture_image_units =
++        GetInt(*params, "MAX_TEXTURE_IMAGE_UNITS", 16);
++    g.max_vertex_attribs = GetInt(*params, "MAX_VERTEX_ATTRIBS", 16);
++    g.max_vertex_uniform_vectors =
++        GetInt(*params, "MAX_VERTEX_UNIFORM_VECTORS", 4095);
++    g.max_fragment_uniform_vectors =
++        GetInt(*params, "MAX_FRAGMENT_UNIFORM_VECTORS", 1024);
++    g.max_renderbuffer_size = GetInt(*params, "MAX_RENDERBUFFER_SIZE", 16384);
++    g.max_varying_vectors = GetInt(*params, "MAX_VARYING_VECTORS", 30);
++    g.max_vertex_texture_image_units =
++        GetInt(*params, "MAX_VERTEX_TEXTURE_IMAGE_UNITS", 16);
++    g.max_samples = GetInt(*params, "MAX_SAMPLES", 8);
++    g.max_3d_texture_size = GetInt(*params, "MAX_3D_TEXTURE_SIZE", 2048);
++    g.max_array_texture_layers =
++        GetInt(*params, "MAX_ARRAY_TEXTURE_LAYERS", 2048);
++    g.max_draw_buffers = GetInt(*params, "MAX_DRAW_BUFFERS", 8);
++    g.max_uniform_buffer_bindings =
++        GetInt(*params, "MAX_UNIFORM_BUFFER_BINDINGS", 24);
++    g.max_combined_texture_image_units =
++        GetInt(*params, "MAX_COMBINED_TEXTURE_IMAGE_UNITS", 32);
++    g.max_color_attachments = GetInt(*params, "MAX_COLOR_ATTACHMENTS", 8);
++    g.uniform_buffer_offset_alignment =
++        GetInt(*params, "UNIFORM_BUFFER_OFFSET_ALIGNMENT", 256);
++    g.max_texture_lod_bias = GetInt(*params, "MAX_TEXTURE_LOD_BIAS", 2);
++  }
++
++  const base::ListValue* ext_list = d.FindList("extensions");
++  if (ext_list) {
++    for (const auto& e : *ext_list) {
++      if (e.is_string())
++        g.extensions.push_back(e.GetString());
++    }
++  }
++  return g;
++}
++
++LocaleData ParseLocale(const base::DictValue& d) {
++  LocaleData l;
++  l.timezone = GetString(d, "timezone", "America/New_York");
++  l.language = GetString(d, "language", "en-US");
++  const base::ListValue* langs = d.FindList("languages");
++  if (langs) {
++    l.languages.clear();
++    for (const auto& v : *langs) {
++      if (v.is_string())
++        l.languages.push_back(v.GetString());
++    }
++  }
++  return l;
++}
++
++CanvasData ParseCanvas(const base::DictValue& d) {
++  CanvasData c;
++  c.mode = GetString(d, "canvas_mode", "spoofed");
++  c.gamma = GetDouble(d, "gamma", 1.8);
++  c.contrast = GetDouble(d, "contrast", 0.5);
++  return c;
++}
++
++ConnectionData ParseConnection(const base::DictValue& d) {
++  ConnectionData c;
++  c.effective_type = GetString(d, "effectiveType", "4g");
++  c.downlink = GetDouble(d, "downlink", 10.0);
++  c.rtt = GetInt(d, "rtt", 50);
++  c.save_data = GetBool(d, "saveData", false);
++  return c;
++}
++
++TogglesData ParseToggles(const base::DictValue& d) {
++  TogglesData t;
++  t.screen = GetBool(d, "screen", true);
++  t.cpu_memory = GetBool(d, "cpu_memory", true);
++  t.gpu_webgl = GetBool(d, "gpu_webgl", true);
++  t.canvas = GetBool(d, "canvas", true);
++  t.audio = GetBool(d, "audio", true);
++  t.fonts = GetBool(d, "fonts", true);
++  t.locale_tz = GetBool(d, "locale_tz", true);
++  t.network = GetBool(d, "network", true);
++  t.voices = GetBool(d, "voices", true);
++  t.permissions = GetBool(d, "permissions", true);
++  t.window_size = GetBool(d, "window_size", true);
++  return t;
++}
++
++}  // namespace
++
++std::optional<ProfileData> LoadProfileFromJson(const std::string& json_str) {
++  auto parsed = base::JSONReader::ReadDict(json_str, base::JSON_PARSE_RFC);
++  if (!parsed) {
++    LOG(ERROR) << "kr: Failed to parse profile JSON";
++    return std::nullopt;
++  }
++
++  const base::DictValue& root = *parsed;
++  ProfileData p;
++  p.schema = GetInt(root, "schema", 1);
++  p.seed = GetString(root, "seed");
++
++  if (p.seed.empty()) {
++    LOG(ERROR) << "kr: Profile missing seed";
++    return std::nullopt;
++  }
++
++  const base::DictValue* toggles = root.FindDict("toggles");
++  if (toggles)
++    p.toggles = ParseToggles(*toggles);
++
++  const base::DictValue* screen = root.FindDict("screen");
++  if (screen)
++    p.screen = ParseScreen(*screen);
++
++  const base::DictValue* nav = root.FindDict("navigator");
++  if (nav)
++    p.navigator = ParseNavigator(*nav);
++
++  const base::DictValue* gpu = root.FindDict("gpu");
++  if (gpu)
++    p.gpu = ParseGpu(*gpu);
++
++  const base::DictValue* locale = root.FindDict("locale");
++  if (locale)
++    p.locale = ParseLocale(*locale);
++
++  const base::DictValue* canvas = root.FindDict("canvas");
++  if (canvas)
++    p.canvas = ParseCanvas(*canvas);
++
++  const base::DictValue* conn = root.FindDict("connection");
++  if (conn)
++    p.connection = ParseConnection(*conn);
++
++  const base::ListValue* fonts = root.FindList("fonts");
++  if (fonts) {
++    for (const auto& v : *fonts) {
++      if (v.is_string())
++        p.fonts.push_back(v.GetString());
++    }
++  }
++
++  const base::ListValue* voices = root.FindList("voices");
++  if (voices) {
++    for (const auto& v : *voices) {
++      if (!v.is_dict())
++        continue;
++      const auto& vd = v.GetDict();
++      VoiceData voice;
++      voice.name = GetString(vd, "name");
++      voice.lang = GetString(vd, "lang");
++      voice.is_default = GetBool(vd, "default", false);
++      voice.local_service = GetBool(vd, "localService", true);
++      p.voices.push_back(std::move(voice));
++    }
++  }
++
++  return p;
++}
++
++std::optional<ProfileData> LoadProfileFromFile(const std::string& path) {
++  std::ifstream file(path);
++  if (!file.is_open()) {
++    LOG(ERROR) << "kr: Cannot open profile file: " << path;
++    return std::nullopt;
++  }
++  std::ostringstream ss;
++  ss << file.rdbuf();
++  return LoadProfileFromJson(ss.str());
++}
++
++}  // namespace kr
+diff --git a/components/kr_fingerprint/profile_loader.h b/components/kr_fingerprint/profile_loader.h
+new file mode 100644
+index 0000000000..25b6b464fb
+--- /dev/null
++++ b/components/kr_fingerprint/profile_loader.h
+@@ -0,0 +1,16 @@
++#ifndef COMPONENTS_KR_FINGERPRINT_PROFILE_LOADER_H_
++#define COMPONENTS_KR_FINGERPRINT_PROFILE_LOADER_H_
++
++#include <optional>
++#include <string>
++
++#include "components/kr_fingerprint/profile_data.h"
++
++namespace kr {
++
++std::optional<ProfileData> LoadProfileFromFile(const std::string& path);
++std::optional<ProfileData> LoadProfileFromJson(const std::string& json_str);
++
++}  // namespace kr
++
++#endif  // COMPONENTS_KR_FINGERPRINT_PROFILE_LOADER_H_
+diff --git a/content/browser/BUILD.gn b/content/browser/BUILD.gn
+index 5beda3489b..3b69b35c20 100644
+--- a/content/browser/BUILD.gn
++++ b/content/browser/BUILD.gn
+@@ -165,6 +165,7 @@ source_set("browser") {
+     "//components/download/database",
+     "//components/download/public/common:public",
+     "//components/embedder_support",
++    "//components/kr_fingerprint",
+     "//components/embedder_support:user_agent",
+     "//components/file_access",
+     "//components/filename_generation",
+diff --git a/content/browser/renderer_host/render_process_host_impl.cc b/content/browser/renderer_host/render_process_host_impl.cc
+index 232d1c239d..0a02268b4a 100644
+--- a/content/browser/renderer_host/render_process_host_impl.cc
++++ b/content/browser/renderer_host/render_process_host_impl.cc
+@@ -74,6 +74,7 @@
+ #include "build/build_config.h"
+ #include "cc/base/switches.h"
+ #include "components/embedder_support/switches.h"
++#include "components/kr_fingerprint/kr_switches.h"
+ #include "components/input/features.h"
+ #include "components/input/utils.h"
+ #include "components/metrics/histogram_controller.h"
+@@ -3897,6 +3898,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
+   // Propagate the following switches to the renderer command line (along
+   // with any associated values) if present in the browser command line.
+   static const char* const kSwitchNames[] = {
++      kr::switches::kKrProfile,
+       switches::kDisableInProcessStackTraces,
+       sandbox::policy::switches::kDisableLandlockSandbox,
+       sandbox::policy::switches::kDisableSeccompFilterSandbox,
+diff --git a/crypto/user_verifying_key_win.cc b/crypto/user_verifying_key_win.cc
+index f1e36ce95f..eb52a5dfe0 100644
+--- a/crypto/user_verifying_key_win.cc
++++ b/crypto/user_verifying_key_win.cc
+@@ -45,8 +45,11 @@ using ABI::Windows::Security::Credentials::KeyCredentialCreationOption;
+ using ABI::Windows::Security::Credentials::KeyCredentialOperationResult;
+ using ABI::Windows::Security::Credentials::KeyCredentialRetrievalResult;
+ using ABI::Windows::Security::Credentials::KeyCredentialStatus;
+-using ABI::Windows::Security::Credentials::
+-    KeyCredentialStatus_AlgorithmNotSupported;
++// KeyCredentialStatus_AlgorithmNotSupported may not exist in older SDKs.
++#ifndef KeyCredentialStatus_AlgorithmNotSupported
++constexpr auto KeyCredentialStatus_AlgorithmNotSupported =
++    static_cast<ABI::Windows::Security::Credentials::KeyCredentialStatus>(7);
++#endif
+ using ABI::Windows::Security::Credentials::
+     KeyCredentialStatus_CredentialAlreadyExists;
+ using ABI::Windows::Security::Credentials::KeyCredentialStatus_NotFound;
+diff --git a/third_party/blink/renderer/controller/BUILD.gn b/third_party/blink/renderer/controller/BUILD.gn
+index 2732667d0e..7303063df3 100644
+--- a/third_party/blink/renderer/controller/BUILD.gn
++++ b/third_party/blink/renderer/controller/BUILD.gn
+@@ -22,6 +22,7 @@ component("controller") {
+   output_name = "blink_controller"
+ 
+   deps = [
++    "//components/kr_fingerprint",
+     "//components/performance_manager/public/mojom:mojom_blink",
+     "//skia",
+     "//third_party/blink/renderer/core",
+diff --git a/third_party/blink/renderer/controller/blink_initializer.cc b/third_party/blink/renderer/controller/blink_initializer.cc
+index cfced2ae75..c01f1823ed 100644
+--- a/third_party/blink/renderer/controller/blink_initializer.cc
++++ b/third_party/blink/renderer/controller/blink_initializer.cc
+@@ -36,6 +36,10 @@
+ 
+ #include "base/command_line.h"
+ #include "base/task/single_thread_task_runner.h"
++#include "components/kr_fingerprint/kr_switches.h"
++#include "components/kr_fingerprint/profile_loader.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
++#include "third_party/blink/renderer/core/timezone/timezone_controller.h"
+ #include "build/build_config.h"
+ #include "mojo/public/cpp/bindings/binder_map.h"
+ #include "partition_alloc/page_allocator.h"
+@@ -118,6 +122,16 @@ BlinkInitializer& GetBlinkInitializer() {
+ }
+ 
+ void InitializeCommon(Platform* platform, mojo::BinderMap* binders) {
++  {
++    const base::CommandLine& cl = *base::CommandLine::ForCurrentProcess();
++    if (cl.HasSwitch(::kr::switches::kKrProfile)) {
++      std::string path = cl.GetSwitchValueASCII(::kr::switches::kKrProfile);
++      auto profile = ::kr::LoadProfileFromFile(path);
++      if (profile) {
++        blink::kr::FingerprintProfile::Initialize(std::move(*profile));
++      }
++    }
++  }
+ // #if expression should match the one around #include <windows.h>
+ #if !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_ARM64) && BUILDFLAG(IS_WIN)
+   // Reserve address space on 32 bit Windows, to make it likelier that large
+@@ -148,6 +162,21 @@ void InitializeCommon(Platform* platform, mojo::BinderMap* binders) {
+   // BlinkInitializer::Initialize() must be called before InitializeMainThread
+   GetBlinkInitializer().Initialize();
+ 
++  {
++    const auto& fp = blink::kr::FingerprintProfile::Get();
++    if (fp.IsActive() && fp.IsToggleEnabled("locale_tz")) {
++      const std::string& tz = fp.locale().timezone;
++      if (!tz.empty()) {
++        auto result = TimeZoneController::SetTimeZoneOverride(
++            String::FromUtf8(tz));
++        if (result.status ==
++            TimeZoneController::TimeZoneOverrideStatus::kSuccess) {
++          std::ignore = result.handle.release();
++        }
++      }
++    }
++  }
++
+   blink::V8Initializer::InitializeIsolateHolder(
+       blink::V8ContextSnapshot::GetReferenceTable(),
+       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+diff --git a/third_party/blink/renderer/core/css/media_values.cc b/third_party/blink/renderer/core/css/media_values.cc
+index 8d4c98859d..6d8f5bfc6b 100644
+--- a/third_party/blink/renderer/core/css/media_values.cc
++++ b/third_party/blink/renderer/core/css/media_values.cc
+@@ -26,6 +26,7 @@
+ #include "third_party/blink/renderer/core/page/page.h"
+ #include "third_party/blink/renderer/core/preferences/preference_overrides.h"
+ #include "third_party/blink/renderer/platform/graphics/color_space_gamut.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "third_party/blink/renderer/platform/network/network_state_notifier.h"
+ #include "third_party/blink/renderer/platform/widget/frame_widget.h"
+ #include "ui/base/mojom/window_show_state.mojom-blink.h"
+@@ -193,6 +194,10 @@ bool MediaValues::CalculateStrictMode(LocalFrame* frame) {
+ }
+ 
+ float MediaValues::CalculateDevicePixelRatio(LocalFrame* frame) {
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return static_cast<float>(kr::FingerprintProfile::Get().screen().dpr);
++  }
+   return frame->DevicePixelRatio();
+ }
+ 
+diff --git a/third_party/blink/renderer/core/dom/element.cc b/third_party/blink/renderer/core/dom/element.cc
+index 19f2e8bf67..741adc1320 100644
+--- a/third_party/blink/renderer/core/dom/element.cc
++++ b/third_party/blink/renderer/core/dom/element.cc
+@@ -35,6 +35,7 @@
+ 
+ #include "base/feature_list.h"
+ #include "cc/input/snap_selection_strategy.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "components/viz/common/surfaces/tracked_element_rects.h"
+ #include "third_party/blink/public/common/features.h"
+ #include "third_party/blink/public/mojom/scroll/scroll_enums.mojom-blink.h"
+@@ -2652,6 +2653,10 @@ int Element::clientWidth() {
+   // When in quirks mode, clientWidth for the body element should return the
+   // width of the containing frame.
+   if (IsViewportScrollElement()) {
++    if (kr::FingerprintProfile::IsActive() &&
++        kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++      return kr::FingerprintProfile::Get().screen().inner_w;
++    }
+     auto* layout_view = GetDocument().GetLayoutView();
+     if (layout_view) {
+       // TODO(crbug.com/740879): Use per-page overlay scrollbar settings.
+@@ -2695,6 +2700,10 @@ int Element::clientHeight() {
+   // When in quirks mode, clientHeight for the body element should return the
+   // height of the containing frame.
+   if (IsViewportScrollElement()) {
++    if (kr::FingerprintProfile::IsActive() &&
++        kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++      return kr::FingerprintProfile::Get().screen().inner_h;
++    }
+     auto* layout_view = GetDocument().GetLayoutView();
+     if (layout_view) {
+       // TODO(crbug.com/740879): Use per-page overlay scrollbar settings.
+diff --git a/third_party/blink/renderer/core/frame/local_dom_window.cc b/third_party/blink/renderer/core/frame/local_dom_window.cc
+index 3c8005efb9..074e569df4 100644
+--- a/third_party/blink/renderer/core/frame/local_dom_window.cc
++++ b/third_party/blink/renderer/core/frame/local_dom_window.cc
+@@ -165,6 +165,7 @@
+ #include "third_party/blink/renderer/platform/timer.h"
+ #include "third_party/blink/renderer/platform/weborigin/kurl.h"
+ #include "third_party/blink/renderer/platform/weborigin/security_origin.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "third_party/blink/renderer/platform/widget/frame_widget.h"
+ #include "third_party/blink/renderer/platform/wtf/cross_thread_functional.h"
+ #include "third_party/blink/renderer/platform/wtf/text/strcat.h"
+@@ -1696,6 +1697,10 @@ int LocalDOMWindow::outerHeight() const {
+   if (!GetFrame()) {
+     return 0;
+   }
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return kr::FingerprintProfile::Get().screen().outer_h;
++  }
+ 
+   LocalFrame* frame = GetFrame();
+ 
+@@ -1728,6 +1733,10 @@ int LocalDOMWindow::outerWidth() const {
+   if (!GetFrame()) {
+     return 0;
+   }
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return kr::FingerprintProfile::Get().screen().outer_w;
++  }
+ 
+   LocalFrame* frame = GetFrame();
+ 
+@@ -1793,6 +1802,10 @@ int LocalDOMWindow::innerHeight() const {
+   if (!GetFrame()) {
+     return 0;
+   }
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return kr::FingerprintProfile::Get().screen().inner_h;
++  }
+ 
+   return AdjustForAbsoluteZoom::AdjustInt(GetViewportSize().height(),
+                                           GetFrame()->LayoutZoomFactor());
+@@ -1802,6 +1815,10 @@ int LocalDOMWindow::innerWidth() const {
+   if (!GetFrame()) {
+     return 0;
+   }
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return kr::FingerprintProfile::Get().screen().inner_w;
++  }
+ 
+   return AdjustForAbsoluteZoom::AdjustInt(GetViewportSize().width(),
+                                           GetFrame()->LayoutZoomFactor());
+@@ -1963,6 +1980,10 @@ double LocalDOMWindow::devicePixelRatio() const {
+   if (!GetFrame()) {
+     return 0.0;
+   }
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return kr::FingerprintProfile::Get().screen().dpr;
++  }
+ 
+   return GetFrame()->DevicePixelRatio();
+ }
+diff --git a/third_party/blink/renderer/core/frame/navigator.cc b/third_party/blink/renderer/core/frame/navigator.cc
+index 72964f48db..ad77f0bdf0 100644
+--- a/third_party/blink/renderer/core/frame/navigator.cc
++++ b/third_party/blink/renderer/core/frame/navigator.cc
+@@ -33,6 +33,7 @@
+ #include "third_party/blink/renderer/core/loader/frame_loader.h"
+ #include "third_party/blink/renderer/core/page/page.h"
+ #include "third_party/blink/renderer/core/probe/core_probes.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "third_party/blink/renderer/platform/language.h"
+ 
+ namespace blink {
+@@ -40,6 +41,11 @@ namespace blink {
+ Navigator::Navigator(ExecutionContext* context) : NavigatorBase(context) {}
+ 
+ String Navigator::platform() const {
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return String::FromUtf8(
++        kr::FingerprintProfile::Get().navigator().platform);
++  }
+   if (!DomWindow())
+     return NavigatorBase::platform();
+   const String& platform_override =
+@@ -79,6 +85,9 @@ bool Navigator::cookieEnabled() const {
+ }
+ 
+ bool Navigator::webdriver() const {
++  if (kr::FingerprintProfile::IsActive())
++    return false;
++
+   if (RuntimeEnabledFeatures::AutomationControlledEnabled())
+     return true;
+ 
+diff --git a/third_party/blink/renderer/core/frame/navigator_concurrent_hardware.cc b/third_party/blink/renderer/core/frame/navigator_concurrent_hardware.cc
+index f5c0db2d1b..9c7ca51b6d 100644
+--- a/third_party/blink/renderer/core/frame/navigator_concurrent_hardware.cc
++++ b/third_party/blink/renderer/core/frame/navigator_concurrent_hardware.cc
+@@ -5,10 +5,16 @@
+ #include "third_party/blink/renderer/core/frame/navigator_concurrent_hardware.h"
+ 
+ #include "base/system/sys_info.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ 
+ namespace blink {
+ 
+ unsigned NavigatorConcurrentHardware::hardwareConcurrency() const {
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("cpu_memory")) {
++    return static_cast<unsigned>(
++        kr::FingerprintProfile::Get().navigator().cores);
++  }
+   return static_cast<unsigned>(base::SysInfo::NumberOfProcessors());
+ }
+ 
+diff --git a/third_party/blink/renderer/core/frame/navigator_device_memory.cc b/third_party/blink/renderer/core/frame/navigator_device_memory.cc
+index 05fa33e456..c79e939ea1 100644
+--- a/third_party/blink/renderer/core/frame/navigator_device_memory.cc
++++ b/third_party/blink/renderer/core/frame/navigator_device_memory.cc
+@@ -8,10 +8,16 @@
+ #include "third_party/blink/public/mojom/use_counter/metrics/web_feature.mojom-shared.h"
+ #include "third_party/blink/renderer/core/dom/document.h"
+ #include "third_party/blink/renderer/core/frame/local_dom_window.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ 
+ namespace blink {
+ 
+ float NavigatorDeviceMemory::deviceMemory() const {
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("cpu_memory")) {
++    return static_cast<float>(
++        kr::FingerprintProfile::Get().navigator().device_memory);
++  }
+   return ApproximatedDeviceMemory::GetApproximatedDeviceMemory();
+ }
+ 
+diff --git a/third_party/blink/renderer/core/frame/navigator_language.cc b/third_party/blink/renderer/core/frame/navigator_language.cc
+index 4bb64aa4d0..c821c9b04e 100644
+--- a/third_party/blink/renderer/core/frame/navigator_language.cc
++++ b/third_party/blink/renderer/core/frame/navigator_language.cc
+@@ -6,6 +6,7 @@
+ 
+ #include "services/network/public/cpp/features.h"
+ #include "third_party/blink/renderer/core/probe/core_probes.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "third_party/blink/renderer/platform/language.h"
+ #include "third_party/blink/renderer/platform/wtf/text/string_builder.h"
+ 
+@@ -34,10 +35,23 @@ NavigatorLanguage::NavigatorLanguage(ExecutionContext* execution_context)
+     : execution_context_(execution_context) {}
+ 
+ AtomicString NavigatorLanguage::language() {
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("locale_tz")) {
++    return AtomicString(String::FromUtf8(fp.locale().language));
++  }
+   return AtomicString(languages().front());
+ }
+ 
+ const Vector<String>& NavigatorLanguage::languages() {
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("locale_tz")) {
++    if (kr_languages_.empty()) {
++      for (const auto& lang : fp.locale().languages) {
++        kr_languages_.push_back(String::FromUtf8(lang));
++      }
++    }
++    return kr_languages_;
++  }
+   EnsureUpdatedLanguage();
+   return languages_;
+ }
+diff --git a/third_party/blink/renderer/core/frame/navigator_language.h b/third_party/blink/renderer/core/frame/navigator_language.h
+index c578784540..345f8e252c 100644
+--- a/third_party/blink/renderer/core/frame/navigator_language.h
++++ b/third_party/blink/renderer/core/frame/navigator_language.h
+@@ -35,6 +35,7 @@ class CORE_EXPORT NavigatorLanguage : public GarbageCollectedMixin {
+   // |execution_context_| may be null at the time of instantiation.
+   WeakMember<ExecutionContext> execution_context_;
+   Vector<String> languages_;
++  Vector<String> kr_languages_;
+   bool languages_dirty_ = true;
+ };
+ 
+diff --git a/third_party/blink/renderer/core/frame/navigator_ua_data.cc b/third_party/blink/renderer/core/frame/navigator_ua_data.cc
+index d75832c657..a2ed2f5dc9 100644
+--- a/third_party/blink/renderer/core/frame/navigator_ua_data.cc
++++ b/third_party/blink/renderer/core/frame/navigator_ua_data.cc
+@@ -16,6 +16,7 @@
+ #include "third_party/blink/renderer/bindings/core/v8/v8_ua_data_values.h"
+ #include "third_party/blink/renderer/core/execution_context/execution_context.h"
+ #include "third_party/blink/renderer/core/frame/web_feature_forward.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ 
+ namespace blink {
+ 
+@@ -106,6 +107,11 @@ const HeapVector<Member<NavigatorUABrandVersion>>& NavigatorUAData::brands()
+ 
+ const String& NavigatorUAData::platform() const {
+   if (GetExecutionContext()) {
++    if (kr::FingerprintProfile::IsActive() &&
++        kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++      DEFINE_STATIC_LOCAL(String, kr_platform, ("Windows"));
++      return kr_platform;
++    }
+     return platform_;
+   }
+   return g_empty_string;
+@@ -144,7 +150,7 @@ ScriptPromise<UADataValues> NavigatorUAData::getHighEntropyValues(
+ 
+   values->setBrands(brand_set_);
+   values->setMobile(is_mobile_);
+-  values->setPlatform(platform_);
++  values->setPlatform(platform());
+ 
+   // If the "ch-ua-high-entropy-values" permission policy is enabled for a
+   // document, add high-entropy client hints to values (if requested)
+diff --git a/third_party/blink/renderer/core/frame/screen.cc b/third_party/blink/renderer/core/frame/screen.cc
+index ed5028943e..618be710e5 100644
+--- a/third_party/blink/renderer/core/frame/screen.cc
++++ b/third_party/blink/renderer/core/frame/screen.cc
+@@ -36,6 +36,7 @@
+ #include "third_party/blink/renderer/core/frame/local_frame.h"
+ #include "third_party/blink/renderer/core/frame/settings.h"
+ #include "third_party/blink/renderer/core/page/chrome_client.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "ui/display/screen_info.h"
+ #include "ui/display/screen_infos.h"
+ 
+@@ -90,22 +91,32 @@ bool Screen::AreWebExposedScreenPropertiesEqual(
+ int Screen::height() const {
+   if (!DomWindow())
+     return 0;
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return kr::FingerprintProfile::Get().screen().h;
++  }
+   return GetRect(/*available=*/false).height();
+ }
+ 
+ int Screen::width() const {
+   if (!DomWindow())
+     return 0;
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return kr::FingerprintProfile::Get().screen().w;
++  }
+   return GetRect(/*available=*/false).width();
+ }
+ 
+ unsigned Screen::colorDepth() const {
+-  // "If the user agent does not know the color depth or does not want to
+-  // return it for privacy considerations, it should return 24."
+-  //
+-  // https://drafts.csswg.org/cssom-view/#dom-screen-colordepth
+   unsigned unknown_color_depth = 24u;
+ 
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return static_cast<unsigned>(
++        kr::FingerprintProfile::Get().screen().color_depth);
++  }
++
+   if (!DomWindow()) {
+     return unknown_color_depth;
+   }
+@@ -133,12 +144,20 @@ int Screen::availTop() const {
+ int Screen::availHeight() const {
+   if (!DomWindow())
+     return 0;
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return kr::FingerprintProfile::Get().screen().avail_h;
++  }
+   return GetRect(/*available=*/true).height();
+ }
+ 
+ int Screen::availWidth() const {
+   if (!DomWindow())
+     return 0;
++  if (kr::FingerprintProfile::IsActive() &&
++      kr::FingerprintProfile::Get().IsToggleEnabled("screen")) {
++    return kr::FingerprintProfile::Get().screen().avail_w;
++  }
+   return GetRect(/*available=*/true).width();
+ }
+ 
+diff --git a/third_party/blink/renderer/modules/canvas/canvas2d/base_rendering_context_2d.cc b/third_party/blink/renderer/modules/canvas/canvas2d/base_rendering_context_2d.cc
+index eaa71b910d..0fb62a8b3c 100644
+--- a/third_party/blink/renderer/modules/canvas/canvas2d/base_rendering_context_2d.cc
++++ b/third_party/blink/renderer/modules/canvas/canvas2d/base_rendering_context_2d.cc
+@@ -28,6 +28,7 @@
+ #include "base/strings/stringprintf.h"
+ #include "base/task/single_thread_task_runner.h"
+ #include "base/time/time.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/canvas_noise.h"
+ #include "base/trace_event/memory_allocator_dump.h"
+ #include "base/trace_event/memory_dump_manager.h"
+ #include "base/trace_event/process_memory_dump.h"
+@@ -937,6 +938,11 @@ ImageData* BaseRenderingContext2D::getImageDataInternal(
+     }
+   }
+ 
++  kr::ApplyCanvasNoise(
++      static_cast<uint8_t*>(image_data->GetSkPixmap().writable_addr()),
++      image_data->width(), image_data->height(),
++      image_data->GetSkPixmap().rowBytes());
++
+   return image_data;
+ }
+ 
+diff --git a/third_party/blink/renderer/modules/webaudio/audio_buffer.cc b/third_party/blink/renderer/modules/webaudio/audio_buffer.cc
+index 9a66186d8e..36c22f4197 100644
+--- a/third_party/blink/renderer/modules/webaudio/audio_buffer.cc
++++ b/third_party/blink/renderer/modules/webaudio/audio_buffer.cc
+@@ -39,6 +39,7 @@
+ #include "third_party/blink/renderer/platform/audio/audio_utilities.h"
+ #include "third_party/blink/renderer/platform/bindings/exception_messages.h"
+ #include "third_party/blink/renderer/platform/bindings/exception_state.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/audio_noise.h"
+ #include "third_party/blink/renderer/platform/wtf/text/strcat.h"
+ 
+ namespace blink {
+@@ -220,6 +221,16 @@ NotShared<DOMFloat32Array> AudioBuffer::getChannelData(unsigned channel_index) {
+     return NotShared<DOMFloat32Array>(nullptr);
+   }
+ 
++  if (!kr_noised_) {
++    kr_noised_ = true;
++    for (unsigned i = 0; i < channels_.size(); ++i) {
++      DOMFloat32Array* ch = channels_[i].Get();
++      if (ch && ch->length() > 0) {
++        kr::ApplyAudioNoise(static_cast<float*>(ch->Data()), ch->length());
++      }
++    }
++  }
++
+   return NotShared<DOMFloat32Array>(channels_[channel_index].Get());
+ }
+ 
+@@ -260,6 +271,16 @@ void AudioBuffer::copyFromChannel(NotShared<DOMFloat32Array> destination,
+     return;
+   }
+ 
++  if (!kr_noised_) {
++    kr_noised_ = true;
++    for (unsigned i = 0; i < channels_.size(); ++i) {
++      DOMFloat32Array* ch = channels_[i].Get();
++      if (ch && ch->length() > 0) {
++        kr::ApplyAudioNoise(static_cast<float*>(ch->Data()), ch->length());
++      }
++    }
++  }
++
+   size_t count = std::min(dst.size(), src.size() - buffer_offset);
+ 
+   DCHECK(src.data());
+diff --git a/third_party/blink/renderer/modules/webaudio/audio_buffer.h b/third_party/blink/renderer/modules/webaudio/audio_buffer.h
+index 0dd11f830e..58b7d427e6 100644
+--- a/third_party/blink/renderer/modules/webaudio/audio_buffer.h
++++ b/third_party/blink/renderer/modules/webaudio/audio_buffer.h
+@@ -123,6 +123,7 @@ class MODULES_EXPORT AudioBuffer final : public ScriptWrappable {
+   uint32_t length_;
+ 
+   HeapVector<Member<DOMFloat32Array>> channels_;
++  bool kr_noised_ = false;
+ };
+ 
+ // Shared data that audio threads can hold onto.
+diff --git a/third_party/blink/renderer/modules/webgl/webgl_rendering_context_base.cc b/third_party/blink/renderer/modules/webgl/webgl_rendering_context_base.cc
+index 1a00418d11..ca3003c235 100644
+--- a/third_party/blink/renderer/modules/webgl/webgl_rendering_context_base.cc
++++ b/third_party/blink/renderer/modules/webgl/webgl_rendering_context_base.cc
+@@ -40,6 +40,7 @@
+ #include "base/notimplemented.h"
+ #include "base/numerics/checked_math.h"
+ #include "base/strings/stringprintf.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "base/synchronization/lock.h"
+ #include "base/task/single_thread_task_runner.h"
+ #include "base/trace_event/memory_dump_manager.h"
+@@ -4086,6 +4087,38 @@ ScriptValue WebGLRenderingContextBase::getParameter(ScriptState* script_state,
+                                                     GLenum pname) {
+   if (isContextLost())
+     return ScriptValue::CreateNull(script_state->GetIsolate());
++
++  {
++    const auto& fp = kr::FingerprintProfile::Get();
++    if (fp.IsActive() && fp.IsToggleEnabled("gpu_webgl")) {
++      const auto& g = fp.gpu();
++      switch (pname) {
++        case GL_MAX_TEXTURE_SIZE:
++          return WebGLAny(script_state, g.max_texture_size);
++        case GL_MAX_CUBE_MAP_TEXTURE_SIZE:
++          return WebGLAny(script_state, g.max_cube_map_texture_size);
++        case GL_MAX_TEXTURE_IMAGE_UNITS:
++          return WebGLAny(script_state, g.max_texture_image_units);
++        case GL_MAX_VERTEX_ATTRIBS:
++          return WebGLAny(script_state, g.max_vertex_attribs);
++        case GL_MAX_VERTEX_UNIFORM_VECTORS:
++          return WebGLAny(script_state, g.max_vertex_uniform_vectors);
++        case GL_MAX_FRAGMENT_UNIFORM_VECTORS:
++          return WebGLAny(script_state, g.max_fragment_uniform_vectors);
++        case GL_MAX_RENDERBUFFER_SIZE:
++          return WebGLAny(script_state, g.max_renderbuffer_size);
++        case GL_MAX_VARYING_VECTORS:
++          return WebGLAny(script_state, g.max_varying_vectors);
++        case GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS:
++          return WebGLAny(script_state, g.max_vertex_texture_image_units);
++        case GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS:
++          return WebGLAny(script_state, g.max_combined_texture_image_units);
++        default:
++          break;
++      }
++    }
++  }
++
+   const int kIntZero = 0;
+   switch (pname) {
+     case GL_ACTIVE_TEXTURE:
+@@ -4295,6 +4328,14 @@ ScriptValue WebGLRenderingContextBase::getParameter(ScriptState* script_state,
+       return ScriptValue::CreateNull(script_state->GetIsolate());
+     case WebGLDebugRendererInfo::kUnmaskedRendererWebgl:
+       if (ExtensionEnabled(kWebGLDebugRendererInfoName)) {
++        {
++          const auto& fp = kr::FingerprintProfile::Get();
++          if (fp.IsActive() && fp.IsToggleEnabled("gpu_webgl") &&
++              !fp.gpu().renderer.empty()) {
++            return WebGLAny(script_state,
++                            String::FromUtf8(fp.gpu().renderer));
++          }
++        }
+         return WebGLAny(script_state,
+                         String(ContextGL()->GetString(GL_RENDERER)));
+       }
+@@ -4304,6 +4345,14 @@ ScriptValue WebGLRenderingContextBase::getParameter(ScriptState* script_state,
+       return ScriptValue::CreateNull(script_state->GetIsolate());
+     case WebGLDebugRendererInfo::kUnmaskedVendorWebgl:
+       if (ExtensionEnabled(kWebGLDebugRendererInfoName)) {
++        {
++          const auto& fp = kr::FingerprintProfile::Get();
++          if (fp.IsActive() && fp.IsToggleEnabled("gpu_webgl") &&
++              !fp.gpu().vendor.empty()) {
++            return WebGLAny(script_state,
++                            String::FromUtf8(fp.gpu().vendor));
++          }
++        }
+         return WebGLAny(script_state,
+                         String(ContextGL()->GetString(GL_VENDOR)));
+       }
+diff --git a/third_party/blink/renderer/platform/BUILD.gn b/third_party/blink/renderer/platform/BUILD.gn
+index ec13ed0736..5b8dacd68f 100644
+--- a/third_party/blink/renderer/platform/BUILD.gn
++++ b/third_party/blink/renderer/platform/BUILD.gn
+@@ -1355,6 +1355,12 @@ component("platform") {
+     "json/json_values.cc",
+     "json/json_values.h",
+     "keyboard_codes.h",
++    "kr_fingerprint/audio_noise.cc",
++    "kr_fingerprint/audio_noise.h",
++    "kr_fingerprint/canvas_noise.cc",
++    "kr_fingerprint/canvas_noise.h",
++    "kr_fingerprint/fingerprint_profile.cc",
++    "kr_fingerprint/fingerprint_profile.h",
+     "language.cc",
+     "language.h",
+     "language_detection/language_detection_model.cc",
+@@ -1876,6 +1882,7 @@ component("platform") {
+     "//cc",
+     "//cc/mojo_embedder",
+     "//components/input",
++    "//components/kr_fingerprint",
+     "//components/language_detection/content/common",
+     "//components/language_detection/content/common:common_blink",
+     "//components/language_detection/content/renderer",
+diff --git a/third_party/blink/renderer/platform/fonts/font_cache.cc b/third_party/blink/renderer/platform/fonts/font_cache.cc
+index 07c2f084f9..b53e5ccd88 100644
+--- a/third_party/blink/renderer/platform/fonts/font_cache.cc
++++ b/third_party/blink/renderer/platform/fonts/font_cache.cc
+@@ -35,6 +35,8 @@
+ #include <memory>
+ 
+ #include "base/byte_size.h"
++#include "base/strings/string_util.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ #include "base/debug/alias.h"
+ #include "base/feature_list.h"
+ #include "base/notreached.h"
+@@ -159,6 +161,25 @@ const FontPlatformData* FontCache::GetFontPlatformData(
+     AlternateFontName alternate_font_name) {
+   TRACE_EVENT0("fonts", "FontCache::GetFontPlatformData");
+ 
++  if (creation_params.CreationType() == kCreateFontByFamily) {
++    const auto& fp = kr::FingerprintProfile::Get();
++    if (fp.IsActive() && fp.IsToggleEnabled("fonts")) {
++      const auto& font_list = fp.fonts();
++      if (!font_list.empty()) {
++        std::string fam = creation_params.Family().Utf8();
++        bool found = false;
++        for (const auto& f : font_list) {
++          if (base::EqualsCaseInsensitiveASCII(f, fam)) {
++            found = true;
++            break;
++          }
++        }
++        if (!found)
++          return nullptr;
++      }
++    }
++  }
++
+ #if !BUILDFLAG(IS_MAC)
+   if (creation_params.CreationType() == kCreateFontByFamily &&
+       creation_params.Family() == font_family_names::kSystemUi) {
+diff --git a/third_party/blink/renderer/platform/graphics/image_data_buffer.cc b/third_party/blink/renderer/platform/graphics/image_data_buffer.cc
+index 89f8fff042..0025dd2300 100644
+--- a/third_party/blink/renderer/platform/graphics/image_data_buffer.cc
++++ b/third_party/blink/renderer/platform/graphics/image_data_buffer.cc
+@@ -36,6 +36,7 @@
+ #include "base/logging.h"
+ #include "base/memory/ptr_util.h"
+ #include "third_party/blink/renderer/platform/image-encoders/image_encoder_utils.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/canvas_noise.h"
+ #include "third_party/blink/renderer/platform/wtf/text/base64.h"
+ #include "third_party/blink/renderer/platform/wtf/text/strcat.h"
+ #include "third_party/skia/include/core/SkImage.h"
+@@ -140,6 +141,19 @@ base::span<const uint8_t> ImageDataBuffer::PixelData() const {
+ bool ImageDataBuffer::EncodeImage(const ImageEncodingMimeType mime_type,
+                                   const double& quality,
+                                   Vector<unsigned char>* encoded_image) const {
++  if (pixmap_.width() > 0 && pixmap_.height() > 0 &&
++      pixmap_.colorType() == kRGBA_8888_SkColorType) {
++    size_t data_size = pixmap_.computeByteSize();
++    if (data_size > 0) {
++      std::vector<uint8_t> noised(data_size);
++      memcpy(noised.data(), pixmap_.addr(), data_size);
++      kr::ApplyCanvasNoise(noised.data(), pixmap_.width(), pixmap_.height(),
++                           pixmap_.rowBytes());
++      SkPixmap noised_pixmap(pixmap_.info(), noised.data(), pixmap_.rowBytes());
++      return ImageEncoder::Encode(encoded_image, noised_pixmap, mime_type,
++                                  quality);
++    }
++  }
+   return ImageEncoder::Encode(encoded_image, pixmap_, mime_type, quality);
+ }
+ 
+diff --git a/third_party/blink/renderer/platform/kr_fingerprint/audio_noise.cc b/third_party/blink/renderer/platform/kr_fingerprint/audio_noise.cc
+new file mode 100644
+index 0000000000..0786c91635
+--- /dev/null
++++ b/third_party/blink/renderer/platform/kr_fingerprint/audio_noise.cc
+@@ -0,0 +1,25 @@
++#include "third_party/blink/renderer/platform/kr_fingerprint/audio_noise.h"
++
++#include "components/kr_fingerprint/deterministic_noise.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
++
++namespace blink {
++namespace kr {
++
++void ApplyAudioNoise(float* samples, size_t count) {
++  const auto& fp = FingerprintProfile::Get();
++  if (!fp.IsActive() || !fp.IsToggleEnabled("audio"))
++    return;
++
++  ::kr::DeterministicNoise noise(fp.seed(), "audio");
++  for (size_t i = 0; i < count; ++i) {
++    float val = samples[i];
++    if (val == 0.0f)
++      continue;
++    double delta = noise.Uniform01() * 2e-7 - 1e-7;
++    samples[i] = static_cast<float>(static_cast<double>(val) + delta);
++  }
++}
++
++}  // namespace kr
++}  // namespace blink
+diff --git a/third_party/blink/renderer/platform/kr_fingerprint/audio_noise.h b/third_party/blink/renderer/platform/kr_fingerprint/audio_noise.h
+new file mode 100644
+index 0000000000..65bd264287
+--- /dev/null
++++ b/third_party/blink/renderer/platform/kr_fingerprint/audio_noise.h
+@@ -0,0 +1,15 @@
++#ifndef THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_AUDIO_NOISE_H_
++#define THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_AUDIO_NOISE_H_
++
++#include <cstddef>
++#include "third_party/blink/renderer/platform/platform_export.h"
++
++namespace blink {
++namespace kr {
++
++PLATFORM_EXPORT void ApplyAudioNoise(float* samples, size_t count);
++
++}  // namespace kr
++}  // namespace blink
++
++#endif
+diff --git a/third_party/blink/renderer/platform/kr_fingerprint/canvas_noise.cc b/third_party/blink/renderer/platform/kr_fingerprint/canvas_noise.cc
+new file mode 100644
+index 0000000000..82dc4b5f86
+--- /dev/null
++++ b/third_party/blink/renderer/platform/kr_fingerprint/canvas_noise.cc
+@@ -0,0 +1,41 @@
++#include "third_party/blink/renderer/platform/kr_fingerprint/canvas_noise.h"
++
++#include "components/kr_fingerprint/deterministic_noise.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
++
++namespace blink {
++namespace kr {
++
++void ApplyCanvasNoise(uint8_t* pixels,
++                      size_t width,
++                      size_t height,
++                      size_t row_bytes) {
++  const auto& fp = FingerprintProfile::Get();
++  if (!fp.IsActive() || !fp.IsToggleEnabled("canvas"))
++    return;
++
++  ::kr::DeterministicNoise noise(fp.seed(), "canvas");
++
++  for (size_t y = 0; y < height; ++y) {
++    uint8_t* row = pixels + y * row_bytes;
++    for (size_t x = 0; x < width; ++x) {
++      // RGBA: 4 bytes per pixel. Only perturb RGB, leave alpha alone.
++      size_t offset = x * 4;
++      for (size_t c = 0; c < 3; ++c) {
++        uint8_t val = row[offset + c];
++        // Skip pure 0 and 255 to avoid creating visible noise on
++        // transparent or saturated regions.
++        if (val == 0 || val == 255)
++          continue;
++        int delta = noise.IntRange(-1, 1);
++        int result = static_cast<int>(val) + delta;
++        if (result < 1) result = 1;
++        if (result > 254) result = 254;
++        row[offset + c] = static_cast<uint8_t>(result);
++      }
++    }
++  }
++}
++
++}  // namespace kr
++}  // namespace blink
+diff --git a/third_party/blink/renderer/platform/kr_fingerprint/canvas_noise.h b/third_party/blink/renderer/platform/kr_fingerprint/canvas_noise.h
+new file mode 100644
+index 0000000000..443dc2edc5
+--- /dev/null
++++ b/third_party/blink/renderer/platform/kr_fingerprint/canvas_noise.h
+@@ -0,0 +1,20 @@
++#ifndef THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_CANVAS_NOISE_H_
++#define THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_CANVAS_NOISE_H_
++
++#include <cstddef>
++#include <cstdint>
++
++#include "third_party/blink/renderer/platform/platform_export.h"
++
++namespace blink {
++namespace kr {
++
++PLATFORM_EXPORT void ApplyCanvasNoise(uint8_t* pixels,
++                                       size_t width,
++                                       size_t height,
++                                       size_t row_bytes);
++
++}  // namespace kr
++}  // namespace blink
++
++#endif  // THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_CANVAS_NOISE_H_
+diff --git a/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc
+new file mode 100644
+index 0000000000..a18ffc6a81
+--- /dev/null
++++ b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.cc
+@@ -0,0 +1,53 @@
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
++
++#include "base/check.h"
++#include "base/logging.h"
++#include "base/no_destructor.h"
++
++namespace blink {
++namespace kr {
++
++FingerprintProfile::FingerprintProfile(::kr::ProfileData data)
++    : data_(std::move(data)), active_(true) {}
++
++// static
++FingerprintProfile& FingerprintProfile::Get() {
++  static base::NoDestructor<FingerprintProfile> instance;
++  return *instance;
++}
++
++// static
++void FingerprintProfile::Initialize(::kr::ProfileData data) {
++  FingerprintProfile& fp = Get();
++  CHECK(!fp.active_) << "kr: FingerprintProfile already initialized";
++  fp.data_ = std::move(data);
++  fp.active_ = true;
++  LOG(INFO) << "kr: FingerprintProfile initialized, seed="
++            << fp.data_.seed.substr(0, 8) << "...";
++}
++
++// static
++bool FingerprintProfile::IsActive() {
++  return Get().active_;
++}
++
++bool FingerprintProfile::IsToggleEnabled(std::string_view group) const {
++  if (!active_)
++    return false;
++  const auto& t = data_.toggles;
++  if (group == "screen") return t.screen;
++  if (group == "cpu_memory") return t.cpu_memory;
++  if (group == "gpu_webgl") return t.gpu_webgl;
++  if (group == "canvas") return t.canvas;
++  if (group == "audio") return t.audio;
++  if (group == "fonts") return t.fonts;
++  if (group == "locale_tz") return t.locale_tz;
++  if (group == "network") return t.network;
++  if (group == "voices") return t.voices;
++  if (group == "permissions") return t.permissions;
++  if (group == "window_size") return t.window_size;
++  return false;
++}
++
++}  // namespace kr
++}  // namespace blink
+diff --git a/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h
+new file mode 100644
+index 0000000000..3457b53941
+--- /dev/null
++++ b/third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h
+@@ -0,0 +1,48 @@
++#ifndef THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_FINGERPRINT_PROFILE_H_
++#define THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_FINGERPRINT_PROFILE_H_
++
++#include <memory>
++#include <string_view>
++
++#include "base/no_destructor.h"
++#include "components/kr_fingerprint/profile_data.h"
++#include "third_party/blink/renderer/platform/platform_export.h"
++
++namespace blink {
++namespace kr {
++
++class PLATFORM_EXPORT FingerprintProfile {
++ public:
++  static FingerprintProfile& Get();
++  static void Initialize(::kr::ProfileData data);
++  static bool IsActive();
++
++  const ::kr::ProfileData& data() const { return data_; }
++  const ::kr::ScreenData& screen() const { return data_.screen; }
++  const ::kr::NavigatorData& navigator() const { return data_.navigator; }
++  const ::kr::GpuData& gpu() const { return data_.gpu; }
++  const ::kr::LocaleData& locale() const { return data_.locale; }
++  const ::kr::CanvasData& canvas() const { return data_.canvas; }
++  const ::kr::ConnectionData& connection() const { return data_.connection; }
++  const std::vector<std::string>& fonts() const { return data_.fonts; }
++  const ::kr::TogglesData& toggles() const { return data_.toggles; }
++  const std::string& seed() const { return data_.seed; }
++
++  bool IsToggleEnabled(std::string_view group) const;
++
++  FingerprintProfile(const FingerprintProfile&) = delete;
++  FingerprintProfile& operator=(const FingerprintProfile&) = delete;
++
++ private:
++  friend class base::NoDestructor<FingerprintProfile>;
++  FingerprintProfile() = default;
++  explicit FingerprintProfile(::kr::ProfileData data);
++
++  ::kr::ProfileData data_;
++  bool active_ = false;
++};
++
++}  // namespace kr
++}  // namespace blink
++
++#endif  // THIRD_PARTY_BLINK_RENDERER_PLATFORM_KR_FINGERPRINT_FINGERPRINT_PROFILE_H_
+diff --git a/ui/accessibility/platform/uia_client_info_source_win.cc b/ui/accessibility/platform/uia_client_info_source_win.cc
+index 93dbcb359e..b803390438 100644
+--- a/ui/accessibility/platform/uia_client_info_source_win.cc
++++ b/ui/accessibility/platform/uia_client_info_source_win.cc
+@@ -4,6 +4,8 @@
+ 
+ #include "ui/accessibility/platform/uia_client_info_source_win.h"
+ 
++#include <objbase.h>
++#include <UIAutomationCore.h>
+ #include <wrl/implements.h>
+ 
+ #include <optional>

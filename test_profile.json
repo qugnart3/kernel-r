@@ -12,7 +12,8 @@
     "network": true,
     "voices": true,
     "permissions": true,
-    "window_size": true
+    "window_size": true,
+    "webrtc": true
   },
   "screen": {
     "w": 1920,
