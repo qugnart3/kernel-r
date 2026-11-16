@@ -76,9 +76,9 @@ function run() {
     ['screen.width', () => Object.getOwnPropertyDescriptor(Screen.prototype, 'width')?.get],
     ['screen.height', () => Object.getOwnPropertyDescriptor(Screen.prototype, 'height')?.get],
     ['screen.colorDepth', () => Object.getOwnPropertyDescriptor(Screen.prototype, 'colorDepth')?.get],
-    ['window.innerWidth', () => Object.getOwnPropertyDescriptor(Window.prototype, 'innerWidth')?.get],
-    ['window.outerWidth', () => Object.getOwnPropertyDescriptor(Window.prototype, 'outerWidth')?.get],
-    ['window.devicePixelRatio', () => Object.getOwnPropertyDescriptor(Window.prototype, 'devicePixelRatio')?.get],
+    ['window.innerWidth', () => Object.getOwnPropertyDescriptor(window, 'innerWidth')?.get],
+    ['window.outerWidth', () => Object.getOwnPropertyDescriptor(window, 'outerWidth')?.get],
+    ['window.devicePixelRatio', () => Object.getOwnPropertyDescriptor(window, 'devicePixelRatio')?.get],
     ['HTMLCanvasElement.toDataURL', () => HTMLCanvasElement.prototype.toDataURL],
     ['HTMLCanvasElement.toBlob', () => HTMLCanvasElement.prototype.toBlob],
     ['CanvasRenderingContext2D.getImageData', () => CanvasRenderingContext2D.prototype.getImageData],
@@ -115,8 +115,8 @@ function run() {
     ['Navigator.prototype.webdriver', Navigator.prototype, 'webdriver', {configurable: true, enumerable: true}],
     ['Screen.prototype.width', Screen.prototype, 'width', {configurable: true, enumerable: true}],
     ['Screen.prototype.height', Screen.prototype, 'height', {configurable: true, enumerable: true}],
-    ['Window.prototype.innerWidth', Window.prototype, 'innerWidth', {configurable: true, enumerable: true}],
-    ['Window.prototype.devicePixelRatio', Window.prototype, 'devicePixelRatio', {configurable: true, enumerable: true}],
+    ['window.innerWidth', window, 'innerWidth', {configurable: true, enumerable: true}],
+    ['window.devicePixelRatio', window, 'devicePixelRatio', {configurable: true, enumerable: true}],
   ];
 
   for (const [name, obj, prop, expected] of descriptorChecks) {
@@ -204,8 +204,9 @@ function run() {
       catch (e) { return `TypeError: ${e.message.substring(0, 60)}`; }
     }, true],
     ['Navigator.prototype.hardwareConcurrency', () => {
-      const getter = Object.getOwnPropertyDescriptor(Navigator.prototype, 'hardwareConcurrency').get;
-      try { getter.call({}); return 'no error (potential issue)'; }
+      const desc = Object.getOwnPropertyDescriptor(Navigator.prototype, 'hardwareConcurrency');
+      if (!desc || !desc.get) return 'no getter found';
+      try { desc.get.call({}); return 'no error (potential issue)'; }
       catch (e) { return `TypeError: ${e.message.substring(0, 60)}`; }
     }, true],
   ];
