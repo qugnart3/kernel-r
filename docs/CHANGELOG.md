@@ -1,5 +1,22 @@
 # CHANGELOG — Kernel-R
 
+## 2026-11-16 — T15: Anti-config-leak (D21 + D22)
+
+### Thêm
+- **chrome/app/chrome_main_delegate.cc** (D21): Khi `--kr-profile` active, append `AimEnabled,AimServerEligibilityEnabled,AimServerRequestOnStartupEnabled,PreconnectToSearch` vào `--disable-features` — tắt Google background connections (Aim eligibility pings, search preconnect) để tránh leak fingerprint qua side-channel
+- **chrome/browser/ui/webui/version/version_ui.cc** (D22): Filter tất cả `kr-*` switches khỏi chrome://version Command Line display. Windows: rebuild CommandLine object bỏ kr-prefixed switches. Non-Windows: filter argv entries bắt đầu `--kr-`
+- **test_antileak.html**: Test page kiểm tra 5 mặt: toString integrity (17 functions), GOPD descriptor integrity (9 properties), KR string leak scan (6 patterns × 5 objects + chrome.kr + UA), brand check (wrong-this TypeError), chrome://version manual check instructions
+
+### Thiết kế
+- D21: Dùng `RemoveSwitch` + `AppendSwitchASCII` để merge với existing `--disable-features` — không ghi đè user flags
+- D22: Reconstruct CommandLine thay vì string replace — robust với quoted paths và special characters
+- toString/GOPD: KR patches ở C++ level (Blink IDL getters) nên `Function.prototype.toString` tự động trả `[native code]` — không cần thêm code
+- KR string scan: Verify không có property nào chứa "kr-profile", "kr_fingerprint", "kernel-r", "KernelR" trong window/navigator/screen/document
+
+### Vấn đề
+- Features disabled: `AimEnabled` + `AimServerEligibilityEnabled` + `AimServerRequestOnStartupEnabled` (omnibox AI suggestions, gọi Google servers) + `PreconnectToSearch` (preconnect tới search engine khi mở new tab)
+- chrome://version: Chỉ ẩn trên UI — `base::CommandLine::ForCurrentProcess()` vẫn giữ nguyên switches cho internal use
+
 ## 2026-11-16 — T14: TLS/H2 fingerprint parity (verification only)
 
 ### Xác minh

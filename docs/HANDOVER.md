@@ -74,6 +74,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | H2 | Accept-Language header override | `profile_network_context_service.cc` | `locale_tz` |
 | T13 | WebRTC IP leak prevention (2 layers) | `renderer_preferences_util.cc`, `rtc_peer_connection.cc` | `webrtc` |
 | T14 | TLS/H2 parity — verified stock (0 net/ changes) | Không sửa file — thừa hưởng Chromium 158 stock | — |
+| T15 | Anti-config-leak (D21 bg connections + D22 chrome://version) | `chrome_main_delegate.cc`, `version_ui.cc` | — |
 
 ### Profile cập nhật mới nhất (ĐÃ TEST — PASS 2026-11-16)
 - **Fonts**: Mở rộng từ 17 → 71 fonts (Windows 10 default set đầy đủ) ✓
@@ -84,7 +85,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 |------|--------|----------|
 | ~~T13~~ | ~~WebRTC (local IP leak, ICE candidates)~~ | ~~DONE~~ |
 | ~~T14~~ | ~~TLS/H2 (verified stock — 0 net/ changes)~~ | ~~DONE~~ |
-| T15 | Anti-config-leak (permissions API, voices, misc) | Medium |
+| ~~T15~~ | ~~Anti-config-leak (D21+D22)~~ | ~~DONE~~ |
 | T17 | Launcher + Manager UI (production) | Medium |
 | H3-H11 | hCaptcha signal gaps (xem HCAPTCHA_SIGNALS.md) | High |
 | A1-A15 | Automation (Named Pipe + SendMessage+HWND) | Later |
@@ -110,6 +111,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 - **Test dashboard**: `C:\src\kernel-r\test_toggles.html` — verification dashboard cho tất cả toggle groups
 - **Context matrix**: `C:\src\kernel-r\test_context_matrix.html` — Main vs Worker vs iframe consistency
 - **TLS/H2 verify**: `C:\src\kernel-r\test_tls.html` — fetch tls.peet.ws, compare JA3/JA4/H2 vs Chrome expected
+- **Anti-leak verify**: `C:\src\kernel-r\test_antileak.html` — toString integrity, GOPD, KR string scan, brand check, chrome://version
 - **Launcher UI**: `C:\src\kernel-r\launcher.py` — Python HTTP server (port 7700) cho bật/tắt toggles + relaunch Chrome
   - Chạy: `"C:\Users\h\AppData\Local\Programs\Python\Python312\python.exe" "C:\src\kernel-r\launcher.py"`
   - Mở: `http://localhost:7700`
@@ -165,6 +167,12 @@ chrome/browser/
 
 chrome/browser/net/
   profile_network_context_service.cc, BUILD.gn
+
+chrome/browser/ui/webui/version/
+  version_ui.cc
+
+chrome/app/
+  chrome_main_delegate.cc
 
 build/config/unsafe_buffers_paths.txt
 ```

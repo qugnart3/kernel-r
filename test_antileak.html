@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Kernel-R T15: Anti-Config-Leak Verification</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+  h1 { color: #00d4ff; margin-bottom: 5px; font-size: 1.4em; }
+  .subtitle { color: #888; margin-bottom: 20px; font-size: 0.9em; }
+  .section { background: #16213e; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .section h2 { color: #00d4ff; font-size: 1.1em; margin-bottom: 12px; border-bottom: 1px solid #333; padding-bottom: 6px; }
+  .check { display: flex; align-items: flex-start; margin-bottom: 6px; padding: 8px; border-radius: 4px; background: #1a1a2e; }
+  .check .icon { font-size: 1.1em; margin-right: 10px; min-width: 22px; text-align: center; }
+  .check .label { font-weight: 600; min-width: 260px; }
+  .check .value { color: #aaa; font-family: 'Consolas', monospace; font-size: 0.85em; word-break: break-all; }
+  .pass { border-left: 3px solid #00e676; }
+  .fail { border-left: 3px solid #ff5252; }
+  .warn { border-left: 3px solid #ffc107; }
+  .info { border-left: 3px solid #448aff; }
+  .status-bar { display: flex; gap: 20px; margin-bottom: 16px; padding: 12px; background: #16213e; border-radius: 8px; }
+  .status-item { text-align: center; }
+  .status-item .count { font-size: 2em; font-weight: 700; }
+  .status-item .lbl { font-size: 0.8em; color: #888; }
+  .pass-count { color: #00e676; }
+  .fail-count { color: #ff5252; }
+  .warn-count { color: #ffc107; }
+</style>
+</head>
+<body>
+<h1>T15: Anti-Config-Leak Verification</h1>
+<p class="subtitle">Kiểm tra không rò rỉ cấu hình KR qua JS APIs, toString, property descriptors</p>
+
+<div class="status-bar" id="status-bar"></div>
+<div id="results"></div>
+
+<script>
+let passCount = 0, failCount = 0, warnCount = 0;
+
+function addCheck(container, status, label, value) {
+  const div = document.createElement('div');
+  div.className = `check ${status}`;
+  const icons = { pass: '✅', fail: '❌', warn: '⚠️', info: 'ℹ️' };
+  div.innerHTML = `<span class="icon">${icons[status]}</span><span class="label">${label}</span><span class="value">${value || ''}</span>`;
+  container.appendChild(div);
+  if (status === 'pass') passCount++;
+  else if (status === 'fail') failCount++;
+  else if (status === 'warn') warnCount++;
+}
+
+function updateStatusBar() {
+  document.getElementById('status-bar').innerHTML = `
+    <div class="status-item"><div class="count pass-count">${passCount}</div><div class="lbl">PASS</div></div>
+    <div class="status-item"><div class="count fail-count">${failCount}</div><div class="lbl">FAIL</div></div>
+    <div class="status-item"><div class="count warn-count">${warnCount}</div><div class="lbl">WARN</div></div>
+    <div class="status-item"><div class="count" style="color:#aaa">${passCount + failCount + warnCount}</div><div class="lbl">TOTAL</div></div>`;
+}
+
+function run() {
+  const container = document.getElementById('results');
+
+  // === Section 1: toString integrity ===
+  const tsSection = document.createElement('div');
+  tsSection.className = 'section';
+  tsSection.innerHTML = '<h2>Function.prototype.toString Integrity</h2>';
+  container.appendChild(tsSection);
+
+  const nativePattern = /^function \w+\(\) \{ \[native code\] \}$/;
+  const functionsToCheck = [
+    ['navigator.hardwareConcurrency', () => Object.getOwnPropertyDescriptor(Navigator.prototype, 'hardwareConcurrency')?.get],
+    ['navigator.deviceMemory', () => Object.getOwnPropertyDescriptor(Navigator.prototype, 'deviceMemory')?.get],
+    ['navigator.platform', () => Object.getOwnPropertyDescriptor(Navigator.prototype, 'platform')?.get],
+    ['navigator.language', () => Object.getOwnPropertyDescriptor(Navigator.prototype, 'language')?.get],
+    ['navigator.languages', () => Object.getOwnPropertyDescriptor(Navigator.prototype, 'languages')?.get],
+    ['navigator.webdriver', () => Object.getOwnPropertyDescriptor(Navigator.prototype, 'webdriver')?.get],
+    ['screen.width', () => Object.getOwnPropertyDescriptor(Screen.prototype, 'width')?.get],
+    ['screen.height', () => Object.getOwnPropertyDescriptor(Screen.prototype, 'height')?.get],
+    ['screen.colorDepth', () => Object.getOwnPropertyDescriptor(Screen.prototype, 'colorDepth')?.get],
+    ['window.innerWidth', () => Object.getOwnPropertyDescriptor(Window.prototype, 'innerWidth')?.get],
+    ['window.outerWidth', () => Object.getOwnPropertyDescriptor(Window.prototype, 'outerWidth')?.get],
+    ['window.devicePixelRatio', () => Object.getOwnPropertyDescriptor(Window.prototype, 'devicePixelRatio')?.get],
+    ['HTMLCanvasElement.toDataURL', () => HTMLCanvasElement.prototype.toDataURL],
+    ['HTMLCanvasElement.toBlob', () => HTMLCanvasElement.prototype.toBlob],
+    ['CanvasRenderingContext2D.getImageData', () => CanvasRenderingContext2D.prototype.getImageData],
+    ['AudioBuffer.getChannelData', () => AudioBuffer.prototype.getChannelData],
+    ['RTCPeerConnection constructor', () => RTCPeerConnection],
+  ];
+
+  for (const [name, getFn] of functionsToCheck) {
+    try {
+      const fn = getFn();
+      if (!fn) {
+        addCheck(tsSection, 'warn', name, 'undefined / not found');
+        continue;
+      }
+      const str = Function.prototype.toString.call(fn);
+      const isNative = nativePattern.test(str) || str.includes('[native code]');
+      addCheck(tsSection, isNative ? 'pass' : 'fail', name, str.substring(0, 80));
+    } catch (e) {
+      addCheck(tsSection, 'warn', name, `Error: ${e.message}`);
+    }
+  }
+
+  // === Section 2: Property descriptor integrity (GOPD) ===
+  const gopdSection = document.createElement('div');
+  gopdSection.className = 'section';
+  gopdSection.innerHTML = '<h2>getOwnPropertyDescriptor Integrity</h2>';
+  container.appendChild(gopdSection);
+
+  const descriptorChecks = [
+    ['Navigator.prototype.hardwareConcurrency', Navigator.prototype, 'hardwareConcurrency', {configurable: true, enumerable: true}],
+    ['Navigator.prototype.deviceMemory', Navigator.prototype, 'deviceMemory', {configurable: true, enumerable: true}],
+    ['Navigator.prototype.platform', Navigator.prototype, 'platform', {configurable: true, enumerable: true}],
+    ['Navigator.prototype.language', Navigator.prototype, 'language', {configurable: true, enumerable: true}],
+    ['Navigator.prototype.webdriver', Navigator.prototype, 'webdriver', {configurable: true, enumerable: true}],
+    ['Screen.prototype.width', Screen.prototype, 'width', {configurable: true, enumerable: true}],
+    ['Screen.prototype.height', Screen.prototype, 'height', {configurable: true, enumerable: true}],
+    ['Window.prototype.innerWidth', Window.prototype, 'innerWidth', {configurable: true, enumerable: true}],
+    ['Window.prototype.devicePixelRatio', Window.prototype, 'devicePixelRatio', {configurable: true, enumerable: true}],
+  ];
+
+  for (const [name, obj, prop, expected] of descriptorChecks) {
+    try {
+      const desc = Object.getOwnPropertyDescriptor(obj, prop);
+      if (!desc) {
+        addCheck(gopdSection, 'warn', name, 'no descriptor');
+        continue;
+      }
+      const hasGetter = typeof desc.get === 'function';
+      const confOk = desc.configurable === expected.configurable;
+      const enumOk = desc.enumerable === expected.enumerable;
+      const ok = hasGetter && confOk && enumOk;
+      addCheck(gopdSection, ok ? 'pass' : 'fail', name,
+        `get=${hasGetter}, configurable=${desc.configurable}, enumerable=${desc.enumerable}`);
+    } catch (e) {
+      addCheck(gopdSection, 'warn', name, `Error: ${e.message}`);
+    }
+  }
+
+  // === Section 3: KR string scan ===
+  const scanSection = document.createElement('div');
+  scanSection.className = 'section';
+  scanSection.innerHTML = '<h2>KR String Leak Scan</h2>';
+  container.appendChild(scanSection);
+
+  const krPatterns = ['kr-profile', 'kr_fingerprint', 'kr-enabled', 'kernel-r', 'KernelR', 'kr_switches'];
+  const objectsToScan = [
+    ['window (own props)', () => Object.getOwnPropertyNames(window)],
+    ['navigator (own props)', () => Object.getOwnPropertyNames(navigator)],
+    ['Navigator.prototype', () => Object.getOwnPropertyNames(Navigator.prototype)],
+    ['Screen.prototype', () => Object.getOwnPropertyNames(Screen.prototype)],
+    ['document (own props)', () => Object.getOwnPropertyNames(document)],
+  ];
+
+  for (const [objName, getPropsFn] of objectsToScan) {
+    try {
+      const props = getPropsFn();
+      let leaked = [];
+      for (const p of props) {
+        for (const pat of krPatterns) {
+          if (p.toLowerCase().includes(pat.toLowerCase())) {
+            leaked.push(p);
+          }
+        }
+      }
+      if (leaked.length === 0) {
+        addCheck(scanSection, 'pass', `${objName}: no kr strings`, `${props.length} properties scanned`);
+      } else {
+        addCheck(scanSection, 'fail', `${objName}: LEAKED`, leaked.join(', '));
+      }
+    } catch (e) {
+      addCheck(scanSection, 'warn', objName, `Error: ${e.message}`);
+    }
+  }
+
+  // Extra: check if chrome.kr or similar exists
+  try {
+    const hasChromeKr = typeof chrome !== 'undefined' && chrome.kr;
+    addCheck(scanSection, hasChromeKr ? 'fail' : 'pass', 'chrome.kr namespace', hasChromeKr ? 'EXISTS — leaked!' : 'not found');
+  } catch (e) {
+    addCheck(scanSection, 'pass', 'chrome.kr namespace', 'not found');
+  }
+
+  // Check userAgent for kr strings
+  const ua = navigator.userAgent;
+  const hasKrInUA = krPatterns.some(p => ua.toLowerCase().includes(p.toLowerCase()));
+  addCheck(scanSection, hasKrInUA ? 'fail' : 'pass', 'User-Agent string', hasKrInUA ? 'CONTAINS kr string!' : 'clean');
+
+  // === Section 4: Brand check ===
+  const brandSection = document.createElement('div');
+  brandSection.className = 'section';
+  brandSection.innerHTML = '<h2>Brand Check (wrong this)</h2>';
+  container.appendChild(brandSection);
+
+  const brandChecks = [
+    ['Navigator.prototype.platform', () => {
+      const getter = Object.getOwnPropertyDescriptor(Navigator.prototype, 'platform').get;
+      try { getter.call({}); return 'no error (potential issue)'; }
+      catch (e) { return `TypeError: ${e.message.substring(0, 60)}`; }
+    }, true],
+    ['Screen.prototype.width', () => {
+      const getter = Object.getOwnPropertyDescriptor(Screen.prototype, 'width').get;
+      try { getter.call({}); return 'no error (potential issue)'; }
+      catch (e) { return `TypeError: ${e.message.substring(0, 60)}`; }
+    }, true],
+    ['Navigator.prototype.hardwareConcurrency', () => {
+      const getter = Object.getOwnPropertyDescriptor(Navigator.prototype, 'hardwareConcurrency').get;
+      try { getter.call({}); return 'no error (potential issue)'; }
+      catch (e) { return `TypeError: ${e.message.substring(0, 60)}`; }
+    }, true],
+  ];
+
+  for (const [name, testFn, expectThrow] of brandChecks) {
+    try {
+      const result = testFn();
+      const threw = result.startsWith('TypeError');
+      addCheck(brandSection, threw === expectThrow ? 'pass' : 'warn', name, result);
+    } catch (e) {
+      addCheck(brandSection, 'warn', name, `Unexpected: ${e.message}`);
+    }
+  }
+
+  // === Section 5: chrome://version check instructions ===
+  const versionSection = document.createElement('div');
+  versionSection.className = 'section';
+  versionSection.innerHTML = '<h2>chrome://version — Manual Check</h2>';
+  container.appendChild(versionSection);
+
+  addCheck(versionSection, 'info', 'Mở chrome://version', 'Kiểm tra Command Line KHÔNG chứa --kr-profile hoặc --kr-*');
+  addCheck(versionSection, 'info', 'Kiểm tra User-Agent', `Hiện tại: ${navigator.userAgent.substring(0, 80)}`);
+
+  updateStatusBar();
+}
+
+run();
+</script>
+</body>
+</html>

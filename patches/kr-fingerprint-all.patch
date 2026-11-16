@@ -1,4 +1,4 @@
-diff --git a/build/config/unsafe_buffers_paths.txt b/build/config/unsafe_buffers_paths.txt
+﻿diff --git a/build/config/unsafe_buffers_paths.txt b/build/config/unsafe_buffers_paths.txt
 index 1bc60565f7..7a66ec67c4 100644
 --- a/build/config/unsafe_buffers_paths.txt
 +++ b/build/config/unsafe_buffers_paths.txt
@@ -12,6 +12,37 @@ index 1bc60565f7..7a66ec67c4 100644
  -components/optimization_guide/internal/
  -ios/third_party/
  -net/third_party/
+diff --git a/chrome/app/chrome_main_delegate.cc b/chrome/app/chrome_main_delegate.cc
+index 33a3b3844a..8531da92d2 100644
+--- a/chrome/app/chrome_main_delegate.cc
++++ b/chrome/app/chrome_main_delegate.cc
+@@ -35,6 +35,7 @@
+ #include "base/strings/string_util.h"
+ #include "base/strings/sys_string_conversions.h"
+ #include "base/strings/utf_string_conversions.h"
++#include "base/base_switches.h"
+ #include "base/task/thread_pool/thread_pool_instance.h"
+ #include "base/threading/hang_watcher.h"
+ #include "base/time/time.h"
+@@ -1226,6 +1227,18 @@ std::optional<int> ChromeMainDelegate::BasicStartupComplete() {
+           switches::kDisableWebSecurity);
+     }
+   }
++
++  if (command_line.HasSwitch("kr-profile")) {
++    auto* mutable_cmd = base::CommandLine::ForCurrentProcess();
++    std::string disabled =
++        mutable_cmd->GetSwitchValueASCII(switches::kDisableFeatures);
++    if (!disabled.empty())
++      disabled += ",";
++    disabled += "AimEnabled,AimServerEligibilityEnabled,"
++                "AimServerRequestOnStartupEnabled,PreconnectToSearch";
++    mutable_cmd->RemoveSwitch(switches::kDisableFeatures);
++    mutable_cmd->AppendSwitchASCII(switches::kDisableFeatures, disabled);
++  }
+ #endif  // !defined(BUILDING_CHROME_RENDERER)
+ 
+ #if !defined(BUILDING_CHROME_RENDERER)
 diff --git a/chrome/browser/BUILD.gn b/chrome/browser/BUILD.gn
 index f0f529901a..01ea9e9713 100644
 --- a/chrome/browser/BUILD.gn
@@ -98,6 +129,49 @@ index 1186e59080..12863ae85a 100644
    for (const base::Value& entry :
         pref_service->GetList(prefs::kWebRTCIPHandlingUrl)) {
      const base::DictValue& dict = entry.GetDict();
+diff --git a/chrome/browser/ui/webui/version/version_ui.cc b/chrome/browser/ui/webui/version/version_ui.cc
+index 7a9234630b..2f860f4fb5 100644
+--- a/chrome/browser/ui/webui/version/version_ui.cc
++++ b/chrome/browser/ui/webui/version/version_ui.cc
+@@ -293,15 +293,34 @@ void VersionUI::AddVersionDetailStrings(content::WebUIDataSource* html_source) {
+ #endif  // BUILDFLAG(IS_ANDROID)
+ 
+ #if BUILDFLAG(IS_WIN)
+-  html_source->AddString(
+-      version_ui::kCommandLine,
+-      base::AsString16(
+-          base::CommandLine::ForCurrentProcess()->GetCommandLineString()));
++  {
++    const auto* cmd = base::CommandLine::ForCurrentProcess();
++    if (cmd->HasSwitch("kr-profile")) {
++      base::CommandLine filtered(cmd->GetProgram());
++      for (const auto& [key, value] : cmd->GetSwitches()) {
++        if (key.rfind("kr-", 0) == 0)
++          continue;
++        filtered.AppendSwitchNative(key, cmd->GetSwitchValueNative(key));
++      }
++      for (const auto& arg : cmd->GetArgs()) {
++        filtered.AppendArgNative(arg);
++      }
++      html_source->AddString(
++          version_ui::kCommandLine,
++          base::AsString16(filtered.GetCommandLineString()));
++    } else {
++      html_source->AddString(
++          version_ui::kCommandLine,
++          base::AsString16(cmd->GetCommandLineString()));
++    }
++  }
+ #else
+   std::string command_line;
+   using ArgvList = std::vector<std::string>;
+   const ArgvList& argv = base::CommandLine::ForCurrentProcess()->argv();
+   for (const auto& iter : argv) {
++    if (iter.rfind("--kr-", 0) == 0)
++      continue;
+     command_line += " " + iter;
+   }
+   // TODO(viettrungluu): |command_line| could really have any encoding, whereas
 diff --git a/components/kr_fingerprint/BUILD.gn b/components/kr_fingerprint/BUILD.gn
 new file mode 100644
 index 0000000000..fc3044125c
