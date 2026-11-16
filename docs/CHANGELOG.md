@@ -1,5 +1,24 @@
 # CHANGELOG — Kernel-R
 
+## 2026-11-16 — T14: TLS/H2 fingerprint parity (verification only)
+
+### Xác minh
+- **0 file `net/` bị sửa** — `git diff --name-only b8c2be851f | grep ^net/` → empty
+- **0 file `boringssl/` bị sửa** — confirmed
+- **43 files total** — tất cả trong `components/kr_fingerprint/`, `third_party/blink/renderer/`, `chrome/browser/`, `content/browser/`, `build/config/`
+- TLS ClientHello, cipher suites, extensions, curves, ALPN → 100% stock Chromium 158
+- HTTP/2 SETTINGS: HEADER_TABLE_SIZE=65536, ENABLE_PUSH=0, INITIAL_WINDOW_SIZE=6291456, MAX_HEADER_LIST_SIZE=262144
+- HTTP/2 WINDOW_UPDATE: 15663105
+- Chrome 110+ extension shuffle: JA3 hash thay đổi mỗi session (by design), ciphers/curves cố định
+
+### Thêm
+- **test_tls.html**: Test page fetch tls.peet.ws/api/all, tự động so sánh ciphers/extensions/curves/H2 vs expected Chrome values
+- **HANDOVER.md**: T14 chuyển sang HOÀN THÀNH, thêm lesson learned #8
+
+### Kết luận
+- T14 là verification task — không cần code changes vì TLS stack thừa hưởng nguyên từ Chromium 158
+- Chỉ cần đảm bảo KHÔNG BAO GIỜ sửa file trong `net/` hoặc `third_party/boringssl/`
+
 ## 2026-11-16 — T13: WebRTC IP leak prevention (webrtc)
 
 ### Thêm

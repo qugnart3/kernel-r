@@ -73,6 +73,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | H1 | Screen leak fixes (innerWidth/outerWidth/DPR/matchMedia) | `local_dom_window.cc`, `media_values.cc` | `screen` |
 | H2 | Accept-Language header override | `profile_network_context_service.cc` | `locale_tz` |
 | T13 | WebRTC IP leak prevention (2 layers) | `renderer_preferences_util.cc`, `rtc_peer_connection.cc` | `webrtc` |
+| T14 | TLS/H2 parity — verified stock (0 net/ changes) | Không sửa file — thừa hưởng Chromium 158 stock | — |
 
 ### Profile cập nhật mới nhất (ĐÃ TEST — PASS 2026-11-16)
 - **Fonts**: Mở rộng từ 17 → 71 fonts (Windows 10 default set đầy đủ) ✓
@@ -82,7 +83,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | Task | Mô tả | Priority |
 |------|--------|----------|
 | ~~T13~~ | ~~WebRTC (local IP leak, ICE candidates)~~ | ~~DONE~~ |
-| T14 | TLS/H2 (JA3/JA4 fingerprint, HTTP/2 settings) | High |
+| ~~T14~~ | ~~TLS/H2 (verified stock — 0 net/ changes)~~ | ~~DONE~~ |
 | T15 | Anti-config-leak (permissions API, voices, misc) | Medium |
 | T17 | Launcher + Manager UI (production) | Medium |
 | H3-H11 | hCaptcha signal gaps (xem HCAPTCHA_SIGNALS.md) | High |
@@ -96,6 +97,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 5. **Noise-only patches (T8/T9/T10) safe** — Chỉ thêm deterministic noise, không tạo cross-signal inconsistency
 6. **`icu::TimeZone::adoptDefault()` không đủ** — Phải dùng `TimeZoneController::SetTimeZoneOverride()` để notify V8 trong Workers
 7. **`document.fonts.check()` không detect system fonts** — Phải block tại `FontCache::GetFontPlatformData()` level
+8. **TLS/H2 parity = verification, not implementation** — Nếu 0 file `net/`/`boringssl` bị sửa → TLS fingerprint tự động khớp stock. Chrome 110+ shuffle extension order mỗi session → JA3 hash thay đổi, nhưng ciphers/curves/H2 SETTINGS cố định
 
 ## hCaptcha Reverse Engineering
 - Full analysis: `C:\src\kernel-r\reverse\HCAPTCHA_SIGNALS.md`
@@ -107,6 +109,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 ## Test tools
 - **Test dashboard**: `C:\src\kernel-r\test_toggles.html` — verification dashboard cho tất cả toggle groups
 - **Context matrix**: `C:\src\kernel-r\test_context_matrix.html` — Main vs Worker vs iframe consistency
+- **TLS/H2 verify**: `C:\src\kernel-r\test_tls.html` — fetch tls.peet.ws, compare JA3/JA4/H2 vs Chrome expected
 - **Launcher UI**: `C:\src\kernel-r\launcher.py` — Python HTTP server (port 7700) cho bật/tắt toggles + relaunch Chrome
   - Chạy: `"C:\Users\h\AppData\Local\Programs\Python\Python312\python.exe" "C:\src\kernel-r\launcher.py"`
   - Mở: `http://localhost:7700`
