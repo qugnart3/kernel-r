@@ -80,7 +80,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | H6 | Voices API filter (by name or locale prefix) | `speech_synthesis.cc` | `voices` |
 | H7 | Storage quota noise ±5% | `storage_manager.cc`, `fingerprint_profile.cc` | — (always active) |
 | H8 | Permissions API → always "prompt" | `permissions.cc` | `permissions` |
-| H10 | ontouchstart ↔ maxTouchPoints consistency | `web_view_impl.cc` | `screen` |
+| ~~H10~~ | ~~ontouchstart~~ — REVERTED, gây detect. Windows desktop: maxTouchPoints=10 + no ontouchstart là bình thường | ~~`web_view_impl.cc`~~ | — |
 
 ### Profile cập nhật mới nhất (ĐÃ TEST — PASS 2026-11-16)
 - **Fonts**: Mở rộng từ 17 → 71 fonts (Windows 10 default set đầy đủ) ✓
@@ -108,6 +108,7 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 7. **`document.fonts.check()` không detect system fonts** — Phải block tại `FontCache::GetFontPlatformData()` level
 8. **TLS/H2 parity = verification, not implementation** — Nếu 0 file `net/`/`boringssl` bị sửa → TLS fingerprint tự động khớp stock. Chrome 110+ shuffle extension order mỗi session → JA3 hash thay đổi, nhưng ciphers/curves/H2 SETTINGS cố định
 9. **Storage quota: noise, không replace** — Spoof giá trị cố định (2GB thay 10GB) → bị detect ngay. Fix: dùng deterministic noise ±5% quanh quota thật via `FingerprintProfile::NoisedQuota()`. Luôn bật khi profile active, không cần toggle hay JSON field
+10. **Không fix "inconsistency" mà máy thật cũng có** — Windows desktop: maxTouchPoints=10 + ontouchstart KHÔNG có = bình thường. Bật ontouchstart cho "consistent" → trông như touch device trên desktop → bị detect ngay. Luôn verify trạng thái máy thật trước khi "fix"
 
 ## hCaptcha Reverse Engineering
 - Full analysis: `C:\src\kernel-r\reverse\HCAPTCHA_SIGNALS.md`

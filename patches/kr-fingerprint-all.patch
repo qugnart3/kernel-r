@@ -941,27 +941,14 @@ index a57561775c..5c8827376c 100644
    return window ? window->GetFrame()->GetSettings()->GetMaxTouchPoints() : 0;
  }
 diff --git a/third_party/blink/renderer/core/exported/web_view_impl.cc b/third_party/blink/renderer/core/exported/web_view_impl.cc
-index 5aca41e3ac..cf2653e8e2 100644
+index 5aca41e3ac..25cdbd6c9a 100644
 --- a/third_party/blink/renderer/core/exported/web_view_impl.cc
 +++ b/third_party/blink/renderer/core/exported/web_view_impl.cc
-@@ -184,6 +184,7 @@
- #include "third_party/blink/renderer/platform/keyboard_codes.h"
- #include "third_party/blink/renderer/platform/loader/fetch/unique_identifier.h"
- #include "third_party/blink/renderer/platform/runtime_enabled_features.h"
-+#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
- #include "third_party/blink/renderer/platform/scheduler/public/page_scheduler.h"
- #include "third_party/blink/renderer/platform/theme/web_theme_engine_helper.h"
- #include "third_party/blink/renderer/platform/weborigin/known_ports.h"
-@@ -1742,6 +1743,12 @@ void WebView::ApplyWebPreferences(const web_pref::WebPreferences& prefs,
+@@ -1742,6 +1742,7 @@ void WebView::ApplyWebPreferences(const web_pref::WebPreferences& prefs,
    settings->SetPrimaryPointerType(prefs.primary_pointer_type);
    settings->SetAvailableHoverTypes(prefs.available_hover_types);
    settings->SetPrimaryHoverType(prefs.primary_hover_type);
 +
-+  const auto& fp = kr::FingerprintProfile::Get();
-+  if (fp.IsActive() && fp.IsToggleEnabled("screen")) {
-+    bool has_touch = fp.navigator().max_touch_points > 0;
-+    RuntimeEnabledFeatures::SetTouchEventFeatureDetectionEnabled(has_touch);
-+  }
    settings->SetOutputDeviceUpdateAbilityType(
        prefs.output_device_update_ability_type);
    settings->SetBarrelButtonForDragEnabled(prefs.barrel_button_for_drag_enabled);

@@ -1,5 +1,15 @@
 # CHANGELOG — Kernel-R
 
+## 2026-11-16 — H10 REVERTED: ontouchstart override gây detect
+
+### Xóa
+- **web_view_impl.cc**: Revert `RuntimeEnabledFeatures::SetTouchEventFeatureDetectionEnabled()` override và xóa include `fingerprint_profile.h`
+
+### Lý do
+- Windows desktop thật: `maxTouchPoints = 10` nhưng `"ontouchstart" in window` = false — đó là trạng thái BÌNH THƯỜNG
+- H10 bật ontouchstart → trông như touch device trên desktop → hCaptcha detect ngay
+- Lesson: không phải mọi "inconsistency" đều cần fix — nếu máy thật cũng "inconsistent" thì đó là normal
+
 ## 2026-11-16 — H8+H10: Permissions API + Touch consistency
 
 ### Sửa
