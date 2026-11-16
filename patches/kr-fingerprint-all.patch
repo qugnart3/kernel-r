@@ -917,6 +917,26 @@ index 19f2e8bf67..741adc1320 100644
      auto* layout_view = GetDocument().GetLayoutView();
      if (layout_view) {
        // TODO(crbug.com/740879): Use per-page overlay scrollbar settings.
+diff --git a/third_party/blink/renderer/core/events/navigator_events.cc b/third_party/blink/renderer/core/events/navigator_events.cc
+index a57561775c..5c8827376c 100644
+--- a/third_party/blink/renderer/core/events/navigator_events.cc
++++ b/third_party/blink/renderer/core/events/navigator_events.cc
+@@ -34,10 +34,15 @@
+ #include "third_party/blink/renderer/core/frame/local_frame.h"
+ #include "third_party/blink/renderer/core/frame/navigator.h"
+ #include "third_party/blink/renderer/core/frame/settings.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ 
+ namespace blink {
+ 
+ int32_t NavigatorEvents::maxTouchPoints(Navigator& navigator) {
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("screen"))
++    return fp.navigator().max_touch_points;
++
+   LocalDOMWindow* window = navigator.DomWindow();
+   return window ? window->GetFrame()->GetSettings()->GetMaxTouchPoints() : 0;
+ }
 diff --git a/third_party/blink/renderer/core/frame/local_dom_window.cc b/third_party/blink/renderer/core/frame/local_dom_window.cc
 index 3c8005efb9..074e569df4 100644
 --- a/third_party/blink/renderer/core/frame/local_dom_window.cc
@@ -1261,6 +1281,80 @@ index eaa71b910d..0fb62a8b3c 100644
 +
    return image_data;
  }
+ 
+diff --git a/third_party/blink/renderer/modules/netinfo/network_information.cc b/third_party/blink/renderer/modules/netinfo/network_information.cc
+index 81df80e2b5..693ce82331 100644
+--- a/third_party/blink/renderer/modules/netinfo/network_information.cc
++++ b/third_party/blink/renderer/modules/netinfo/network_information.cc
+@@ -22,6 +22,7 @@
+ #include "third_party/blink/renderer/platform/supplementable.h"
+ #include "third_party/blink/renderer/platform/weborigin/kurl.h"
+ #include "third_party/blink/renderer/platform/wtf/text/wtf_string.h"
++#include "third_party/blink/renderer/platform/kr_fingerprint/fingerprint_profile.h"
+ 
+ namespace blink {
+ 
+@@ -111,6 +112,15 @@ double NetworkInformation::downlinkMax() const {
+ }
+ 
+ V8EffectiveConnectionType NetworkInformation::effectiveType() {
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("network")) {
++    const auto& et = fp.connection().effective_type;
++    if (et == "slow-2g") return V8EffectiveConnectionType(V8EffectiveConnectionType::Enum::kSlow2G);
++    if (et == "2g") return V8EffectiveConnectionType(V8EffectiveConnectionType::Enum::k2G);
++    if (et == "3g") return V8EffectiveConnectionType(V8EffectiveConnectionType::Enum::k3G);
++    return V8EffectiveConnectionType(V8EffectiveConnectionType::Enum::k4G);
++  }
++
+   MaybeShowWebHoldbackConsoleMsg();
+   std::optional<WebEffectiveConnectionType> override_ect =
+       GetNetworkStateNotifier().GetWebHoldbackEffectiveType();
+@@ -119,19 +129,20 @@ V8EffectiveConnectionType NetworkInformation::effectiveType() {
+         EffectiveConnectionTypeToEnum(override_ect.value()));
+   }
+ 
+-  // effective_type_ is only updated when listening for events, so ask
+-  // networkStateNotifier if not listening (crbug.com/379841).
+   if (!IsObserving()) {
+     return V8EffectiveConnectionType(EffectiveConnectionTypeToEnum(
+         GetNetworkStateNotifier().EffectiveType()));
+   }
+ 
+-  // If observing, return m_type which changes when the event fires, per spec.
+   return V8EffectiveConnectionType(
+       EffectiveConnectionTypeToEnum(effective_type_));
+ }
+ 
+ uint32_t NetworkInformation::rtt() {
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("network"))
++    return static_cast<uint32_t>(fp.connection().rtt);
++
+   MaybeShowWebHoldbackConsoleMsg();
+   std::optional<base::TimeDelta> override_rtt =
+       GetNetworkStateNotifier().GetWebHoldbackHttpRtt();
+@@ -148,6 +159,10 @@ uint32_t NetworkInformation::rtt() {
+ }
+ 
+ double NetworkInformation::downlink() {
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("network"))
++    return fp.connection().downlink;
++
+   MaybeShowWebHoldbackConsoleMsg();
+   std::optional<double> override_downlink_mbps =
+       GetNetworkStateNotifier().GetWebHoldbackDownlinkThroughputMbps();
+@@ -165,6 +180,10 @@ double NetworkInformation::downlink() {
+ }
+ 
+ bool NetworkInformation::saveData() const {
++  const auto& fp = kr::FingerprintProfile::Get();
++  if (fp.IsActive() && fp.IsToggleEnabled("network"))
++    return fp.connection().save_data;
++
+   bool save_data =
+       IsObserving() ? save_data_ : GetNetworkStateNotifier().SaveDataEnabled();
  
 diff --git a/third_party/blink/renderer/modules/peerconnection/rtc_peer_connection.cc b/third_party/blink/renderer/modules/peerconnection/rtc_peer_connection.cc
 index 65c71ea9de..09ce0dad36 100644

@@ -1,5 +1,20 @@
 # CHANGELOG — Kernel-R
 
+## 2026-11-16 — H3-H4: hCaptcha signal gaps (connection + maxTouchPoints)
+
+### Sửa
+- **network_information.cc**: Override `effectiveType()`, `rtt()`, `downlink()`, `saveData()` — return profile connection values khi network toggle enabled. Map effectiveType string ("4g"/"3g"/"2g"/"slow-2g") sang V8EffectiveConnectionType enum
+- **navigator_events.cc**: Override `maxTouchPoints()` — return profile `max_touch_points` khi screen toggle enabled
+
+### Thiết kế
+- Connection: Early-return pattern trước Chromium logic (holdback, observing, notifier). Profile values cố định — không thay đổi khi mạng thật thay đổi, tránh fingerprint instability
+- maxTouchPoints: Đọc từ Settings object (set bởi browser process) → override bằng profile value trong renderer
+
+### Context
+- hCaptcha `interrogateNavigator()` dump TẤT CẢ navigator properties qua `for..in` loop — bao gồm `navigator.connection.*` và `navigator.maxTouchPoints`
+- Connection values khác giữa các instance có thể dùng để correlate sessions
+- maxTouchPoints=10 (mặc định máy này) cần configurable cho profiles giả lập máy không touch
+
 ## 2026-11-16 — T15: Anti-config-leak (D21 + D22)
 
 ### Thêm

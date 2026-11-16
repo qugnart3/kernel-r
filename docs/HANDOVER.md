@@ -75,6 +75,8 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | T13 | WebRTC IP leak prevention (2 layers) | `renderer_preferences_util.cc`, `rtc_peer_connection.cc` | `webrtc` |
 | T14 | TLS/H2 parity — verified stock (0 net/ changes) | Không sửa file — thừa hưởng Chromium 158 stock | — |
 | T15 | Anti-config-leak (D21 bg connections + D22 chrome://version) | `chrome_main_delegate.cc`, `version_ui.cc` | — |
+| H3 | navigator.connection spoofing (effectiveType/rtt/downlink/saveData) | `network_information.cc` | `network` |
+| H4 | maxTouchPoints from profile | `navigator_events.cc` | `screen` |
 
 ### Profile cập nhật mới nhất (ĐÃ TEST — PASS 2026-11-16)
 - **Fonts**: Mở rộng từ 17 → 71 fonts (Windows 10 default set đầy đủ) ✓
@@ -86,8 +88,9 @@ windows_sdk_path = "C:\\Program Files (x86)\\Windows Kits\\10"
 | ~~T13~~ | ~~WebRTC (local IP leak, ICE candidates)~~ | ~~DONE~~ |
 | ~~T14~~ | ~~TLS/H2 (verified stock — 0 net/ changes)~~ | ~~DONE~~ |
 | ~~T15~~ | ~~Anti-config-leak (D21+D22)~~ | ~~DONE~~ |
+| ~~H3-H4~~ | ~~Connection + maxTouchPoints~~ | ~~DONE~~ |
 | T17 | Launcher + Manager UI (production) | Medium |
-| H3-H11 | hCaptcha signal gaps (xem HCAPTCHA_SIGNALS.md) | High |
+| H5-H11 | hCaptcha remaining gaps (screenX/Y, voices, permissions, storage — all P2+) | Low |
 | A1-A15 | Automation (Named Pipe + SendMessage+HWND) | Later |
 
 ### Bài học quan trọng (Lessons Learned)
@@ -157,6 +160,12 @@ third_party/blink/renderer/modules/webgl/
 
 third_party/blink/renderer/modules/peerconnection/
   rtc_peer_connection.cc
+
+third_party/blink/renderer/modules/netinfo/
+  network_information.cc
+
+third_party/blink/renderer/core/events/
+  navigator_events.cc
 
 content/browser/renderer_host/
   render_process_host_impl.cc
